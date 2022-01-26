@@ -5,7 +5,8 @@ function VehicleStatus (props) {
 
     return (
         <div className={props.className}>
-            <p>Status</p>
+            <h3>Vehicle Status</h3>
+            <hr/>
         </div>
     );
 }

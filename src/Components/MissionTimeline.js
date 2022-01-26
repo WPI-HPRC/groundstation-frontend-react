@@ -5,7 +5,7 @@ function MissionTimeline (props) {
 
     return (
         <div className={props.className}>
-            <p>Mission Timeline</p>
+            <h3>Mission Timeline</h3>
         </div>
     );
 }

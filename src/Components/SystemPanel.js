@@ -5,7 +5,8 @@ function SystemPanel (props) {
 
     return (
         <div className={props.className}>
-            <p>SYSTEM</p>
+            <h3>System</h3>
+            <hr/>
         </div>
     );
 }

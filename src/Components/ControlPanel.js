@@ -5,7 +5,7 @@ function ControlPanel (props) {
 
     return (
         <div className={props.className}>
-            <p>Controls</p>
+            <h3>Controls</h3>
         </div>
     );
 }

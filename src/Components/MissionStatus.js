@@ -4,9 +4,12 @@ import React from 'react';
 function MissionStatus (props) {
 
     return (
+        <>
             <div className={props.className}>
-                <p>Mission Status</p>
+                <h3>Mission Status</h3>
+                <hr/>
             </div>
+        </>
     );
 }
 

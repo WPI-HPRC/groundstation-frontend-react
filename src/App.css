@@ -15,6 +15,7 @@
 .VehicleStatus {
   border-radius: 5px;
   background-color: #021212;
+  box-shadow: 2px 2px 5px #011111; 
   width: 100%;
   margin: 5px;
 }
@@ -22,6 +23,8 @@
 .ControlPanel {
   border-radius: 5px;
   background-color: #021212;
+  box-shadow: 2px 2px 5px #011111; 
+ 
   width: 100%;
   margin: 5px;
 }
@@ -29,6 +32,7 @@
 .SystemPanel {
   border-radius: 5px;
   background-color: #021212;
+  box-shadow: 2px 2px 5px #011111; 
   width: 100%;
   margin: 5px;
 }
@@ -36,13 +40,7 @@
 .GaugeCluster {
   border-radius: 5px;
   background-color: #021212;
-  width: 100%;
-  margin: 5px;
-}
-
-.MissionStatus {
-  border-radius: 5px;
-  background-color: #021212;
+  box-shadow: 2px 2px 5px #011111; 
   width: 100%;
   margin: 5px;
 }
@@ -50,7 +48,17 @@
 .TitlePlate {
   border-radius: 5px;
   background-color: #021212;
+  box-shadow: 2px 2px 5px #011111; 
+  color: #BD1E01;
   text-align: center;
+  width: 100%;
+  margin: 5px;
+}
+
+.MissionStatus {
+  border-radius: 5px;
+  background-color: #021212;
+  box-shadow: 2px 2px 5px #011111; 
   width: 100%;
   margin: 5px;
 }
@@ -58,6 +66,7 @@
 .Visualization {
   border-radius: 5px;
   background-color: #021212;
+  box-shadow: 2px 2px 5px #011111; 
   width: 100%;
   margin: 5px;
 }
@@ -65,6 +74,29 @@
 .MissionTimeline {
   border-radius: 5px;
   background-color: #021212;
+  box-shadow: 2px 2px 5px #011111; 
   width: 100%;
   margin: 5px;
+}
+
+h1 {
+  font-family: 'Courier New', monospace;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+h3 {
+  padding: 0px 20px 0px ;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+h4 {
+  margin-top: 0px;
+}
+
+hr {
+  color: #042A2B;
+  background-color: #042A2B;
+  border-color: #042A2B;
+  height: 1;
 }

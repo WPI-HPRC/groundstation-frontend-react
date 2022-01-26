@@ -5,7 +5,7 @@ function Visualization (props) {
 
     return (
         <div className={props.className}>
-            <p>Map/3D</p>
+            <h3>Map   |    3D</h3>
         </div>
     );
 }
