@@ -16,39 +16,47 @@ const Layout = ({ children }) => {
     return (
         <>
             <div>
-                <Row className="bordered">
+                <Grid style={{width:"100%"}}>
+                    <Row style={{height:"90vh"}}>
+                        <Col lg={9}>
+                            <Row>
+                                <Col lg={4}>
+                                    <Row style={{height:"50vh"}}>
+                                        <VehicleStatus className="VehicleStatus" />
+                                    </Row>
+                                </Col>
+                                
+                                <Col lg={8}>
+                                    <Row style={{height:"10vh"}}>
+                                        <ControlPanel className="ControlPanel" />
+                                    </Row>
+                                    <Row style={{height:"40vh"}}>
+                                        <SystemPanel className="SystemPanel" />
+                                    </Row>
+                                </Col>
+                            </Row>
+                            <Row style={{height:"40vh"}}>
+                                <GaugeCluster className="GaugeCluster" />
+                            </Row>
+                        </Col>
 
-                    <Col className="bordered" lg={9}>
-                        <Row>
-                            <Col className="bordered" lg={4}>
-                                <VehicleStatus />
-                            </Col>
-                            
-                            <Col lg={8}>
-                                <ControlPanel />
-                                <SystemPanel />
-                            </Col>
-                        </Row>
-                        <GaugeCluster />
-                    </Col>
+                        <Col lg={3}>
+                            <Row style={{height:"15vh"}}>
+                                <TitlePlate className="TitlePlate"/>
+                            </Row>
+                            <Row style={{height:"30vh"}}>
+                                <MissionStatus className="MissionStatus"/>
+                            </Row>
+                            <Row style={{height:"45vh"}}>
+                                <Visualization className="Visualization"/>
+                            </Row>
+                        </Col>
+                    </Row>
 
-                    <Col lg={3}>
-                        <Row>
-                            <TitlePlate className="TitlePlate"/>
-                        </Row>
-                        <Row>
-                            <MissionStatus className="MissionStatus"/>
-                        </Row>
-                        <Row>
-                            <Visualization />
-                        </Row>
-                    </Col>
-
-                </Row>
-
-                <Row className="bordered">
-                    <MissionTimeline />
-                </Row>
+                    <Row style={{height:"10vh"}}>
+                        <MissionTimeline className="MissionTimeline" />
+                    </Row>
+                </Grid>
             </div>
             <main>{children}</main>
         </>

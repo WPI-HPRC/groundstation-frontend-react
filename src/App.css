@@ -1,20 +1,70 @@
 .App {
+  background-color: #042A2B;
   text-align: left;
+  color: #F7F7FF
 }
 
-/* .bordered {
-  border: solid;
-} */
+.bordered {
+  border: none;
+}
 
-.TitlePlate {
-  border: solid;
-  text-align: center;
+.hidden {
+  display: none;
+}
+
+.VehicleStatus {
+  border-radius: 5px;
+  background-color: #021212;
+  width: 100%;
+  margin: 5px;
+}
+
+.ControlPanel {
+  border-radius: 5px;
+  background-color: #021212;
+  width: 100%;
+  margin: 5px;
+}
+
+.SystemPanel {
+  border-radius: 5px;
+  background-color: #021212;
+  width: 100%;
+  margin: 5px;
+}
+
+.GaugeCluster {
+  border-radius: 5px;
+  background-color: #021212;
   width: 100%;
   margin: 5px;
 }
 
 .MissionStatus {
-  border: solid;
+  border-radius: 5px;
+  background-color: #021212;
+  width: 100%;
+  margin: 5px;
+}
+
+.TitlePlate {
+  border-radius: 5px;
+  background-color: #021212;
+  text-align: center;
+  width: 100%;
+  margin: 5px;
+}
+
+.Visualization {
+  border-radius: 5px;
+  background-color: #021212;
+  width: 100%;
+  margin: 5px;
+}
+
+.MissionTimeline {
+  border-radius: 5px;
+  background-color: #021212;
   width: 100%;
   margin: 5px;
 }
