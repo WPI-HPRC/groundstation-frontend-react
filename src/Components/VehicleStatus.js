@@ -1,14 +1,16 @@
 import React from 'react';
 
 
-function VehicleStatus (props) {
+export default class VehicleStatus extends React.Component {
 
-    return (
-        <div className={props.className}>
-            <h3>Vehicle Status</h3>
-            <hr/>
-        </div>
-    );
+    render() {
+        return (
+            <div className="panel">
+                <div className="VehicleStatus">
+                    <h3>Vehicle Status</h3>
+                    <hr/>
+                </div>
+            </div>
+        );
+    }
 }
-
-export default VehicleStatus;

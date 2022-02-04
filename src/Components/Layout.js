@@ -45,7 +45,7 @@ const Layout = ({ children }) => {
                                 <TitlePlate className="TitlePlate"/>
                             </Row>
                             <Row style={{height:"30vh"}}>
-                                <MissionStatus className="MissionStatus"/>
+                                <MissionStatus/>
                             </Row>
                             <Row style={{height:"45vh"}}>
                                 <Visualization className="Visualization"/>

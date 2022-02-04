@@ -1,66 +1,106 @@
-import { render } from '@testing-library/react';
 import React from 'react';
-import RTChart from 'react-rt-chart';
-import Button from 'react-bootstrap/Button'
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Button from 'react-bootstrap/Button';
+import { ArcGauge } from "@progress/kendo-react-gauges";
+import RealtimeLineChart from "./RealtimeLineChart";
+import TestChart from "./Test.js"
+
+const TIME_RANGE_IN_MILLISECONDS = 30 * 1000;
+const ADDING_DATA_INTERVAL_IN_MILLISECONDS = 1000;
+const ADDING_DATA_RATIO = 0.8;
+
+function padLeadingZeros(num, size) {
+    var s = num+"";
+    while (s.length < size) s = "0" + s;
+    return s;
+}
 
 class VelBox extends React.Component {
-    
+
     constructor(props) {
         super(props);
-        this.state = { drawGraph: true };
-        this.i = 0;
-        this.chart = {
-            axis: {
-                y: {min: 0}
-            },
-            point: {
-                show: false
-            }
-        };
-        this.flow = {
-            duration: 2
-        };
+        this.state = { drawGraph: false,
+                       vel: 10,
+                       data: []
+                    };
     }
 
     componentDidMount() {
-        setInterval(() => this.forceUpdate(), 500);
+        setInterval(() => this.changeVel(), 500);
     }
 
-    render() {
-        this.i = this.i+2;
+    changeVel() {
+        this.setState({
+            vel: Math.ceil(Math.random() * 100)
+        })
 
-        var data = {
-            date: new Date(),
-            Car: this.i,
+    }
+
+    handleClick() {
+        this.setState({
+            drawGraph: !this.state.drawGraph
+        });
+    }
+    
+    
+    render() {
+
+        const colors = [
+            {
+              to: 0,
+              color: "#6D6D6D",
+            },
+            {
+              from: 0,
+              to: 100,
+              color: "#ED5031",
+            }
+        ];
+
+        const arcOptions = {
+            value: this.state.vel,
+            colors
+        }
+
+        const centerRenderer = (value, color) => {
+
+            return (
+              <h3
+                style={{
+                  color: "#F7F7F7",
+                  fontSize: "3em",
+                  margin: "5px",
+                }}
+              >
+                {padLeadingZeros(value, 3)}
+              </h3>
+            );
         };
 
         return (
             <>
-                <div id='VelBox' style={{width:"33%", height:"100%"}}>
-                    <div style={{width: "100%"}}>
-                        <div style={{float: "left"}}>
+                <div id='VelBox' style={{display:"inline-block", width:"33%", height:"100%", textAlign: "center"}}>
+                    <div style={{width: "100%", textAlign: "left"}}>
+                        <div style={{display:"inline-block", width: "50%"}}>
                             <h3>Velocity</h3>
                         </div>
-                        <div style={{float: "right", margin: "15px"}}>
-                            <ButtonGroup aria-label="mode select">
-                                <Button variant="info">Gauge</Button>
-                                <Button variant="info">Graph</Button>
-                            </ButtonGroup>
+                        <div style={{display:"inline-block", textAlign:"right", width: "50%"}}>
+                            <Button onClick={() => this.handleClick()}>
+                                {this.state.drawGraph ? "View Gauge" : "View Graph"}
+                            </Button>
                         </div>
                     </div>
 
                     <div className={this.state.drawGraph ? "hidden" : undefined} id='VelMeter'>
-                        Hello there
+                        <div style={{display: "inline-block", margin: "0 auto"}}>
+                            <ArcGauge {...arcOptions} centerRender={centerRenderer} scale={{startAngle: -40, endAngle: 220, rangeSize: 10, min: 0, max: 300}}/>
+                        </div>
                     </div>
 
 
                     <div className={!this.state.drawGraph ? "hidden" : undefined} id='VelGraph'>
-                        <RTChart chart={this.chart}
-                                flow={this.flow}
-                                fields={['Car']} 
-                                data={data}
-                                reset={!this.state.drawGraph} />
+                        <div style={{display: "inline-block", margin: "0 auto", border:"solid"}}>
+                            <TestChart/>
+                        </div>    
                     </div>
                 </div>
             </>
@@ -73,8 +113,96 @@ class VelBox extends React.Component {
  * Acceleration display
  * @param {*} props 
  */
-function AccelBox (props) {
+ class AccelBox extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = { drawGraph: false,
+                       accel: 0 };
+    }
+
+    componentDidMount() {
+        setInterval(() => this.changeAccel(), 1000);
+    }
+
+    changeAccel() {
+        this.setState({
+            accel: Math.ceil(Math.random() * 100)
+        })
+    }
+
+    handleClick() {
+        this.setState({
+            drawGraph: !this.state.drawGraph
+        });
+    }
+
+    render() {
+
+        const colors = [
+            {
+              to: 80,
+              color: "#6D6D6D",
+            },
+            {
+              from: 80,
+              to: 100,
+              color: "#ED5031",
+            }
+        ];
+
+        const arcOptions = {
+            value: this.state.accel,
+            colors
+        }
+
+        const centerRenderer = (value, color) => {
+
+            return (
+              <h3
+                style={{
+                  color: "#F7F7F7",
+                  fontSize: "3em",
+                  margin: "5px",
+                }}
+              >
+                {padLeadingZeros(value, 3)}
+              </h3>
+            );
+        };
+        var data = {
+            date: new Date(),
+            Car: 0,
+        };
+
+        return (
+            <>
+                <div id='AccelBox' style={{display:"inline-block", width:"33%", height:"100%", textAlign: "center"}}>
+                    <div style={{width: "100%", textAlign: "left"}}>
+                        <div style={{display:"inline-block", width: "50%"}}>
+                            <h3>Acceleration</h3>
+                        </div>
+                        <div style={{display:"inline-block", textAlign:"right", width: "50%"}}>
+                            <Button onClick={() => this.handleClick()}>
+                                {this.state.drawGraph ? "View Gauge" : "View Graph"}
+                            </Button>
+                        </div>
+                    </div>
+
+                    <div className={this.state.drawGraph ? "hidden" : undefined} id='AccelMeter'>
+                        <div style={{display: "inline-block", margin: "0 auto"}}>
+                            <ArcGauge {...arcOptions} centerRender={centerRenderer} scale={{startAngle: -40, endAngle: 220, rangeSize: 10, min: 0, max: 300}}/>
+                        </div>
+                    </div>
+
+
+                    <div className={!this.state.drawGraph ? "hidden" : undefined} id='AccelGraph'>
+                        I am a graph
+                    </div>
+                </div>
+            </>
+        )
+    }
 }
 
 
@@ -82,18 +210,71 @@ function AccelBox (props) {
  * Altitude display
  * @param {*} props 
  */
-function AltBox (props) {
+ class AltBox extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = { drawGraph: false,
+                       altitude: 0 };
+    }
+
+    componentDidMount() {
+        setInterval(() => this.forceUpdate(), 500);
+    }
+
+    handleClick() {
+        this.setState({
+            drawGraph: !this.state.drawGraph
+        });
+    }
+
+    render() {
+
+        var data = {
+            date: new Date(),
+            Car: 0,
+        };
+
+        return (
+            <>
+                <div id='AltBox' style={{display:"inline-block", width:"33%", height:"100%"}}>
+                    <div style={{width: "100%"}}>
+                        <div style={{display:"inline-block", width: "50%"}}>
+                            <h3>Altitude</h3>
+                        </div>
+                        <div style={{display:"inline-block", textAlign:"right", width: "50%"}}>
+                            <Button onClick={() => this.handleClick()}>
+                                {this.state.drawGraph ? "View Gauge" : "View Graph"}
+                            </Button>
+                        </div>
+                    </div>
+
+                    <div className={this.state.drawGraph ? "hidden" : undefined} id='AltMeter'>
+                        I am a gauge
+                    </div>
+
+
+                    <div className={!this.state.drawGraph ? "hidden" : undefined} id='AltGraph'>
+                        I am a graph
+                    </div>
+                </div>
+            </>
+        )
+    }
 }
 
-function GaugeCluster (props) {
 
-    return (
-        <div className={props.className}>
-            <VelBox />
-            
-        </div>
-    );
+export default class GaugeCluster extends React.Component {
+
+    render() {
+        return (
+            <div className="panel">
+                <div className="GaugeCluster">
+                    <VelBox />
+                    <AccelBox />
+                    <AltBox />
+                </div>
+            </div>
+        );
+        }
 }
-
-export default GaugeCluster;
