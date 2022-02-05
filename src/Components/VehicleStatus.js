@@ -23,6 +23,22 @@ class VehicleState extends React.Component {
     }
 }
 
+class FlightClock extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { time: "00:00:00",
+                       color: "white"};
+    }
+
+    render() {
+        return (
+            <div style={{display:"inline-block", width: "100%", textAlign: "center"}}>
+                <h1 style={{margin: "0px", color: this.state.color}}>+{this.state.time}</h1>
+            </div>
+        )
+    }
+}
+
 
 export default class VehicleStatus extends React.Component {
     state = {
@@ -47,6 +63,8 @@ export default class VehicleStatus extends React.Component {
                     <h4>Position:</h4>
                     <h4>{this.state.lat}, {this.state.long}</h4>
                     <hr/>
+                    <h4>Flight Clock:</h4>
+                    <FlightClock/>
                 </div>
             </div>
         );
