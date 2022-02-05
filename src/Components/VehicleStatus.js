@@ -6,14 +6,28 @@ class VehicleState extends React.Component {
     constructor(props) {
         super(props);
         this.state = { vehicleStateStr: props.vehicleState,
-                       color: "red"};
+                       };
     }
 
     render() {
+
+        var color = "red"
+        switch (this.state.vehicleStateStr) {
+            case "Launch": 
+                color = "orange";
+                break;
+            case "Powered Ascent":
+                color = "red";
+                break;
+            default:
+                color = "gray";
+                break;
+        }
+
         return (
-            <div style={{display:"inline-block", width: "100%", textAlign: "center"}}>
+            <div style={{display:"inline-block", width: "100%", textAlign: "center", padding: "10px"}}>
                 <h4 style={{margin: "0px 0px 10px"}}>Vehicle State</h4>
-                <div style={{display: "inline-block", backgroundColor: this.state.color, borderRadius: "5px", width: "50%", boxShaddow: "2px 2px 5px #000000" }}>
+                <div style={{display: "inline-block", backgroundColor: color, borderRadius: "5px", width: "50%", boxShaddow: "2px 2px 5px #000000" }}>
                     <h3>
                     {this.state.vehicleStateStr}
                     </h3>

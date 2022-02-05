@@ -21,13 +21,13 @@ const Layout = ({ children }) => {
                         <Col lg={9}>
                             <Row>
                                 <Col lg={4}>
-                                    <Row style={{height:"50vh"}}>
+                                    <Row style={{height:"60vh"}}>
                                         <VehicleStatus className="VehicleStatus" />
                                     </Row>
                                 </Col>
                                 
                                 <Col lg={8}>
-                                    <Row style={{height:"10vh"}}>
+                                    <Row style={{height:"20vh"}}>
                                         <ControlPanel className="ControlPanel" />
                                     </Row>
                                     <Row style={{height:"40vh"}}>
@@ -35,7 +35,7 @@ const Layout = ({ children }) => {
                                     </Row>
                                 </Col>
                             </Row>
-                            <Row style={{height:"40vh"}}>
+                            <Row style={{height:"30vh"}}>
                                 <GaugeCluster className="GaugeCluster" />
                             </Row>
                         </Col>
