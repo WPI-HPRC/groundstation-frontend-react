@@ -27,7 +27,7 @@ class VelBox extends React.Component {
     }
 
     componentDidMount() {
-        setInterval(() => this.changeVel(), 50);
+        setInterval(() => this.changeVel(), 200);
     }
 
     changeVel() {
@@ -103,20 +103,16 @@ class VelBox extends React.Component {
                         </div>
                     </div>
 
-                    <div className={this.state.drawGraph ? "hidden" : undefined} id='VelMeter'>
-                        <div style={{display: "inline-block", margin: "0 auto"}}>
-                            <ArcGauge {...arcOptions} centerRender={centerRenderer} scale={{startAngle: -40, endAngle: 220, rangeSize: 10, min: 0, max: 300}}/>
-                        </div>
+                    <div className={this.state.drawGraph ? "hidden" : undefined}>
+                        <ArcGauge {...arcOptions} centerRender={centerRenderer} scale={{startAngle: -40, endAngle: 220, rangeSize: 10, min: 0, max: 300}}/>
                     </div>
 
-
-                    <div className={!this.state.drawGraph ? "hidden" : undefined} id='VelGraph'>
-                        <div style={{display: "inline-block", margin: "0 auto"}}>
-                            <LiveSplineChart 
-                                data={this.state.data} 
-                            title="Velocity" />*
-                        </div>    
+                    <div className={!this.state.drawGraph ? "hidden" : undefined} style={{height: "100%"}}>
+                        <LiveSplineChart 
+                            data={this.state.data} 
+                        title="Velocity" />   
                     </div>
+
                 </div>
             </>
         )
@@ -133,7 +129,8 @@ class VelBox extends React.Component {
     constructor(props) {
         super(props);
         this.state = { drawGraph: false,
-                       accel: 0 };
+                       accel: 0,
+                       data: [] };
     }
 
     componentDidMount() {
@@ -144,6 +141,9 @@ class VelBox extends React.Component {
         this.setState({
             accel: Math.ceil(Math.random() * 100)
         })
+
+        let array = [...this.state.data, this.state.accel];
+        this.state.data = array;
     }
 
     handleClick() {
@@ -189,10 +189,6 @@ class VelBox extends React.Component {
 
             );
         };
-        var data = {
-            date: new Date(),
-            Car: 0,
-        };
 
         return (
             <>
@@ -209,14 +205,14 @@ class VelBox extends React.Component {
                     </div>
                     
                     <div className={this.state.drawGraph ? "hidden" : undefined} id='AccelMeter'>
-                        <div style={{display: "inline-block", margin: "0 auto"}}>
-                            <ArcGauge {...arcOptions} centerRender={centerRenderer} scale={{startAngle: -40, endAngle: 220, rangeSize: 10, min: 0, max: 100}}/>
-                        </div>
+                        <ArcGauge {...arcOptions} centerRender={centerRenderer} scale={{startAngle: -40, endAngle: 220, rangeSize: 10, min: 0, max: 100}}/>
                     </div>
 
 
                     <div className={!this.state.drawGraph ? "hidden" : undefined} id='AccelGraph'>
-                        I am a graph
+                    <LiveSplineChart 
+                                data={this.state.data} 
+                            title="Acceleration" />
                     </div>
                 </div>
             </>
@@ -234,7 +230,8 @@ class AltBox extends React.Component {
     constructor(props) {
         super(props);
         this.state = { drawGraph: false,
-                       altitude: 0 };
+                       altitude: 0,
+                       data: [] };
     }
 
     componentDidMount() {
@@ -251,6 +248,9 @@ class AltBox extends React.Component {
         this.setState({
             altitude: Math.ceil(Math.random() * 100)
         });
+        
+        let array = [...this.state.data, this.state.altitude];
+        this.state.data = array;
     }
 
     render() {
@@ -291,7 +291,7 @@ class AltBox extends React.Component {
 
         return (
             <>
-                <div id='AltBox' style={{display:"inline-block", width:"33%", height:"100%", verticalAlign: "top"}}>
+                <div id='AltBox' style={{display:"inline-block", width:"33%", height:"100%", textAlign: "center", verticalAlign: "top"}}>
                     <div style={{width: "100%"}}>
                         <div style={{display:"inline-block", width: "50%"}}>
                             <h3>Altitude</h3>
@@ -304,23 +304,24 @@ class AltBox extends React.Component {
                     </div>
 
                     <div className={this.state.drawGraph ? "hidden" : undefined} id='AltMeter'>
-                        <div style={{display: "inline-block", margin: "0 auto"}}>
-                            <ArcGauge {...arcOptions}
-                                centerRender={centerRender}
-                                scale={{
-                                    startAngle: -40,
-                                    endAngle: 220,
-                                    rangeSize: 10,
-                                    min: 0,
-                                    max: 300
-                                }}/>
-                        </div>
+                        <ArcGauge {...arcOptions}
+                            centerRender={centerRender}
+                            scale={{
+                                startAngle: -40,
+                                endAngle: 220,
+                                rangeSize: 10,
+                                min: 0,
+                                max: 300
+                            }}/>
                     </div>
 
 
                     <div className={!this.state.drawGraph ? "hidden" : undefined} id='AltGraph'>
-                        </div>
+                        <LiveSplineChart 
+                            data={this.state.data} 
+                        title="Velocity" />   
                     </div>
+                </div>
             </>
         )
     }
