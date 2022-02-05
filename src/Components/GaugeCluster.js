@@ -64,21 +64,24 @@ class VelBox extends React.Component {
         const centerRenderer = (value, color) => {
 
             return (
-              <h3
-                style={{
-                  color: "#F7F7F7",
-                  fontSize: "3em",
-                  margin: "5px",
-                }}
-              >
-                {padLeadingZeros(value, 3)}
-              </h3>
+                <>
+                    <h4>m/s</h4>
+                    <h3
+                        style={{
+                        color: "#F7F7F7",
+                        fontSize: "3em",
+                        margin: "5px",
+                        }}
+                    >
+                        {padLeadingZeros(value, 3)}
+                    </h3>
+                </>
             );
         };
 
         return (
             <>
-                <div id='VelBox' style={{display:"inline-block", width:"33%", height:"100%", textAlign: "center"}}>
+                <div id='VelBox' style={{display:"inline-block", width:"33%", height:"100%", textAlign: "center", verticalAlign: "top"}}>
                     <div style={{width: "100%", textAlign: "left"}}>
                         <div style={{display:"inline-block", width: "50%"}}>
                             <h3>Velocity</h3>
@@ -159,15 +162,19 @@ class VelBox extends React.Component {
         const centerRenderer = (value, color) => {
 
             return (
-              <h3
-                style={{
-                  color: "#F7F7F7",
-                  fontSize: "3em",
-                  margin: "5px",
-                }}
-              >
-                {padLeadingZeros(value, 3)}
-              </h3>
+                <>
+                    <h4>m/s/s</h4>
+                    <h3
+                    style={{
+                        color: "#F7F7F7",
+                        fontSize: "3em",
+                        margin: "5px",
+                    }}
+                    >
+                        {padLeadingZeros(value, 3)}
+                    </h3>
+                </>
+
             );
         };
         var data = {
@@ -177,7 +184,7 @@ class VelBox extends React.Component {
 
         return (
             <>
-                <div id='AccelBox' style={{display:"inline-block", width:"33%", height:"100%", textAlign: "center"}}>
+                <div id='AccelBox' style={{display:"inline-block", width:"33%", height:"100%", textAlign: "center", verticalAlign: "top"}}>
                     <div style={{width: "100%", textAlign: "left"}}>
                         <div style={{display:"inline-block", width: "50%"}}>
                             <h3>Acceleration</h3>
@@ -191,7 +198,7 @@ class VelBox extends React.Component {
 
                     <div className={this.state.drawGraph ? "hidden" : undefined} id='AccelMeter'>
                         <div style={{display: "inline-block", margin: "0 auto"}}>
-                            <ArcGauge {...arcOptions} centerRender={centerRenderer} scale={{startAngle: -40, endAngle: 220, rangeSize: 10, min: 0, max: 300}}/>
+                            <ArcGauge {...arcOptions} centerRender={centerRenderer} scale={{startAngle: -40, endAngle: 220, rangeSize: 10, min: 0, max: 100}}/>
                         </div>
                     </div>
 
@@ -237,7 +244,7 @@ class AltBox extends React.Component {
 
         return (
             <>
-                <div id='AltBox' style={{display:"inline-block", width:"33%", height:"100%"}}>
+                <div id='AltBox' style={{display:"inline-block", width:"33%", height:"100%", verticalAlign: "top"}}>
                     <div style={{width: "100%"}}>
                         <div style={{display:"inline-block", width: "50%"}}>
                             <h3>Altitude</h3>
