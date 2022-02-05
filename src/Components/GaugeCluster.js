@@ -25,12 +25,18 @@ class VelBox extends React.Component {
     }
 
     componentDidMount() {
-        setInterval(() => this.changeVel(), 500);
+        setInterval(() => this.changeVel(), 50);
     }
 
     changeVel() {
+        var vel = this.state.vel;
+        if (vel > 300) {
+            vel = 0;
+        } else {
+            vel++;
+        }
         this.setState({
-            vel: Math.ceil(Math.random() * 100)
+            vel: vel
         })
 
     }
@@ -51,7 +57,7 @@ class VelBox extends React.Component {
             },
             {
               from: 0,
-              to: 100,
+              to: 300,
               color: "#ED5031",
             }
         ];
