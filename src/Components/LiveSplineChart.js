@@ -28,7 +28,11 @@ export default (props) => {
         stroke: {
             width: 2,
             curve: 'smooth'
-        }
+        },
+        xaxis: {
+            colors: ['#FEFEFE'],
+            range: 10
+        },
     }
 
     return (
