@@ -6,10 +6,10 @@ const isDev = require('electron-is-dev');
 function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 1600,
-    height: 900,
-    minWidth: 1366,
-    minHeight: 768,
+    width: 1920,
+    height: 1080,
+    minWidth: 1920,
+    minHeight: 1080,
     center: true,
     icon: path.join(__dirname, "./hprcLogoWhite.png"),
     webPreferences: {

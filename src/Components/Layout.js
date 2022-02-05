@@ -17,17 +17,17 @@ const Layout = ({ children }) => {
         <>
             <div>
                 <Grid style={{width:"100%"}}>
-                    <Row style={{height:"90vh"}}>
+                    <Row style={{height:"88vh"}}>
                         <Col lg={9}>
                             <Row>
                                 <Col lg={4}>
-                                    <Row style={{height:"50vh"}}>
+                                    <Row style={{height:"58vh"}}>
                                         <VehicleStatus className="VehicleStatus" />
                                     </Row>
                                 </Col>
                                 
                                 <Col lg={8}>
-                                    <Row style={{height:"10vh"}}>
+                                    <Row style={{height:"18vh"}}>
                                         <ControlPanel className="ControlPanel" />
                                     </Row>
                                     <Row style={{height:"40vh"}}>
@@ -35,13 +35,13 @@ const Layout = ({ children }) => {
                                     </Row>
                                 </Col>
                             </Row>
-                            <Row style={{height:"40vh"}}>
+                            <Row style={{height:"30vh"}}>
                                 <GaugeCluster className="GaugeCluster" />
                             </Row>
                         </Col>
 
                         <Col lg={3}>
-                            <Row style={{height:"15vh"}}>
+                            <Row style={{height:"13vh"}}>
                                 <TitlePlate className="TitlePlate"/>
                             </Row>
                             <Row style={{height:"30vh"}}>
@@ -53,7 +53,7 @@ const Layout = ({ children }) => {
                         </Col>
                     </Row>
 
-                    <Row style={{height:"10vh"}}>
+                    <Row style={{height:"12vh"}}>
                         <MissionTimeline className="MissionTimeline" />
                     </Row>
                 </Grid>

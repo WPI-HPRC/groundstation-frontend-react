@@ -8,6 +8,7 @@
     "@progress/kendo-react-gauges": "^5.0.1",
     "@progress/kendo-react-intl": "^5.0.1",
     "@progress/kendo-theme-default": "^5.1.1",
+    "@ramonak/react-progress-bar": "^4.2.0",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
