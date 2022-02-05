@@ -1,13 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import { ArcGauge } from "@progress/kendo-react-gauges";
-import RealtimeLineChart from "./RealtimeLineChart";
 import LiveSplineChart from './LiveSplineChart';
-import ChartViewer from './ChartViewer';
-
-const TIME_RANGE_IN_MILLISECONDS = 30 * 1000;
-const ADDING_DATA_INTERVAL_IN_MILLISECONDS = 1000;
-const ADDING_DATA_RATIO = 0.8;
 
 function padLeadingZeros(num, size) {
     var s = num+"";
@@ -27,7 +21,7 @@ class VelBox extends React.Component {
     }
 
     componentDidMount() {
-        setInterval(() => this.changeVel(), 200);
+        setInterval(() => this.changeVel(), 100);
     }
 
     changeVel() {
@@ -292,7 +286,7 @@ class AltBox extends React.Component {
         return (
             <>
                 <div id='AltBox' style={{display:"inline-block", width:"33%", height:"100%", textAlign: "center", verticalAlign: "top"}}>
-                    <div style={{width: "100%"}}>
+                    <div style={{width: "100%", textAlign: "left"}}>
                         <div style={{display:"inline-block", width: "50%"}}>
                             <h3>Altitude</h3>
                         </div>
