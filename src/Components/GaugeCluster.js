@@ -210,7 +210,7 @@ class VelBox extends React.Component {
  * Altitude display
  * @param {*} props 
  */
- class AltBox extends React.Component {
+class AltBox extends React.Component {
 
     constructor(props) {
         super(props);
