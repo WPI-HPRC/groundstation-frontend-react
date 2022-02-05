@@ -291,7 +291,11 @@ class AltBox extends React.Component {
 
         return (
             <>
+<<<<<<< HEAD
                 <div id='AltBox' style={{display:"inline-block", width:"33%", height:"100%", textAlign: "center", verticalAlign: "top"}}>
+=======
+                <div id='AltBox' style={{display:"inline-block", width:"33%", height:"100%", verticalAlign: "top", textAlign: "center"}}>
+>>>>>>> 91e2baa466c53628175ab81e448db062f6d512b1
                     <div style={{width: "100%"}}>
                         <div style={{display:"inline-block", width: "50%"}}>
                             <h3>Altitude</h3>
