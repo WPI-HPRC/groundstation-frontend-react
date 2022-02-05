@@ -2,7 +2,8 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import { ArcGauge } from "@progress/kendo-react-gauges";
 import RealtimeLineChart from "./RealtimeLineChart";
-import TestChart from "./Test.js"
+import LiveSplineChart from './LiveSplineChart';
+import ChartViewer from './ChartViewer';
 
 const TIME_RANGE_IN_MILLISECONDS = 30 * 1000;
 const ADDING_DATA_INTERVAL_IN_MILLISECONDS = 1000;
@@ -18,10 +19,11 @@ class VelBox extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { drawGraph: false,
-                       vel: 10,
-                       data: []
-                    };
+        this.state = { 
+            drawGraph: false,
+            vel: 0,
+            data: []
+        };
     }
 
     componentDidMount() {
@@ -39,6 +41,8 @@ class VelBox extends React.Component {
             vel: vel
         })
 
+        let array = [...this.state.data, this.state.vel];
+        this.state.data = array;
     }
 
     handleClick() {
@@ -107,8 +111,10 @@ class VelBox extends React.Component {
 
 
                     <div className={!this.state.drawGraph ? "hidden" : undefined} id='VelGraph'>
-                        <div style={{display: "inline-block", margin: "0 auto", border:"solid"}}>
-                            <TestChart/>
+                        <div style={{display: "inline-block", margin: "0 auto"}}>
+                            <LiveSplineChart 
+                                data={this.state.data} 
+                            title="Velocity" />*
                         </div>    
                     </div>
                 </div>
@@ -201,7 +207,7 @@ class VelBox extends React.Component {
                             </Button>
                         </div>
                     </div>
-
+                    
                     <div className={this.state.drawGraph ? "hidden" : undefined} id='AccelMeter'>
                         <div style={{display: "inline-block", margin: "0 auto"}}>
                             <ArcGauge {...arcOptions} centerRender={centerRenderer} scale={{startAngle: -40, endAngle: 220, rangeSize: 10, min: 0, max: 100}}/>
@@ -232,7 +238,7 @@ class AltBox extends React.Component {
     }
 
     componentDidMount() {
-        setInterval(() => this.forceUpdate(), 500);
+        setInterval(() => this.changeAltitude(), 500);
     }
 
     handleClick() {
@@ -241,11 +247,46 @@ class AltBox extends React.Component {
         });
     }
 
+    changeAltitude() {
+        this.setState({
+            altitude: Math.ceil(Math.random() * 100)
+        });
+    }
+
     render() {
 
         var data = {
             date: new Date(),
             Car: 0,
+        };
+
+        const colors = [
+            {
+                to: 80,
+                color: "#6D6D6D"
+            },
+            {
+                from: 80,
+                to: 100,
+                color: "#ED5031"
+            }
+        ];
+
+        const arcOptions = {
+            value: this.state.altitude,
+            colors
+        };
+
+        const centerRender = (value, color) => {
+            return (
+                <h3 style={{
+                    color: "#F7F7F7",
+                    fontSize: "3em",
+                    margin: "5px"
+                }}>
+                    {padLeadingZeros(value, 3)}
+                </h3>
+            );
         };
 
         return (
@@ -263,14 +304,23 @@ class AltBox extends React.Component {
                     </div>
 
                     <div className={this.state.drawGraph ? "hidden" : undefined} id='AltMeter'>
-                        I am a gauge
+                        <div style={{display: "inline-block", margin: "0 auto"}}>
+                            <ArcGauge {...arcOptions}
+                                centerRender={centerRender}
+                                scale={{
+                                    startAngle: -40,
+                                    endAngle: 220,
+                                    rangeSize: 10,
+                                    min: 0,
+                                    max: 300
+                                }}/>
+                        </div>
                     </div>
 
 
                     <div className={!this.state.drawGraph ? "hidden" : undefined} id='AltGraph'>
-                        I am a graph
+                        </div>
                     </div>
-                </div>
             </>
         )
     }
