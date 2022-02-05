@@ -28,13 +28,13 @@ class StatusIndicator extends React.Component {
     render() {
         const renderWarning = () => {
             if (this.state.blinkOn) {
-                return <h4 style={{display: "inline-block", width: "20%",textAlign: "right", padding: "0px", color: 'red'}}>!</h4>;
+                return <h4 style={{display: "inline-block", width: "20%",textAlign: "right", padding: "0px", color: 'red', margin: "1.33em 0px 0px 0px"}}>!</h4>;
             }
         }
 
         return (
             <div>
-                <h4 style={{display: "inline-block", width: "70%", padding: "0px 0px 0px 20px"}}>{this.state.systemName}: {this.state.status ? "Connected" : "Disconnected"}</h4>
+                <h4 style={{display: "inline-block", width: "70%", padding: "0px 0px 0px 20px", margin: "1.33em 0px 0px 0px"}}>{this.state.systemName}: {this.state.status ? "Connected" : "Disconnected"}</h4>
                 {renderWarning()}
             </div>
         )
@@ -90,7 +90,7 @@ export default class MissionStatus extends React.Component {
                 <div className="MissionStatus">
                     <h3>Mission Status</h3>
                     <hr/>
-                    <div style={{display: "inline-block", width: "100%", overflow: "hidden"}}>
+                    <div style={{display: "inline-block", position: "relative", width: "100%", overflow: "hidden"}}>
                         <StatusIndicator name="Receiver" connected={this.state.receiverIsConnected} level={0}/>
                         <StatusIndicator name="Rocket" connected={this.state.rocketIsConnected} level={0}/>
                         <MissionState missionState={this.state.missionState}/>
