@@ -74,7 +74,7 @@ export default class Layout extends React.Component {
                                     </Col>
                                 </Row>
                                 <Row style={{height:"30vh"}}>
-                                    {<GaugeCluster className="GaugeCluster"
+                                    <GaugeCluster className="GaugeCluster"
                                         {...this.state} />
                                 </Row>
                             </Col>
