@@ -8,10 +8,18 @@ class VehicleState extends React.PureComponent {
         this.state = { stateStr: props.stateStr };
     }
 
-    componentWillReceiveProps(props) {
-        this.setState({ stateStr: props.stateStr });  
-    }
+    static getDerivedStateFromProps(props, current_state) {
+        let update = null;
 
+        if (current_state.stateStr !== props.stateStr) {
+            update = {
+                stateStr: props.stateStr,
+            }
+        }
+       
+        return update;
+    }
+    
     render() {
 
         var color = "red"
