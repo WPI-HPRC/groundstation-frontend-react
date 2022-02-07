@@ -1,6 +1,7 @@
 import './App.css';
 import '@progress/kendo-theme-default/dist/all.css';
 import Layout from "./Components/Layout";
+import SplashScreen from "./Components/SplashScreen.js"
 import React from 'react';
 
 export default class App extends React.Component {
@@ -8,6 +9,7 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            renderSplashScreen: true,
             battery: 1,
             temperature: 0,
             stateStr: "Apogee",
@@ -31,6 +33,7 @@ export default class App extends React.Component {
         setInterval(() => this.changeAccel(), 1000);
         setInterval(() => this.updateVel(), 100);
         setInterval(() => this.updateAltitude(), 100);
+        setTimeout(() => this.finishSetup(), 2000);
     }
 
     testClock() {
@@ -76,16 +79,29 @@ export default class App extends React.Component {
         });
     }
 
+    finishSetup() {
+        this.setState({
+            renderSplashScreen: false
+        });
+    }
     
     render() {
-        return (
-            <div className="App">
-                <main>
-                    <Layout
-                        {...this.state}
-                        />
-                </main>
-            </div>
-        );
+        
+        if (this.state.renderSplashScreen) {
+            return (
+                <SplashScreen/>
+            );
+        }
+        else {
+            return (
+                <div className="App">
+                    <main>
+                        <Layout
+                            {...this.state}
+                            />
+                    </main>
+                </div>
+            );
+        }
     }
 }
