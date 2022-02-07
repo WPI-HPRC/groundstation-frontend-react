@@ -16,37 +16,7 @@ export default class Layout extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            battery: props.battery,
-            temperature: props.temperature,
-            stateStr: props.stateStr,
-            lat: props.lat,
-            long: props.long,
-            vehicleClock: props.vehicleClock,
-            vel: props.vel,
-            accel: props.accel,
-            altitude: props.altitude,
-            receiver: props.receiver,
-            rocket: props.rocket,
-            missionClock: props.missionClock
-        }
-    }
-
-    componentWillReceiveProps(props) {
-        this.setState({ 
-            battery: props.battery,
-            temperature: props.temperature,
-            stateStr: props.stateStr,
-            lat: props.lat,
-            long: props.long,
-            vehicleClock: props.vehicleClock,
-            vel: props.vel,
-            accel: props.accel,
-            altitude: props.altitude,
-            receiver: props.receiver,
-            rocket: props.rocket,
-            missionClock: props.missionClock
-        });  
+        this.state = { }
     }
 
     render() {
@@ -60,7 +30,7 @@ export default class Layout extends React.Component {
                                     <Col lg={4}>
                                         <Row style={{height:"58vh"}}>
                                             <VehicleStatus className="VehicleStatus" 
-                                                {...this.state}/>
+                                                {...this.props}/>
                                         </Row>
                                     </Col>
                                     
@@ -75,7 +45,7 @@ export default class Layout extends React.Component {
                                 </Row>
                                 <Row style={{height:"30vh"}}>
                                     <GaugeCluster className="GaugeCluster"
-                                        {...this.state} />
+                                        {...this.props} />
                                 </Row>
                             </Col>
 
@@ -84,7 +54,8 @@ export default class Layout extends React.Component {
                                     <TitlePlate className="TitlePlate"/>
                                 </Row>
                                 <Row style={{height:"30vh"}}>
-                                    <MissionStatus/>
+                                    <MissionStatus
+                                        {...this.props}/>
                                 </Row>
                                 <Row style={{height:"45vh"}}>
                                     <Visualization className="Visualization"/>
@@ -93,7 +64,8 @@ export default class Layout extends React.Component {
                         </Row>
 
                         <Row style={{height:"12vh"}}>
-                            <MissionTimeline className="MissionTimeline" />
+                            <MissionTimeline 
+                                {...this.props}/>
                         </Row>
                     </Grid>
                 </div>

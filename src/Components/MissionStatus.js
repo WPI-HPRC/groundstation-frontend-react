@@ -4,11 +4,25 @@ import React from 'react';
 class StatusIndicator extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { status: props.connected,
+        this.state = { connected: props.connected,
                        level: props.level,
                        systemName: props.name,
                        blinkOn: false};
         this.blinkWarning = this.blinkWarning.bind(this)
+    }
+
+    static getDerivedStateFromProps(props, current_state) {
+        let update = null;
+
+        if (current_state.connected !== props.connected ||
+            current_state.level !== props.level) {
+            update = {
+                status: props.connected,
+                level: props.level
+            }
+        }
+        
+        return update;
     }
 
     componentDidMount() {
@@ -17,7 +31,7 @@ class StatusIndicator extends React.Component {
 
     blinkWarning = () => {
         
-        if (!this.state.status) {
+        if (!this.state.connected) {
             var blink = this.state.blinkOn;
             this.setState({
                 blinkOn: !blink
@@ -34,7 +48,7 @@ class StatusIndicator extends React.Component {
 
         return (
             <div>
-                <h4 style={{display: "inline-block", width: "70%", padding: "0px 0px 0px 20px", margin: "1.33em 0px 0px 0px"}}>{this.state.systemName}: {this.state.status ? "Connected" : "Disconnected"}</h4>
+                <h4 style={{display: "inline-block", width: "70%", padding: "0px 0px 0px 20px", margin: "1.33em 0px 0px 0px"}}>{this.state.systemName}: {this.state.connected ? "Connected" : "Disconnected"}</h4>
                 {renderWarning()}
             </div>
         )
@@ -44,8 +58,19 @@ class StatusIndicator extends React.Component {
 class MissionState extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { missionStateStr: props.missionState,
-                        };
+        this.state = { missionStateStr: props.missionStateStr };
+    }
+
+    static getDerivedStateFromProps(props, current_state) {
+        let update = null;
+
+        if (current_state.missionStateStr !== props.missionStateStr) {
+            update = {
+                missionStateStr: props.missionStateStr
+            }
+        }
+        
+        return update;
     }
 
     render() {
@@ -79,9 +104,26 @@ class MissionState extends React.Component {
 export default class MissionStatus extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { receiverIsConnected: false,
-                       rocketIsConnected: false,
-                       missionState: "IDLE"};
+        this.state = { receiverIsConnected: props.receiverIsConnected,
+                       rocketIsConnected: props.rocketIsConnected,
+                       missionStateStr: props.missionStateStr
+                     }
+    }
+
+    static getDerivedStateFromProps(props, current_state) {
+        let update = null;
+
+        if (current_state.receiverIsConnected !== props.receiverIsConnected ||
+            current_state.rocketIsConnected !== props.rocketIsConnected ||
+            current_state.missionStateStr !== props.missionStateStr) {
+            update = {
+                receiverIsConnected: props.receiverIsConnected,
+                rocketIsConnected: props.rocketIsConnected,
+                missionStateStr: props.missionStateStr
+            }
+        }
+        
+        return update;
     }
     
     render() {
@@ -93,7 +135,7 @@ export default class MissionStatus extends React.Component {
                     <div style={{display: "inline-block", position: "relative", width: "100%", overflow: "hidden"}}>
                         <StatusIndicator name="Receiver" connected={this.state.receiverIsConnected} level={0}/>
                         <StatusIndicator name="Rocket" connected={this.state.rocketIsConnected} level={0}/>
-                        <MissionState missionState={this.state.missionState}/>
+                        <MissionState missionStateStr={this.state.missionStateStr}/>
                     </div>
                 </div>
             </div>

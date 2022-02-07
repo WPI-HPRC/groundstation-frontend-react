@@ -138,7 +138,7 @@ export default class GaugeCluster extends React.PureComponent {
                 <div className="GaugeCluster">
                     <Box title="Velocity" unit="m/s" min={0} max={300} threshold={200} digits={3} datanum={10} val={this.state.vel}/>
                     <Box title="Acceleration" unit="m/s/s" min={0} max={300} threshold={200} digits={2} datanum={100} val={this.state.accel}/>
-                    <Box title="Altitude" unit="m" min={0} max={1000} threshold={900} digits={4} datanum={100} val={this.state.altitude}/>
+                    <Box title="Altitude" unit="m" min={0} max={9999} threshold={900} digits={4} datanum={50} val={this.state.altitude}/>
                 </div>
             </div>
         );

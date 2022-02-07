@@ -10,7 +10,7 @@ export default class App extends React.Component {
         this.state = {
             battery: 1,
             temperature: 0,
-            stateStr: "Powered Ascent",
+            stateStr: "Apogee",
             lat: 42.40574232,
             long: -71.23549720,
             vehicleClock: new Date(0),
@@ -19,16 +19,18 @@ export default class App extends React.Component {
             altitude: 0,
             receiver: false,
             rocket: false,
-            missionClock: new Date()
+            missionClock: new Date(),
+            receiverIsConnected: false,
+            rocketIsConnected: false,
+            missionStateStr: "IDLE"
         }
     }
 
     componentDidMount() {
         setInterval(() => this.testClock(), 1000);
-        setInterval(() => this.changeAccel(), 100);
+        setInterval(() => this.changeAccel(), 1000);
         setInterval(() => this.updateVel(), 100);
         setInterval(() => this.updateAltitude(), 100);
-
     }
 
     testClock() {
@@ -63,7 +65,7 @@ export default class App extends React.Component {
 
     updateAltitude() {
         var altitude = this.state.altitude;
-        if (altitude > 1000) {
+        if (altitude > 9999) {
             altitude = 0;
         } else {
             altitude += this.state.vel;
