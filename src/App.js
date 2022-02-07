@@ -25,8 +25,10 @@ export default class App extends React.Component {
 
     componentDidMount() {
         setInterval(() => this.testClock(), 1000);
-        // setInterval(() => this.changeVel(), 100);
-        // setInterval(() => this.changeAccel(), 100);
+        setInterval(() => this.changeAccel(), 100);
+        setInterval(() => this.updateVel(), 100);
+        setInterval(() => this.updateAltitude(), 100);
+
     }
 
     testClock() {
@@ -41,21 +43,34 @@ export default class App extends React.Component {
         });
     }
 
-    changeVel() {
+    changeAccel() {
+        this.setState({
+            accel: Math.ceil(Math.random() * 2)
+        });
+    }
+
+    updateVel() {
         var vel = this.state.vel;
-        if (vel > 300) {
+        if (vel > 50) {
             vel = 0;
         } else {
-            vel++;
+            vel += this.state.accel;
         }
         this.setState({
             vel: vel
         })
     }
 
-    changeAccel() {
+    updateAltitude() {
+        var altitude = this.state.altitude;
+        if (altitude > 1000) {
+            altitude = 0;
+        } else {
+            altitude += this.state.vel;
+        }
+
         this.setState({
-            accel: Math.ceil(Math.random() * 100)
+            altitude: altitude
         });
     }
 

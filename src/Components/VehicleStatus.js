@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-class VehicleState extends React.Component {
+class VehicleState extends React.PureComponent {
 
     constructor(props) {
         super(props);
@@ -47,9 +47,13 @@ class FlightClock extends React.Component {
                        color: "white"};
     }
 
-    componentWillReceiveProps(props) {
-        this.setState({ 
-            time: props.time });  
+    static getDerivedStateFromProps(props, current_state) {
+        if (current_state.time !== props.time) {
+            return {
+                time: props.time,
+            }
+        }
+        return null
     }
 
     render() {
@@ -77,18 +81,29 @@ export default class VehicleStatus extends React.Component {
         };
     }
 
-    componentWillReceiveProps(props) {
-        this.setState({ 
-            battery: props.battery,
-            temperature: props.temperature,
-            stateStr: props.stateStr,
-            lat: props.lat,
-            long: props.long,
-            vehicleClock: props.vehicleClock });  
+    static getDerivedStateFromProps(props, current_state) {
+        let update = null;
+
+        if (current_state.battery !== props.battery ||
+            current_state.temperature !== props.temperature ||
+            current_state.stateStr !== props.stateStr ||
+            current_state.lat !== props.lat ||
+            current_state.long !== props.log ||
+            current_state.vehicleClock !== props.vehicleClock) {
+            update = {
+                battery: props.battery,
+                temperature: props.temperature,
+                stateStr: props.stateStr,
+                lat: props.lat,
+                long: props.long,
+                vehicleClock: props.vehicleClock
+            }
+        }
+        
+        return update;
     }
 
     render() {
-        console.log(this.state);
         return (
             <div className="panel" style={{backgroundColor: this.state.lightMode ? "#F7F7F7" : "#212121"}}>
                 <div className="VehicleStatus">

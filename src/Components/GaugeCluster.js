@@ -9,7 +9,18 @@ function padLeadingZeros(num, size) {
     return s;
 }
 
-class Box extends React.Component {
+class Box extends React.PureComponent {
+
+    static getDerivedStateFromProps(props, current_state) {
+        if (current_state.val !== props.val) {
+            return {
+                val: props.val,
+                data: [...current_state.data.slice(props.datanum * -1), props.val]
+            }
+        }
+
+        return null
+    }
 
     constructor(props) {
         super(props);
@@ -24,15 +35,6 @@ class Box extends React.Component {
         this.setState((state, props) => ({
             drawGraph: !state.drawGraph
         }));
-    }
-
-    componentWillReceiveProps(props) {
-        let array = [...this.state.data, this.props.val];
-
-        this.setState({ 
-            val: props.val,
-            data: array
-        });  
     }
        
     render() {
@@ -66,7 +68,7 @@ class Box extends React.Component {
                         margin: "5px",
                         }}
                     >
-                        {padLeadingZeros(value, 3)}
+                        {padLeadingZeros(value, this.props.digits)}
                     </h3>
                 </>
             );
@@ -103,7 +105,7 @@ class Box extends React.Component {
 }
 
 
-export default class GaugeCluster extends React.Component {
+export default class GaugeCluster extends React.PureComponent {
 
     constructor(props) {
         super(props);
@@ -114,21 +116,29 @@ export default class GaugeCluster extends React.Component {
         }
     }
 
-    componentWillReceiveProps(props) {
-        this.setState({ 
-            vel: props.vel,
-            accel: props.accel,
-            altitude: props.altitude
-        });  
+    static getDerivedStateFromProps(props, current_state) {
+        let update = null;
+
+        if (current_state.vel !== props.vel ||
+            current_state.accel !== props.accel ||
+            current_state.altitude !== props.altitude) {
+            update = {
+                vel: props.vel,
+                accel: props.accel,
+                altitude: props.altitude
+            }
+        }
+        
+        return update;
     }
 
     render() {
         return (
             <div className="panel">
                 <div className="GaugeCluster">
-                    <Box title="Velocity" unit="m/s" min={0} max={300} threshold={200} val={this.state.vel}/>
-                    <Box title="Acceleration" unit="m/s/s" min={0} max={300} threshold={200} val={this.state.accel}/>
-                    <Box title="Altitude" unit="m" min={0} max={300} threshold={200} val={this.state.altitude}/>
+                    <Box title="Velocity" unit="m/s" min={0} max={300} threshold={200} digits={3} datanum={10} val={this.state.vel}/>
+                    <Box title="Acceleration" unit="m/s/s" min={0} max={300} threshold={200} digits={2} datanum={100} val={this.state.accel}/>
+                    <Box title="Altitude" unit="m" min={0} max={1000} threshold={900} digits={4} datanum={100} val={this.state.altitude}/>
                 </div>
             </div>
         );
