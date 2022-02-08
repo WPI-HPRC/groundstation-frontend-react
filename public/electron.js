@@ -46,7 +46,7 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.on('activate', () => {
+app.on('ready', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }

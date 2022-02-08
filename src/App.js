@@ -33,7 +33,14 @@ export default class App extends React.Component {
         setInterval(() => this.changeAccel(), 1000);
         setInterval(() => this.updateVel(), 100);
         setInterval(() => this.updateAltitude(), 100);
-        setTimeout(() => this.finishSetup(), 2000);
+        setTimeout(() => this.hideSplashScreen(), 2000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.testClock());
+        clearInterval(this.changeAccel());
+        clearInterval(this.updateVel());
+        clearInterval(this.updateAltitude());
     }
 
     testClock() {
@@ -79,29 +86,26 @@ export default class App extends React.Component {
         });
     }
 
-    finishSetup() {
+    hideSplashScreen() {
+        console.log("Got here");
         this.setState({
             renderSplashScreen: false
         });
     }
     
     render() {
-        
-        if (this.state.renderSplashScreen) {
-            return (
-                <SplashScreen/>
-            );
-        }
-        else {
-            return (
-                <div className="App">
-                    <main>
-                        <Layout
-                            {...this.state}
-                            />
-                    </main>
-                </div>
-            );
-        }
+        return (
+            <div className="App">
+                <main>
+                    <Layout
+                        {...this.state}
+                        />
+                        
+                    <div className={this.state.renderSplashScreen ? 'splash' : 'splashFade'}>
+                        <SplashScreen/>
+                    </div>
+                </main>
+            </div>
+        );
     }
 }

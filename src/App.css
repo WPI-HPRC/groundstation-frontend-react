@@ -1,7 +1,17 @@
 .App {
-  background-color: #141414;
   text-align: left;
-  color: #ffffff
+  color: #ffffff;
+  position: relative;
+  background-color: #141414;
+}
+
+.Layout {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #141414;
 }
 
 .bordered {
@@ -10,6 +20,21 @@
 
 .hidden {
   display: none;
+}
+
+.splash {
+  opacity: 1;
+  position: absolute;
+  top: 0;
+  left: 0; 
+  text-align: center;
+  height: 100vh;
+  width: 100vw; 
+}
+
+.splashFade{
+  opacity: 0;
+  transition: all 2s linear 0s;
 }
 
 .panel {
