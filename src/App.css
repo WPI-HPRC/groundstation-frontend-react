@@ -6,6 +6,7 @@
 }
 
 .Layout {
+  pointer-events: auto;
   position: absolute;
   top: 0;
   left: 0;
@@ -34,7 +35,8 @@
 
 .splashFade{
   opacity: 0;
-  transition: all 2s linear 0s;
+  pointer-events: none;
+  transition: all 1s linear 0s;
 }
 
 .panel {

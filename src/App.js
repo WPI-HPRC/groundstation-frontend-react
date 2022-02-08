@@ -33,7 +33,7 @@ export default class App extends React.Component {
         setInterval(() => this.changeAccel(), 1000);
         setInterval(() => this.updateVel(), 100);
         setInterval(() => this.updateAltitude(), 100);
-        setTimeout(() => this.hideSplashScreen(), 10000);
+        setTimeout(() => this.hideSplashScreen(), 9000);
     }
 
     componentWillUnmount() {
@@ -100,7 +100,7 @@ export default class App extends React.Component {
                     <Layout
                         {...this.state}
                         />
-                        
+
                     <div className={this.state.renderSplashScreen ? 'splash' : 'splashFade'}>
                         <SplashScreen/>
                     </div>
