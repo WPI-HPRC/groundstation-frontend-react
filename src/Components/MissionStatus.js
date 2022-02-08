@@ -29,6 +29,10 @@ class StatusIndicator extends React.Component {
         setInterval(this.blinkWarning, 1000);
     }
 
+    componentWillUnmount() {
+        clearInterval(this.blinkWarning);
+    }
+    
     blinkWarning = () => {
         
         if (!this.state.connected) {
