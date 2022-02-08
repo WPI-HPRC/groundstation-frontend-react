@@ -22,8 +22,8 @@ export default class Layout extends React.Component {
     render() {
         return (
             <>
-                <div>
-                    <Grid style={{width:"100%"}}>
+                <div className="Layout">
+                    <Grid style={{width:"100%", backgroundColor: "inherit"}}>
                         <Row style={{height:"88vh"}}>
                             <Col lg={9}>
                                 <Row>
