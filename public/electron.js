@@ -11,7 +11,7 @@ function createWindow() {
     minWidth: 1920,
     minHeight: 1080,
     center: true,
-    icon: path.join(__dirname, "./hprcLogoWhite.png"),
+    icon: path.join(__dirname, "./icons/png/512x512.png"),
     webPreferences: {
       nodeIntegration: true,
     },
