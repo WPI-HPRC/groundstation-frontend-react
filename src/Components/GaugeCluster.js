@@ -16,7 +16,9 @@ class Box extends React.PureComponent {
         this.state = { 
             drawGraph: false,
             val: props.val,
-            data: []
+            data: [],
+            enable: false,
+            gaugeLevel: 0,
         };
     }
 
@@ -31,12 +33,28 @@ class Box extends React.PureComponent {
         return null
     }
 
+    componentDidMount() {
+        setTimeout(() => {this.initAnimation()}, 8000);
+    }
+
     handleClick() {
         this.setState((state, props) => ({
             drawGraph: !state.drawGraph
         }));
     }
-       
+    
+    initAnimation() {
+        this.setState({
+            gaugeLevel: this.props.max
+        });
+
+        setTimeout(() => {
+            this.setState({
+                enable: true
+            });
+        }, 1000);
+    }
+
     render() {
 
         const colors = [
@@ -52,7 +70,7 @@ class Box extends React.PureComponent {
         ];
 
         const arcOptions = {
-            value: this.state.val,
+            value: this.state.enable ? this.state.val : this.state.gaugeLevel,
             colors
         }
 
@@ -65,7 +83,7 @@ class Box extends React.PureComponent {
                         style={{
                         color: "#F7F7F7",
                         fontSize: "3em",
-                        margin: "5px",
+                        margin: "0px 0px 20px 0px",
                         }}
                     >
                         {padLeadingZeros(value, this.props.digits)}
@@ -97,6 +115,10 @@ class Box extends React.PureComponent {
                             data={this.state.data}
                             datanum={this.props.datanum} 
                             title={this.props.title} />   
+                    </div>
+
+                    <div style={{position: "absolute", bottom: 0, right: 0, height: "15%", textAlign: "right"}}>
+                        <h3 style={{margin: 0, padding: 5}}>Max: {this.state.val}</h3>
                     </div>
 
                 </div>
@@ -138,7 +160,7 @@ export default class GaugeCluster extends React.PureComponent {
             <div className="panel">
                 <div className="GaugeCluster" style={{height: "90%"}}>
                     <Box title="Velocity" unit="m/s" min={0} max={300} threshold={200} digits={3} datanum={100} val={this.state.vel}/>
-                    <Box title="Acceleration" unit="m/s/s" min={0} max={300} threshold={200} digits={2} datanum={50} val={this.state.accel}/>
+                    <Box title="Acceleration" unit="m/s/s" min={0} max={99} threshold={80} digits={2} datanum={50} val={this.state.accel}/>
                     <Box title="Altitude" unit="m" min={0} max={9999} threshold={900} digits={4} datanum={50} val={this.state.altitude}/>
                 </div>
             </div>
