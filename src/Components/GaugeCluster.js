@@ -42,6 +42,18 @@ class Box extends React.PureComponent {
             drawGraph: !state.drawGraph
         }));
     }
+
+    handleKeyPress = (event) => {
+        console.log(event);
+        if ((event.key == 'Digit1' && this.props.title === "Velocity") ||
+            (event.key == 'Digit2' && this.props.title === "Acceleration") ||
+            (event.key == 'Digit3' && this.props.title === "Altitude")
+        ) {
+            this.setState((state, props) => ({
+                drawGraph: !state.drawGraph
+            }));
+        }
+    }
     
     initAnimation() {
         this.setState({
@@ -100,7 +112,7 @@ class Box extends React.PureComponent {
                             <h3>{this.props.title}</h3>
                         </div>
                         <div style={{display:"inline-block", textAlign:"right", width: "50%"}}>
-                            <Button onClick={() => this.handleClick()}>
+                            <Button onClick={() => this.handleClick()} onKeyPress={() => this.handleKeyPress()}>
                                 {this.state.drawGraph ? "View Gauge" : "View Graph"}
                             </Button>
                         </div>

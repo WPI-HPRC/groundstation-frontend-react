@@ -40,6 +40,10 @@ class StatusIndicator extends React.Component {
             this.setState({
                 blinkOn: !blink
             });
+        } else {
+            this.setState({
+                blinkOn: false
+            })
         }
     }
 

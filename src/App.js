@@ -41,14 +41,19 @@ export default class App extends React.Component {
 
     async getTelem() {
         const telemetryFetch = await fetch('http://127.0.0.1:3005/api/telemetry', {method: 'GET', mode: 'cors'}).catch((error) => {
+
+            // Lost connection
             this.setState({receiverIsConnected: false});
             console.log(error);
         }).then(response => {
             if (response.ok) {
+
+                // Good response
                 this.setState({receiverIsConnected: true});
                 return response.json().then(response => ({response}));
             }
 
+            // Bad connection
             this.setState({receiverIsConnected: false});
             return response.json().then(error => ({error}));
         });
