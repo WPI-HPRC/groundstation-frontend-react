@@ -80,7 +80,10 @@ export default class App extends React.Component {
 
         const json = telemetryFetch.json();
         console.log(json);
-        this.state.altitude = json.Altitude;
+        
+        this.setState({
+            altitude: json.Altitude
+        })
     }
 
     hideSplashScreen() {
