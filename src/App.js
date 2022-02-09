@@ -65,16 +65,17 @@ export default class App extends React.Component {
             accel: json.Acceleration,
             altitude: json.Altitude,
             battery: json.Voltage,
-            stateStr: json.State,
-        })
+            stateStr: json.State
+            //vehicleClock: new Date(0).setTime(json.Timestamp)
+        });
     }
 
     testClock() {
         var clock = this.state.vehicleClock;
         clock.setSeconds(clock.getSeconds() + 1);
-        this.setState({
+        /*this.setState({
             vehicleClock: clock
-        });
+        });*/
 
         this.setState({
             missionClock: new Date()
