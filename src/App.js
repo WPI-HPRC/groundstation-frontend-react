@@ -9,7 +9,7 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            renderSplashScreen: false,
+            renderSplashScreen: true,
             battery: 1,
             temperature: 0,
             stateStr: "Apogee",
@@ -30,9 +30,9 @@ export default class App extends React.Component {
 
     componentDidMount() {
         setInterval(() => this.testClock(), 1000);
-        // setInterval(() => this.changeAccel(), 1000);
+        setInterval(() => this.changeAccel(), 1000);
         setInterval(() => this.updateVel(), 100);
-        setInterval(() => this.updateAltitude(), 100);
+        setInterval(() => this.updateAltitude(), 1000);
         setTimeout(() => this.hideSplashScreen(), 7000);
     }
 
@@ -74,12 +74,18 @@ export default class App extends React.Component {
     }
 
     async updateAltitude() {
-        const telemetryFetch = await fetch('http://127.0.0.1:3005/api/telemetry').catch((error) => {
+        const telemetryFetch = await fetch('http://127.0.0.1:3001/api/telemetry', {method: 'GET', mode: 'cors'}).catch((error) => {
             console.log(error);
+        }).then(response => {
+            if (response.ok) {
+                return response.json().then(response => ({response}));
+            }
+
+            return response.json().then(error => ({error}));
         });
 
-        const json = telemetryFetch.json();
-        console.log(json);
+        console.log(telemetryFetch.response);
+        let json = telemetryFetch.response;
         
         this.setState({
             altitude: json.Altitude
