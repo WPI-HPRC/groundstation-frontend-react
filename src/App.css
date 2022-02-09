@@ -43,6 +43,7 @@
   border-radius: 5px;
   background-color: #212121;
   box-shadow: 2px 2px 5px #000000; 
+  overflow: hidden;
   width: 100%;
   margin: 5px;
 }
@@ -64,12 +65,27 @@
 }
 
 .TitlePlate {
+  height: 100%;
+  width: 100%;
   color: #BD1E01;
+  text-align: center;
+  position: relative;
+}
+
+.title {
   text-align: center;
 }
 
-.MissionStatus {
+.subTitle {
+  text-align: center;
+  margin: 0;
+  padding: 0;
 
+}
+
+.MissionStatus {
+  height: 100%;
+  width: 100%;
 }
 
 .Visualization {
