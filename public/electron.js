@@ -8,8 +8,8 @@ function createWindow() {
   const win = new BrowserWindow({
     width: 1920,
     height: 1080,
-    minWidth: 1920,
-    minHeight: 1080,
+    minWidth: 0,
+    minHeight: 0,
     center: true,
     icon: path.join(__dirname, "./icons/png/512x512.png"),
     webPreferences: {
