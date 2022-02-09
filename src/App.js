@@ -22,25 +22,47 @@ export default class App extends React.Component {
             receiver: false,
             rocket: false,
             missionClock: new Date(),
-            receiverIsConnected: false,
-            rocketIsConnected: false,
+            receiverIsConnected: 0,
+            rocketIsConnected: 0,
             missionStateStr: "IDLE"
         }
     }
 
     componentDidMount() {
+        setInterval(() => this.getTelem(), 100);
         setInterval(() => this.testClock(), 1000);
-        setInterval(() => this.changeAccel(), 1000);
-        setInterval(() => this.updateVel(), 100);
-        setInterval(() => this.updateAltitude(), 1000);
         setTimeout(() => this.hideSplashScreen(), 7000);
     }
 
     componentWillUnmount() {
         clearInterval(this.testClock());
-        clearInterval(this.changeAccel());
-        clearInterval(this.updateVel());
-        clearInterval(this.updateAltitude());
+        clearInterval(this.getTelem());
+    }
+
+    async getTelem() {
+        const telemetryFetch = await fetch('http://127.0.0.1:3005/api/telemetry', {method: 'GET', mode: 'cors'}).catch((error) => {
+            console.log(error);
+        }).then(response => {
+            if (response.ok) {
+                this.setState({receiverIsConnected: true});
+                return response.json().then(response => ({response}));
+            }
+
+            this.setState({receiverIsConnected: false});
+            return response.json().then(error => ({error}));
+        });
+
+        console.log(telemetryFetch.response);
+        let json = telemetryFetch.response;
+        
+        this.setState({
+            vel: json.Velocity,
+            accel: json.Acceleration,
+            altitude: json.Altitude,
+            battery: json.Voltage,
+            stateStr: json.State,
+            receiverIsConnected: 1
+        })
     }
 
     testClock() {
@@ -53,43 +75,6 @@ export default class App extends React.Component {
         this.setState({
             missionClock: new Date()
         });
-    }
-
-    changeAccel() {
-        this.setState({
-            accel: Math.ceil(Math.random() * 2)
-        });
-    }
-
-    updateVel() {
-        var vel = this.state.vel;
-        if (vel > 50) {
-            vel = 0;
-        } else {
-            vel += this.state.accel;
-        }
-        this.setState({
-            vel: vel
-        })
-    }
-
-    async updateAltitude() {
-        const telemetryFetch = await fetch('http://127.0.0.1:3001/api/telemetry', {method: 'GET', mode: 'cors'}).catch((error) => {
-            console.log(error);
-        }).then(response => {
-            if (response.ok) {
-                return response.json().then(response => ({response}));
-            }
-
-            return response.json().then(error => ({error}));
-        });
-
-        console.log(telemetryFetch.response);
-        let json = telemetryFetch.response;
-        
-        this.setState({
-            altitude: json.Altitude
-        })
     }
 
     hideSplashScreen() {

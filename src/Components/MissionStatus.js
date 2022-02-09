@@ -126,7 +126,6 @@ export default class MissionStatus extends React.Component {
                 missionStateStr: props.missionStateStr
             }
         }
-        
         return update;
     }
     
