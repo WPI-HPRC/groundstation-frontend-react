@@ -17,7 +17,7 @@ class StatusIndicator extends React.Component {
         if (current_state.connected !== props.connected ||
             current_state.level !== props.level) {
             update = {
-                status: props.connected,
+                connected: props.connected,
                 level: props.level
             }
         }
@@ -126,6 +126,7 @@ export default class MissionStatus extends React.Component {
                 missionStateStr: props.missionStateStr
             }
         }
+
         return update;
     }
     

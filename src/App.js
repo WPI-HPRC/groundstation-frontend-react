@@ -22,8 +22,8 @@ export default class App extends React.Component {
             receiver: false,
             rocket: false,
             missionClock: new Date(),
-            receiverIsConnected: 0,
-            rocketIsConnected: 0,
+            receiverIsConnected: false,
+            rocketIsConnected: false,
             missionStateStr: "IDLE"
         }
     }
@@ -41,6 +41,7 @@ export default class App extends React.Component {
 
     async getTelem() {
         const telemetryFetch = await fetch('http://127.0.0.1:3005/api/telemetry', {method: 'GET', mode: 'cors'}).catch((error) => {
+            this.setState({receiverIsConnected: false});
             console.log(error);
         }).then(response => {
             if (response.ok) {
@@ -52,16 +53,14 @@ export default class App extends React.Component {
             return response.json().then(error => ({error}));
         });
 
-        console.log(telemetryFetch.response);
         let json = telemetryFetch.response;
-        
+
         this.setState({
             vel: json.Velocity,
             accel: json.Acceleration,
             altitude: json.Altitude,
             battery: json.Voltage,
             stateStr: json.State,
-            receiverIsConnected: 1
         })
     }
 
