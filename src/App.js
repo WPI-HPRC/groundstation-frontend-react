@@ -73,17 +73,14 @@ export default class App extends React.Component {
         })
     }
 
-    updateAltitude() {
-        var altitude = this.state.altitude;
-        if (altitude > 9999) {
-            altitude = 0;
-        } else {
-            altitude += this.state.vel;
-        }
-
-        this.setState({
-            altitude: altitude
+    async updateAltitude() {
+        const telemetryFetch = await fetch('http://127.0.0.1:3005/api/telemetry').catch((error) => {
+            console.log(error);
         });
+
+        const json = telemetryFetch.json();
+        console.log(json);
+        this.state.altitude = json.Altitude;
     }
 
     hideSplashScreen() {
