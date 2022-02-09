@@ -34,8 +34,9 @@ export default (props) => {
             curve: 'smooth'
         },
         xaxis: {
+            type: 'numeric',
             colors: ['#FEFEFE'],
-            range: props.datanum,
+            range: props.datanum * 100,
             tickAmount: 1,
             labels: {
                 show: false
