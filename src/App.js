@@ -9,7 +9,7 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            renderSplashScreen: true,
+            renderSplashScreen: false,
             battery: 1,
             temperature: 0,
             stateStr: "Apogee",
@@ -30,10 +30,10 @@ export default class App extends React.Component {
 
     componentDidMount() {
         setInterval(() => this.testClock(), 1000);
-        setInterval(() => this.changeAccel(), 1000);
+        // setInterval(() => this.changeAccel(), 1000);
         setInterval(() => this.updateVel(), 100);
         setInterval(() => this.updateAltitude(), 100);
-        setTimeout(() => this.hideSplashScreen(), 9000);
+        setTimeout(() => this.hideSplashScreen(), 7000);
     }
 
     componentWillUnmount() {
@@ -87,7 +87,7 @@ export default class App extends React.Component {
     }
 
     hideSplashScreen() {
-        console.log("Got here");
+
         this.setState({
             renderSplashScreen: false
         });

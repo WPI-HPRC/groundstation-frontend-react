@@ -11,6 +11,15 @@ function padLeadingZeros(num, size) {
 
 class Box extends React.PureComponent {
 
+    constructor(props) {
+        super(props);
+        this.state = { 
+            drawGraph: false,
+            val: props.val,
+            data: []
+        };
+    }
+
     static getDerivedStateFromProps(props, current_state) {
         if (current_state.val !== props.val) {
             return {
@@ -20,15 +29,6 @@ class Box extends React.PureComponent {
         }
 
         return null
-    }
-
-    constructor(props) {
-        super(props);
-        this.state = { 
-            drawGraph: false,
-            val: props.val,
-            data: []
-        };
     }
 
     handleClick() {
@@ -77,7 +77,7 @@ class Box extends React.PureComponent {
         return (
             <>
                 <div style={{display:"inline-block", position: "relative", width:"33%", height:"100%", textAlign: "center", verticalAlign: "top"}}>
-                    <div style={{width: "100%", textAlign: "left"}}>
+                    <div style={{width: "100%", height: "20%", textAlign: "left"}}>
                         <div style={{display:"inline-block", width: "50%"}}>
                             <h3>{this.props.title}</h3>
                         </div>
@@ -88,8 +88,8 @@ class Box extends React.PureComponent {
                         </div>
                     </div>
 
-                    <div className={this.state.drawGraph ? "hidden" : undefined}>
-                        <ArcGauge {...arcOptions} centerRender={centerRenderer} scale={{startAngle: -40, endAngle: 220, rangeSize: 10, min: this.props.min, max: this.props.max}}/>
+                    <div className={this.state.drawGraph ? "hidden" : undefined} style={{height: "80%"}}>
+                        <ArcGauge {...arcOptions} centerRender={centerRenderer} style={{width: "100%", height: "100%"}} scale={{startAngle: -40, endAngle: 220, rangeSize: 10, min: this.props.min, max: this.props.max}}/>
                     </div>
 
                     <div className={!this.state.drawGraph ? "hidden" : undefined} style={{height: "100%", width: "80%", position:"absolute", top: "50px"}}>
@@ -136,7 +136,7 @@ export default class GaugeCluster extends React.PureComponent {
     render() {
         return (
             <div className="panel">
-                <div className="GaugeCluster">
+                <div className="GaugeCluster" style={{height: "90%"}}>
                     <Box title="Velocity" unit="m/s" min={0} max={300} threshold={200} digits={3} datanum={100} val={this.state.vel}/>
                     <Box title="Acceleration" unit="m/s/s" min={0} max={300} threshold={200} digits={2} datanum={50} val={this.state.accel}/>
                     <Box title="Altitude" unit="m" min={0} max={9999} threshold={900} digits={4} datanum={50} val={this.state.altitude}/>
