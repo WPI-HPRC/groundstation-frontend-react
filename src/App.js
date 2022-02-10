@@ -11,7 +11,7 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            renderSplashScreen: false,
+            renderSplashScreen: true,
             battery: "-",
             temperature: "-",
             stateStr: "Apogee",
