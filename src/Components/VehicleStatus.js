@@ -22,7 +22,7 @@ class VehicleState extends React.PureComponent {
     
     render() {
 
-        var color = "red"
+        var color;
         switch (this.state.stateStr) {
             case "Launch": 
                 color = "orange";
@@ -113,7 +113,7 @@ export default class VehicleStatus extends React.Component {
 
     render() {
         return (
-            <div className="panel" style={{backgroundColor: this.state.lightMode ? "#F7F7F7" : "#212121"}}>
+            <div className="panel" style={{backgroundColor: this.state.lightMode ? "#F7F7F7" : "#212121", position: "relative", width: "100%"}}>
                 <div className="VehicleStatus">
                     <h3>Vehicle Status</h3>
                     <hr/>
@@ -123,9 +123,11 @@ export default class VehicleStatus extends React.Component {
                     <hr/>
                     <h4>Position:</h4>
                     <h4>{this.state.lat}, {this.state.long}</h4>
-                    <hr/>
-                    <h4>Flight Clock:</h4>
-                    <FlightClock time={this.state.vehicleClock}/>
+                    <div style={{position: "absolute", bottom: "2%", width: "100%"}}>
+                        <hr/>
+                        <h4>Flight Clock:</h4>
+                        <FlightClock time={this.state.vehicleClock}/>
+                    </div>
                 </div>
             </div>
         );

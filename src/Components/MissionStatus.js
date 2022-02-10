@@ -138,12 +138,15 @@ export default class MissionStatus extends React.Component {
         return (
             <div className="panel" style={{backgroundColor: this.state.lightMode ? "#F7F7F7" : "#212121"}}>
                 <div className="MissionStatus">
-                    <h3>Mission Status</h3>
-                    <hr/>
-                    <div style={{display: "inline-block", position: "relative", width: "100%", overflow: "hidden"}}>
+                    <div style={{display: "inline-block", position: "relative", width: "100%", height: "100%", overflow: "hidden"}}>
+                        <h3>Mission Status</h3>
+                        <hr/>
                         <StatusIndicator name="Receiver" connected={this.state.receiverIsConnected} level={0}/>
                         <StatusIndicator name="Rocket" connected={this.state.rocketIsConnected} level={0}/>
-                        <MissionState missionStateStr={this.state.missionStateStr}/>
+
+                        <div style={{position: "absolute", bottom: "1%", width: "100%"}}>
+                            <MissionState missionStateStr={this.state.missionStateStr}/>
+                        </div>
                     </div>
                 </div>
             </div>
