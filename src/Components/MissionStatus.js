@@ -85,11 +85,17 @@ class MissionState extends React.Component {
         
         var color = "red"
         switch (this.state.missionStateStr) {
-            case "IDLE": 
+            case "Connected": 
+                color = "green";
+                break;
+            case "Disconnected":
+                color = "red";
+                break;
+            case "Idle":
                 color = "orange";
                 break;
-            case "LIVE":
-                color = "green";
+            case "Reconnecting":
+                color = "orange";
                 break;
             default:
                 color = "gray";

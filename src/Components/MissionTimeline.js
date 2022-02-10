@@ -31,12 +31,16 @@ export default class MissionTimeline extends React.Component {
         super(props);
         this.state = { stateStr: props.stateStr,
                        time: props.vehicleClock,
-                       missionPoints: [ [0, 10, "Power On", new Date(0)],
-                                        [10, 40, "Lift Off", new Date(0)],
-                                        [40, 50, "Apogee", new Date(0)],
-                                        [50, 80, "Parachute Deploy", new Date(0)],
-                                        [80, 100, "Recovery", new Date(0)],
-                                        [100, 100, "Mission", new Date(0)]]
+                       missionPoints: [ [0, 5, "Stby", new Date(0)],
+                                        [5, 10, "Boot", new Date(0)],
+                                        [10, 15, "DGN", new Date(0)],
+                                        [15, 20, "Armed", new Date(0)],
+                                        [20, 25, "Launch", new Date(0)],
+                                        [25, 35, "Pwrd Asnt", new Date(0)],
+                                        [35, 45, "Unpwrd Asnt", new Date(0)],
+                                        [45, 50, "APO-G", new Date(0)],
+                                        [50, 100, "Chute", new Date(0)],
+                                        [100, 100, "GND", new Date(0)]]
                     };
     }
     
