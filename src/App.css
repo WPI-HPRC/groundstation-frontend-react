@@ -48,9 +48,24 @@
   margin: 5px;
 }
 
-.customButton {
+.customButtonLg {
   width: 130px;
   height: 40px;
+  letter-spacing: 0.5px;
+  font-weight: 550;
+  background-color: #2e2e2e;
+  color: #ffffff;
+  box-shadow: 2px 2px 5px #000000; 
+  font-size: 1em;
+  border: 1.5px solid #ED5031;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.customButtonSm {
+  width: auto;
+  height: auto;
+  margin: 5px;
   letter-spacing: 0.5px;
   background-color: #2e2e2e;
   color: #ffffff;
@@ -59,16 +74,24 @@
   border: 1.5px solid #ED5031;
   border-radius: 5px;
   cursor: pointer;
-  }
+}
 
-.customButton:hover {
+.customButtonLg:hover {
   border: 3px solid #ED5031;
+  box-shadow: 2px 2px 5px 2px #000000;
+}
+
+.customButtonSm:hover {
+  background-color: #ED5031;
+  border: 1.5px solid #ED5031;
+  box-shadow: 2px 2px 5px 2px #000000;
 }
 
 .active{
   background-color: #ED5031;
   border: 1.5px solid #ED5031;
-  }
+  box-shadow: 4px 4px 5px 2px #000000; 
+}
 
 
 .VehicleStatus {

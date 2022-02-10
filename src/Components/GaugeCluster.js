@@ -116,7 +116,7 @@ class Box extends React.PureComponent {
                             <h3>{this.props.title}</h3>
                         </div>
                         <div style={{display:"inline-block", textAlign:"right", width: "50%"}}>
-                            <button className={"customButton"} onClick={() => this.handleClick()}>
+                            <button className={"customButtonLg"} onClick={() => this.handleClick()}>
                                 {this.state.drawGraph ? "View Gauge" : "View Graph"}
                             </button>
                         </div>
