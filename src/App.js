@@ -4,17 +4,19 @@ import Layout from "./Components/Layout";
 import SplashScreen from "./Components/SplashScreen.js"
 import React from 'react';
 
+const dataPollingRate = 100;
+
 export default class App extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            renderSplashScreen: true,
-            battery: 1,
-            temperature: 0,
+            renderSplashScreen: false,
+            battery: "-",
+            temperature: "-",
             stateStr: "Apogee",
-            lat: 42.40574232,
-            long: -71.23549720,
+            lat: "-",
+            long: "-",
             vehicleClock: new Date(0),
             vel: 0,
             accel: 0,
@@ -24,12 +26,14 @@ export default class App extends React.Component {
             missionClock: new Date(),
             receiverIsConnected: false,
             rocketIsConnected: false,
-            missionStateStr: "IDLE"
+            missionStateStr: "IDLE",
+            timeScale: 50,
+            tsFunc: this.updateTimescale,
         }
     }
 
     componentDidMount() {
-        setInterval(() => this.getTelem(), 100);
+        setInterval(() => this.getTelem(), dataPollingRate);
         setInterval(() => this.testClock(), 1000);
         setTimeout(() => this.hideSplashScreen(), 7000);
     }
@@ -83,6 +87,14 @@ export default class App extends React.Component {
         this.setState({
             renderSplashScreen: false
         });
+    }
+
+    updateTimescale = (ts) => {
+        if (ts > 0 && ts < 1000) {
+            this.setState({
+                timeScale: ts * (dataPollingRate / 10)
+            });
+        }
     }
     
     render() {
