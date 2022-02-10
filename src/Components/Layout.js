@@ -36,7 +36,8 @@ export default class Layout extends React.Component {
                                     
                                     <Col lg={8}>
                                         <Row style={{height:"18vh"}}>
-                                            <ControlPanel className="ControlPanel" />
+                                            <ControlPanel className="ControlPanel" 
+                                                {...this.props}/>
                                         </Row>
                                         <Row style={{height:"40vh"}}>
                                             <SystemPanel className="SystemPanel" />

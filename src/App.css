@@ -48,6 +48,29 @@
   margin: 5px;
 }
 
+.customButton {
+  width: 130px;
+  height: 40px;
+  letter-spacing: 0.5px;
+  background-color: #2e2e2e;
+  color: #ffffff;
+  box-shadow: 2px 2px 5px #000000; 
+  font-size: 1em;
+  border: 1.5px solid #ED5031;
+  border-radius: 5px;
+  cursor: pointer;
+  }
+
+.customButton:hover {
+  border: 3px solid #ED5031;
+}
+
+.active{
+  background-color: #ED5031;
+  border: 1.5px solid #ED5031;
+  }
+
+
 .VehicleStatus {
 
 }
