@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import { ArcGauge } from "@progress/kendo-react-gauges";
 import LiveSplineChart from './LiveSplineChart';
 
@@ -117,9 +116,9 @@ class Box extends React.PureComponent {
                             <h3>{this.props.title}</h3>
                         </div>
                         <div style={{display:"inline-block", textAlign:"right", width: "50%"}}>
-                            <Button onClick={() => this.handleClick()}>
+                            <button className={"customButton"} onClick={() => this.handleClick()}>
                                 {this.state.drawGraph ? "View Gauge" : "View Graph"}
-                            </Button>
+                            </button>
                         </div>
                     </div>
 
@@ -164,7 +163,8 @@ export default class GaugeCluster extends React.PureComponent {
             vel: props.vel,
             accel: props.accel,
             altitude: props.altitude,
-            vehicleClock: props.vehicleClock
+            vehicleClock: props.vehicleClock,
+            timeScale: props.timeScale,
         }
     }
 
@@ -174,12 +174,14 @@ export default class GaugeCluster extends React.PureComponent {
         if (current_state.vel !== props.vel ||
             current_state.accel !== props.accel ||
             current_state.altitude !== props.altitude ||
-            current_state.vehicleClock !== props.vehicleClock) {
+            current_state.vehicleClock !== props.vehicleClock ||
+            current_state.timeScale !== props.timeScale) {
             update = {
                 vel: props.vel,
                 accel: props.accel,
                 altitude: props.altitude,
-                vehicleClock: props.vehicleClock
+                vehicleClock: props.vehicleClock,
+                timeScale: props.timeScale
             }
         }
         
@@ -190,9 +192,9 @@ export default class GaugeCluster extends React.PureComponent {
         return (
             <div className="panel">
                 <div className="GaugeCluster" style={{height: "90%"}}>
-                    <Box title="Velocity" unit="m/s" min={0} max={300} threshold={200} digits={3} datanum={50} time={this.state.vehicleClock} val={this.state.vel}/>
-                    <Box title="Acceleration" unit="m/s/s" min={0} max={99} threshold={80} digits={2} datanum={50} time={this.state.vehicleClock} val={this.state.accel}/>
-                    <Box title="Altitude" unit="m" min={0} max={9999} threshold={900} digits={4} datanum={50} time={this.state.vehicleClock} val={this.state.altitude}/>
+                    <Box title="Velocity" unit="m/s" min={0} max={300} threshold={200} digits={3} datanum={this.state.timeScale} time={this.state.vehicleClock} val={this.state.vel}/>
+                    <Box title="Acceleration" unit="m/s/s" min={0} max={99} threshold={80} digits={2} datanum={this.state.timeScale} time={this.state.vehicleClock} val={this.state.accel}/>
+                    <Box title="Altitude" unit="m" min={0} max={9999} threshold={900} digits={4} datanum={this.state.timeScale} time={this.state.vehicleClock} val={this.state.altitude}/>
                 </div>
             </div>
         );
