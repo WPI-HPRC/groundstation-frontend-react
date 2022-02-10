@@ -26,11 +26,23 @@ class Box extends React.PureComponent {
 
     static getDerivedStateFromProps(props, current_state) {
         if (current_state.val !== props.val ||
-            current_state.time !== props.vehicleClock) {
-            return {
-                val: props.val,
-                data: [...current_state.data.slice(props.datanum * -1.3), [props.time.getTime(), props.val]],
-                max: current_state.max > props.val ? current_state.max : props.val
+            current_state.time !== props.time) {
+
+            if (props.time.getTime() === 0) {
+                return {
+                    val: 0,
+                    data: [],
+                    max: 0,
+                    time: props.time
+                }
+            }
+            else {
+                return {
+                    val: props.val,
+                    data: [...current_state.data.slice(props.datanum * -1.1), [props.time.getTime(), props.val]],
+                    max: current_state.max > props.val ? current_state.max : props.val,
+                    time: props.time
+                }
             }
         }
 
