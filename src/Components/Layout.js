@@ -62,7 +62,7 @@ export default class Layout extends React.Component {
                                 </Row>
                                 <Row style={{height:"45vh"}}>
                                     <Visualization className="Visualization"
-                                        {...this.props} />
+                                        {...this.props}/>
                                 </Row>
                             </Col>
                         </Row>
