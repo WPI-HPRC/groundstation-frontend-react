@@ -10,6 +10,7 @@ export default class ControlPanel extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            dark: props.dark,
             tsInput: (props.timeScale / 10).toString(),
             showConnect: props.showConnectButton
         };
@@ -78,7 +79,7 @@ export default class ControlPanel extends React.Component {
 
     render() {
         return (
-            <div className="panel">
+            <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`}>
                 <div className="ControlPanel">
                     <div style={{position: "relative", width: "100%", height: "100%"}}>
                         <h3 style={{display: "inline-block"}}>Controls</h3>
@@ -95,7 +96,7 @@ export default class ControlPanel extends React.Component {
                         <Grid>
                             <Row>
                                 <Col lg={4}>    
-                                    <div style={{width: "100%", textAlign: "center"}}>
+                                    <div className="subpanel" style={{width: "100%", height: "100%", textAlign: "center"}}>
                                         <h4 style={{margin: "0px 0px 0px 0px"}}>Graph Timeslice (Seconds):</h4>
    
                                         <button className="customButtonSm mono" onClick={() => this.handleTSDec()}>-</button>

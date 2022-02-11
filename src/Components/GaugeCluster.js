@@ -108,6 +108,7 @@ class Box extends React.PureComponent {
                 <>
                     <h4>{this.props.unit}</h4>
                     <h3
+                        className="subpanel"
                         style={{
                         color: "#F7F7F7",
                         fontSize: "3.5em",
@@ -172,6 +173,7 @@ export default class GaugeCluster extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
+            dark: props.dark,
             vel: props.vel,
             accel: props.accel,
             altitude: props.altitude,
@@ -202,7 +204,7 @@ export default class GaugeCluster extends React.PureComponent {
 
     render() {
         return (
-            <div className="panel">
+            <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`}>
                 <div className="GaugeCluster" style={{height: "90%"}}>
                     <Box title="Velocity" unit="m/s" min={0} max={300} threshold={200} digits={3} datanum={this.state.timeScale} time={this.state.vehicleClock} val={this.state.vel}/>
                     <Box title="Acceleration" unit="m/s/s" min={0} max={99} threshold={80} digits={2} datanum={this.state.timeScale} time={this.state.vehicleClock} val={this.state.accel}/>

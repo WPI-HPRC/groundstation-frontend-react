@@ -38,7 +38,7 @@ class VehicleState extends React.PureComponent {
         return (
             <div style={{display:"inline-block", width: "100%", textAlign: "center", padding: "10px"}}>
                 <h4 style={{margin: "0px 0px 10px"}}>Vehicle State</h4>
-                <div style={{display: "inline-block", backgroundColor: color, borderRadius: "5px", width: "50%", boxShaddow: "2px 2px 5px #000000" }}>
+                <div className="statusIndicator" style={{display: "inline-block", backgroundColor: color}}>
                     <h3>
                     {this.state.stateStr}
                     </h3>
@@ -68,8 +68,8 @@ class FlightClock extends React.Component {
         var clockStr = this.state.time.toISOString().substr(11, 8);
 
         return (
-            <div style={{display:"inline-block", width: "100%", textAlign: "center"}}>
-                <h1 style={{margin: "0px", color: this.state.color}}>+{clockStr}</h1>
+            <div style={{display:"inline-block", position: "relative", width: "100%", textAlign: "center"}}>
+                <h1 className="subpanel" style={{margin: "auto", color: this.state.color, width: "70%", fontSize: "3em"}}>+{clockStr}</h1>
             </div>
         )
     }
@@ -80,6 +80,7 @@ export default class VehicleStatus extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            dark: props.dark,
             battery: props.battery,
             temperature: props.temperature,
             stateStr: props.stateStr,
@@ -113,7 +114,7 @@ export default class VehicleStatus extends React.Component {
 
     render() {
         return (
-            <div className="panel" style={{backgroundColor: this.state.lightMode ? "#F7F7F7" : "#212121", position: "relative", width: "100%"}}>
+            <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`} style={{position: "relative", width: "100%"}}>
                 <div className="VehicleStatus">
                     <h3>Vehicle Status</h3>
                     <hr/>
