@@ -40,7 +40,8 @@ export default class Layout extends React.Component {
                                                 {...this.props}/>
                                         </Row>
                                         <Row style={{height:"40vh"}}>
-                                            <SystemPanel className="SystemPanel" />
+                                            <SystemPanel className="SystemPanel" 
+                                                {...this.props} />
                                         </Row>
                                     </Col>
                                 </Row>
@@ -52,11 +53,12 @@ export default class Layout extends React.Component {
 
                             <Col lg={3}>
                                 <Row style={{height:"13vh"}}>
-                                    <TitlePlate className="TitlePlate"/>
+                                    <TitlePlate className="TitlePlate"
+                                        {...this.props} />
                                 </Row>
                                 <Row style={{height:"30vh"}}>
                                     <MissionStatus
-                                        {...this.props}/>
+                                        {...this.props} />
                                 </Row>
                                 <Row style={{height:"45vh"}}>
                                     <Visualization className="Visualization"

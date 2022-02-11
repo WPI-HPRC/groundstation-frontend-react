@@ -15,9 +15,18 @@ export default class Visualization extends React.Component {
             lat: props.lat,
             lng: props.long,
             zoom: 15,
-            map: null
+            map: null,
+            dark: props.dark
         }
-        
+    }
+
+    static getDerivedStateFromProps(props, current_state) {
+        if (current_state.dark !== props.dark) {
+            return {
+                dark: props.dark,
+            }
+        }
+        return null
     }
 
     componentDidMount() {
@@ -37,7 +46,7 @@ export default class Visualization extends React.Component {
         
         return (
             <>
-                <div className="panel">
+                <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`}>
                     <div id="map" style={{width:"100%", height: "100%"}}>
 
                     </div>
@@ -45,7 +54,4 @@ export default class Visualization extends React.Component {
             </>
         );
     }
-
-
-    
 }

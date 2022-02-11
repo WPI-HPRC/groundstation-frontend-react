@@ -1,8 +1,28 @@
-.App {
+@font-face {
+  font-family: "Overpass Mono Semi";
+  src: url('../public/OverpassMono-SemiBold.ttf');
+}
+
+@font-face {
+  font-family: "Overpass Mono Reg";
+  src: url('../public/OverpassMono-Regular.ttf');
+}
+
+.darkApp {
+  width: 100vw;
+  height: 100vh;
   text-align: left;
   color: #ffffff;
   position: relative;
   background-color: #141414;
+  /* background-color: #212121; */
+}
+
+.lightApp {
+  text-align: left;
+  color: #000000;
+  position: relative;
+  background-color: #ffffff;
 }
 
 .Layout {
@@ -12,7 +32,32 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #141414;
+  background-color: inherit;
+}
+
+.darkPanel {
+  border-radius: 5px;
+  background-color: #212121;
+  /* background-color: #191919; */
+  box-shadow: 2px 2px 5px #000000, -2px -2px 5px #2e2e2e; 
+  overflow: hidden;
+  width: 100%;
+  margin: 5px;
+}
+
+.lightPanel {
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 2px 2px 5px #000000; 
+  overflow: hidden;
+  width: 100%;
+  margin: 5px;
+}
+
+.subpanel {
+  border-radius: 5px;
+  background-color: inherit;
+  box-shadow: 2px 2px 5px #000000, -2px -2px 5px #2e2e2e;
 }
 
 .bordered {
@@ -43,13 +88,10 @@
   transition: all 1s linear 0s;
 }
 
-.panel {
+.statusIndicator {
   border-radius: 5px;
-  background-color: #212121;
-  box-shadow: 2px 2px 5px #000000; 
-  overflow: hidden;
-  width: 100%;
-  margin: 5px;
+  width: 50%; 
+  box-shadow: 2px 2px 5px #000000;
 }
 
 .customButtonLg {
@@ -63,7 +105,7 @@
   box-shadow: 2px 2px 5px #000000; 
   font-size: 1em;
   border: 1.5px solid #ED5031;
-  border-radius: 5px;
+  border-radius: 20px;
   cursor: pointer;
 }
 
@@ -77,7 +119,7 @@
   box-shadow: 2px 2px 5px #000000; 
   font-size: 1em;
   border: 1.5px solid #ED5031;
-  border-radius: 5px;
+  border-radius: 20px;
   cursor: pointer;
 }
 
@@ -153,7 +195,7 @@
 }
 
 h1 {
-  font-family: 'Courier New', monospace;
+  font-family: 'Trebuchet MS', 'Courier New', monospace;
   padding-bottom: 0px;
   margin-bottom: 0px;
 }

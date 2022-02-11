@@ -104,8 +104,8 @@ class MissionState extends React.Component {
 
         return (
             <div style={{display:"inline-block", width: "100%", textAlign: "center", padding: "10px"}}>
-                <h4 style={{margin: "0px 0px 10px"}}>Mission State</h4>
-                <div style={{display: "inline-block", backgroundColor: color, borderRadius: "5px", width: "50%", boxShaddow: "2px 2px 5px #000000" }}>
+                <h4 style={{margin: "0px 0px 10px"}}>Groundstation State</h4>
+                <div className="statusIndicator" style={{display: "inline-block", backgroundColor: color}}>
                     <h3>
                     {this.state.missionStateStr}
                     </h3>
@@ -118,10 +118,12 @@ class MissionState extends React.Component {
 export default class MissionStatus extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { receiverIsConnected: props.receiverIsConnected,
-                       rocketIsConnected: props.rocketIsConnected,
-                       missionStateStr: props.missionStateStr
-                     }
+        this.state = { 
+            dark: props.dark,
+            receiverIsConnected: props.receiverIsConnected,
+            rocketIsConnected: props.rocketIsConnected,
+            missionStateStr: props.missionStateStr
+        }
     }
 
     static getDerivedStateFromProps(props, current_state) {
@@ -142,10 +144,10 @@ export default class MissionStatus extends React.Component {
     
     render() {
         return (
-            <div className="panel" style={{backgroundColor: this.state.lightMode ? "#F7F7F7" : "#212121"}}>
+            <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`}>
                 <div className="MissionStatus">
                     <div style={{display: "inline-block", position: "relative", width: "100%", height: "100%", overflow: "hidden"}}>
-                        <h3>Mission Status</h3>
+                        <h3>Ground Station Status</h3>
                         <hr/>
                         <StatusIndicator name="Receiver" connected={this.state.receiverIsConnected} level={0}/>
                         <StatusIndicator name="Rocket" connected={this.state.rocketIsConnected} level={0}/>
