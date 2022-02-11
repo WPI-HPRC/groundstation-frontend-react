@@ -1,6 +1,12 @@
 import React from 'react';
 import ProgressBar from "@ramonak/react-progress-bar";
 
+function padLeadingZeros(num, size) {
+    var s = num+"";
+    while (s.length < size) s = "0" + s;
+    return s;
+}
+
 class MissionPoint extends React.Component {
     constructor(props) {
         super(props);
@@ -11,15 +17,15 @@ class MissionPoint extends React.Component {
     }
 
     render() {
-        var timeStr = this.state.time.toISOString().substr(11, 8);
+        var timeStr = this.state.time.toISOString().substr(14, 5);
 
         return (
-            <div style={{display: "inline-block", width: (this.state.percentEnd - this.state.percentStart) + "%", textAlign: "left", top: "0px", left:"0px"}}>
+            <div style={{display: "inline-block", width: this.state.percentStart === 100 ? "0%" : (this.state.percentEnd - this.state.percentStart) + "%", textAlign: this.state.percentStart === 100 ? "right" : "left", top: "0px", left:"0px"}}>
                 <h4 style={{padding: "10px 0px 0px 0px", margin: "0px"}}>{this.state.name}</h4>
                 <h6 style={{padding: "0px", margin: "0px"}}>|</h6>
                 <br/>
                 <h6 style={{padding: "0px", margin: "0px"}}>|</h6>
-                <h6 style={{padding: "0px", margin: "0px"}}>{timeStr}</h6>
+                <h5 style={{padding: "0px", margin: "0px"}}>{timeStr}</h5>
 
             </div>
         )
@@ -91,28 +97,38 @@ export default class MissionTimeline extends React.Component {
             }
         });
 
-        var clockStr = this.state.clock.toISOString().substr(11, 8);
+        const time = this.state.clock;
+        const tzStr = time.toLocaleString('en-us', {timeZoneName:'short'}).split(' ').pop();
+        const month = time.toLocaleString('en-us', { month: 'long' });
 
         return (
             <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`}>
-                <div className="MissionTimeline" style={{position: "relative"}}>
+                <div className="MissionTimeline" style={{position: "relative", width: "100%", height: "100%"}}>
                     <div style={{display: "inline-block", width: "15%", height: "100%", verticalAlign: "top"}}>
                         <h3>Mission Timeline</h3>
                     </div>
                     <div style={{display: "inline-block", position: "relative", width: "60%", height: "100%"}}>
-                        <div style={{position: "absolute", top: "-20px", width: "100%"}}>
+                        <div style={{position: "absolute", width: "100%"}}>
                             {missionPoints.map((elem) => (<MissionPoint key={elem[0]} name={elem[2]} percentStart={elem[0]} percentEnd={elem[1]} time={elem[3]}/>))}
                         </div>
-                        <div style={{position: "absolute", top: "32px", width: "100%"}}>
+                        <div style={{position: "absolute", top: "52px", width: "100%"}}>
                             <ProgressBar completed={missionPercent} isLabelVisible={false} bgColor="#ED5031" height="11px"/>
                         </div>
                     </div>
-                    <div className="subpanel" style={{display: "inline-block", position: "absolute", right: "0", margin: "20px", width: "20%", height: "120%"}}>
-                        <div style={{display: "inline-block", width: "50%"}}>
-
-                        </div>
-                        <div style={{display: "inline-block", width: "50%"}}>
-                            <h1 style={{fontSize: "2.5em", margin: "auto"}}>{clockStr}</h1>
+                    <div style={{display: "inline-block", position: "absolute", right: "0", height: "100%", width: "22%"}}>
+                        <div className="subpanel" style={{position: "absolute", top: "10px", right: "10px", bottom: "10px", left: "10px"}}>
+                            <div style={{display: "inline-block", position: "absolute", top: 0, left: 0, textAlign: "left", padding: 0, margin: 0, verticalAlign: "top"}}>
+                                <h1 style={{fontSize: "1.5em", margin: "10px"}}>{month}</h1>
+                            </div>
+                            <div style={{display: "inline-block", position: "absolute", bottom: 0, left: 0, textAlign: "left", padding: 0, margin: 0, verticalAlign: "top"}}>
+                                <h1 style={{fontSize: "2.5em", margin: "10px"}}>{time.getDate()}, {time.getFullYear()}</h1>
+                            </div>
+                            <div style={{display: "inline-block", position: "absolute", top: 0, right: 0, textAlign: "right", margin: "auto", verticalAlign: "top"}}>
+                                <h1 style={{fontSize: "2.5em", margin: "10px"}}>{padLeadingZeros(time.getHours(), 2)}:{padLeadingZeros(time.getMinutes(),2)}:{padLeadingZeros(time.getSeconds(), 2)}</h1>
+                            </div>
+                            <div style={{display: "inline-block", position: "absolute", bottom: 0, right: 0, textAlign: "right", margin: "auto", verticalAlign: "top"}}>
+                                <h1 style={{fontSize: "1.5em", margin: "10px"}}>{tzStr}</h1>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -104,7 +104,7 @@
   color: #ffffff;
   box-shadow: 2px 2px 5px #000000; 
   font-size: 1em;
-  border: 1.5px solid #ED5031;
+  border: 2px solid #ED5031;
   border-radius: 20px;
   cursor: pointer;
 }
@@ -127,6 +127,13 @@
   border: 3px solid #ED5031;
   box-shadow: 2px 2px 5px 2px #000000;
 }
+
+.customButtonLg:active {
+  background-color: #ED5031;
+  border: 1.5px solid #ED5031;
+  box-shadow: 0px 0px 0px 0px #000000;
+}
+
 
 .customButtonSm:hover {
   background-color: #ED5031;
@@ -196,6 +203,7 @@
 
 h1 {
   font-family: 'Trebuchet MS', 'Courier New', monospace;
+  text-shadow: 2px 2px 5px #000000;
   padding-bottom: 0px;
   margin-bottom: 0px;
 }
