@@ -67,7 +67,7 @@ export default class MissionTimeline extends React.Component {
         this.clockId = setInterval(() => this.updateClock(), 1000);
     }
 
-    componentDidUnmount() {
+    componentWillUnmount() {
         clearInterval(this.clockId);
     }
 
