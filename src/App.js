@@ -11,7 +11,8 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            renderSplashScreen: false,
+            renderSplashScreen: true,
+            dark: true,
             battery: "-",
             temperature: "-",
             stateStr: "-",
@@ -48,6 +49,7 @@ export default class App extends React.Component {
     componentWillUnmount() {
         clearInterval(this.testClock());
         clearInterval(this.getTelemId);
+        clearInterval(this.reconnId);
     }
 
     async getTelem() {
@@ -239,7 +241,7 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <div className="App">
+            <div className={`App ${this.state.dark ? "darkApp" : "lightApp"}`}>
                 <main>
                     <Layout
                         {...this.state}
