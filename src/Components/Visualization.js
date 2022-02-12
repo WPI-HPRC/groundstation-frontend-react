@@ -27,6 +27,9 @@ export default class Visualization extends React.Component {
         return null
     }
 
+    componentDidMount() {
+    }
+
     render() {
 
         var position = [42.27470400012541,-71.80915315792504];
@@ -34,10 +37,10 @@ export default class Visualization extends React.Component {
         return (
             <>
                 <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`}>
-                    <MapContainer center={position} zoom={13} scrollWheelZoom={true}>
+                    <MapContainer center={position} zoom={13} scrollWheelZoom={true} maxZoom={14}>
                         <TileLayer
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            url="Maps/{z}/{x}/{y}.png"
                         />
                     </MapContainer>
                 </div>
