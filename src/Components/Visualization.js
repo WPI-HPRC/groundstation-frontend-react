@@ -27,14 +27,6 @@ export default class Visualization extends React.Component {
         return null
     }
 
-    componentDidMount() {
-
-    }
-
-    componentDidUpdate() {
-        
-    }
-
     render() {
 
         var position = [42.27470400012541,-71.80915315792504];
