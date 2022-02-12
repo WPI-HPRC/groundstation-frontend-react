@@ -48,14 +48,12 @@ export default class Visualization extends React.Component {
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
                     </MapContainer>
-                    {/* <div id="map" style={{width:"100%", height: "100%"}}>
-
-                    </div> */}
                 </div>
                 <style jsx> {`
                     .leaflet-container {
                         width: 100%; 
                         height: 100%;
+                        z-index: 0;
                       }
 
 
