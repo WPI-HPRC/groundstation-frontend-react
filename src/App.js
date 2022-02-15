@@ -7,6 +7,7 @@ import React from 'react';
 const dataPollingRate = 80;    // Time in ms to poll the telemetry server
 const server = "ws://127.0.0.1"
 const port = "3005"
+var socket;
 
 export default class App extends React.Component {
 
@@ -122,11 +123,12 @@ export default class App extends React.Component {
     }
     
     connectToReceiver = () => {
-        let socket = new WebSocket(server+":"+port);
+        socket = new WebSocket(server+":"+port);
 
         this.setState({
-            receiverIsConnected: true
-        })
+            receiverIsConnected: true,
+            showConnectButton: false
+        });
         // Update telemetry
         socket.onmessage = function(event) {
             let message = event.data;
@@ -136,7 +138,11 @@ export default class App extends React.Component {
     }
 
     disconnectFromReceiver = () => {
-        
+        this.setState({
+            receiverIsConnected: false,
+            showConnectButton: true
+        });
+        socket.close();
         
     }
 
