@@ -4,7 +4,7 @@ import Layout from "./Components/Layout";
 import SplashScreen from "./Components/SplashScreen.js"
 import React from 'react';
 
-const dataPollingRate = 80;    // Time in ms to poll the telemetry server
+const dataPollingRate = 100;    // Time in ms to poll the telemetry server
 const server = "ws://127.0.0.1"
 const port = "3005"
 var socket;
@@ -14,7 +14,7 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            renderSplashScreen: true,
+            renderSplashScreen: false,
             dark: true,
             battery: "-",
             temperature: "-",
@@ -23,6 +23,7 @@ export default class App extends React.Component {
             long: -71.8081,
             vehicleClock: new Date(0),
             lastUpdate: 0,
+            receiverClock: new Date(0),
             vel: 0,
             altitude: 0,
             accelX: 0,
@@ -59,22 +60,19 @@ export default class App extends React.Component {
         clearInterval(this.reconnId);
     }
 
-    testSpeed() {
-        this.setState({
-            altitude: Math.ceil(Math.random() * 1000)
-        });
-    }
-
     getTelem(message) {
         
         // Good connection
         let json = JSON.parse(message);
         let vehicleTime = new Date(json.Timestamp);
+        let receiverTime = new Date(json.ReceiverTime);
 
         let diff = 0;
         if (this.state.vehicleClock.getTime() !== 0) {
             diff = vehicleTime.getTime() - this.state.vehicleClock.getTime();
         }
+
+        let latency = Date.now() - receiverTime.getTime();
 
         this.setState({
             vel: json.Velocity,
@@ -83,6 +81,7 @@ export default class App extends React.Component {
             stateStr: json.State,
             vehicleClock: vehicleTime,
             lastUpdate: diff,
+            latency: latency, 
             rocketIsConnected: json.RocketConnected,
             accelX: json.Acceleration_X,
             accelY: json.Acceleration_Y,
@@ -140,6 +139,8 @@ export default class App extends React.Component {
     disconnectFromReceiver = () => {
         this.setState({
             receiverIsConnected: false,
+            rocketIsConnected: false,
+            missionStateStr: "Disconnected",
             showConnectButton: true
         });
         socket.close();
@@ -160,12 +161,14 @@ export default class App extends React.Component {
                 lat: "-",
                 long: "-",
                 vehicleClock: new Date(0),
+                receiverClock: new Date(0),
                 vel: 0,
                 accel: 0,
                 altitude: 0,
                 accelX: 0,
                 accelY: 0,
                 accelZ: 0,
+                rocketIsConnected: false,
                 missionClock: new Date(),
                 missionStateStr: "Idle",
                 showConnectButton: true
