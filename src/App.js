@@ -22,6 +22,9 @@ export default class App extends React.Component {
             vel: 0,
             accel: 0,
             altitude: 0,
+            accelX: 0,
+            accelY: 0,
+            accelZ: 0,
             missionClock: new Date(),
             receiverIsConnected: false,
             rocketIsConnected: false,
@@ -109,7 +112,10 @@ export default class App extends React.Component {
                 battery: json.Voltage,
                 stateStr: json.State,
                 vehicleClock: vehicleTime,
-                rocketIsConnected: json.RocketConnected
+                rocketIsConnected: json.RocketConnected,
+                accelX: json.acceleration_x,
+                accelY: json.acceleration_y,
+                accelZ: json.acceleration_z,
             });
         }
 
