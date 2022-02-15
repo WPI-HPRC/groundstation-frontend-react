@@ -5,7 +5,7 @@ import SplashScreen from "./Components/SplashScreen.js"
 import React from 'react';
 
 const dataPollingRate = 80;    // Time in ms to poll the telemetry server
-const server = "127.0.0.1"
+const server = "ws://127.0.0.1"
 const port = "3005"
 
 export default class App extends React.Component {
@@ -44,6 +44,8 @@ export default class App extends React.Component {
 
         this.getTelemId = 0;
         this.reconnId = 0;
+        this.connectToReceiver = this.connectToReceiver.bind(this);
+        this.getTelem = this.getTelem.bind(this);
     }
 
     componentDidMount() {
@@ -62,75 +64,30 @@ export default class App extends React.Component {
         });
     }
 
-    async getTelem() {
-        if (this.getTelemId === 0) {
-            return;
+    getTelem(message) {
+       
+        // Good connection
+        let json = JSON.parse(message);
+        let vehicleTime = new Date(json.Timestamp);
+
+        let diff = 0;
+        if (this.state.vehicleClock.getTime() !== 0) {
+            diff = vehicleTime.getTime() - this.state.vehicleClock.getTime();
         }
 
-        const controller = new AbortController()
-
-        // .1 second timeout:
-        const timeoutId = setTimeout(() => controller.abort(), 1000)
-
-        const telemetryFetch = await fetch('http://' + server + ':' + port + '/api/telemetry', {method: 'GET', mode: 'cors', signal: controller.signal}).catch((error) => {
-
-            console.log(error);
-
-        }).then(response => {
-            if (response === undefined) {
-                // Bad connection
-                this.setState({receiverIsConnected: false});
-                return undefined;
-            }
-            else if (response.ok) {
-                // Good response
-                this.setState({receiverIsConnected: true,
-                               showConnectButton: false
-                            });
-                return response.json().then(response => ({response}));
-            }
+        this.setState({
+            vel: json.Velocity,
+            altitude: json.Altitude,
+            battery: json.Voltage,
+            stateStr: json.State,
+            vehicleClock: vehicleTime,
+            lastUpdate: diff,
+            rocketIsConnected: json.RocketConnected,
+            accelX: json.Acceleration_X,
+            accelY: json.Acceleration_Y,
+            accelZ: json.Acceleration_Z,
         });
-
-        if (telemetryFetch === undefined) {
-
-            // Lost connection
-            clearInterval(this.getTelemId);
-            this.getTelemId = 0;
-
-            this.setState({
-                receiverIsConnected: false,
-                rocketIsConnected: false,
-            });
-
-            if (this.reconnId === 0) {
-                this.reconnId = setInterval(() => this.tryReconnect(), 1000);
-            }
-        }
-         else {
-
-            // Good connection
-            let json = telemetryFetch.response;
-            let vehicleTime = new Date(json.Timestamp);
-
-            let diff = 0;
-            if (this.state.vehicleClock.getTime() !== 0) {
-                diff = vehicleTime.getTime() - this.state.vehicleClock.getTime();
-            }
-
-            this.setState({
-                vel: json.Velocity,
-                altitude: json.Altitude,
-                battery: json.Voltage,
-                stateStr: json.State,
-                vehicleClock: vehicleTime,
-                lastUpdate: diff,
-                rocketIsConnected: json.RocketConnected,
-                accelX: json.Acceleration_X,
-                accelY: json.Acceleration_Y,
-                accelZ: json.Acceleration_Z,
-            });
-        }
-
+        
         if (this.state.receiverIsConnected && this.state.rocketIsConnected) {
             this.setState({
                 missionStateStr: "Connected"
@@ -164,71 +121,27 @@ export default class App extends React.Component {
         }
     }
     
-    connectToReceiver = async () => {
+    connectToReceiver = () => {
+        let socket = new WebSocket(server+":"+port);
 
-        if (!this.state.receiverIsConnected) {
-            const telemetryFetch = await fetch('http://' + server + ':' + port + '/api/telemetry', {method: 'GET', mode: 'cors'}).catch((error) => {
+        this.setState({
+            receiverIsConnected: true
+        })
+        // Update telemetry
+        socket.onmessage = function(event) {
+            let message = event.data;
 
-                // Lost connection
-                console.log(error);
-                return;
-            })
-            
-            if (telemetryFetch === undefined) {
-                alert("Unable to connect to receiver.");
-            } else {
-
-                // Begin polling
-                if (this.getTelemId === 0) {
-                    this.getTelemId = setInterval(() => this.getTelem(), dataPollingRate);
-                }
-            }
-        }
+            this.getTelem(message);
+        }.bind(this);
     }
 
     disconnectFromReceiver = () => {
-        clearInterval(this.getTelemId);
-        this.getTelemId = 0;
-        clearInterval(this.reconnId);
-        this.reconnId = 0;
-
-        setTimeout(() => this.setState({
-            receiverIsConnected: false,
-            rocketIsConnected: false,
-            missionStateStr: "Idle",
-            showConnectButton: true
-        }), 200);
+        
         
     }
 
     tryReconnect = async () => {
-        if (this.reconnId === 0) {
-            return;
-        }
-
-        const controller = new AbortController()
-
-        // 1 second timeout:
-        const timeoutId = setTimeout(() => controller.abort(), 1000)
-
-        const telemetryFetch = await fetch('http://' + server + ':' + port + '/api/telemetry', {method: 'GET', mode: 'cors', signal: controller.signal}).catch((error) => {
-
-            // Lost connection
-            console.log(error);
-        })
         
-        if (telemetryFetch !== undefined) {
-            clearInterval(this.reconnId);
-            this.reconnId = 0;
-
-            if (this.getTelemId === 0) {
-                this.getTelemId = setInterval(() => this.getTelem(), dataPollingRate);
-            }
-        }
-
-        this.setState ({
-            missionStateStr: "Reconnecting"
-        })
     }
 
     resetTelem = () => {
