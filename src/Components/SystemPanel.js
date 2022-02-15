@@ -22,15 +22,29 @@ export default class SystemPanel extends React.Component {
         if (current_state.accelX !== props.accelX ||
             current_state.accelY !== props.accelY ||
             current_state.accelZ !== props.accelZ ||
-            current_state.time !== props.vehicleTime) {
+            current_state.time !== props.vehicleClock) {
 
-            return {
-                accelX: props.accelX,
-                accelY: props.accelY,
-                accelZ: props.accelZ,
-                dataX: [...current_state.dataX.slice(props.timeScale * -1.1), [props.vehicleClock.getTime(), props.accelX]],
-                dataY: [...current_state.dataY.slice(props.timeScale * -1.1), [props.vehicleClock.getTime(), props.accelY]],
-                dataZ: [...current_state.dataZ.slice(props.timeScale * -1.1), [props.vehicleClock.getTime(), props.accelZ]],
+            if (props.vehicleClock.getTime() === 0) {
+                return {
+                    accelX: props.accelX,
+                    accelY: props.accelY,
+                    accelZ: props.accelZ,
+                    dataX: [],
+                    dataY: [],
+                    dataZ: [],
+                    time: props.vehicleClock
+                }
+            }
+            else {
+                return {
+                    accelX: props.accelX,
+                    accelY: props.accelY,
+                    accelZ: props.accelZ,
+                    dataX: [...current_state.dataX.slice(props.timeScale * -1.1), [props.vehicleClock.getTime(), props.accelX]],
+                    dataY: [...current_state.dataY.slice(props.timeScale * -1.1), [props.vehicleClock.getTime(), props.accelY]],
+                    dataZ: [...current_state.dataZ.slice(props.timeScale * -1.1), [props.vehicleClock.getTime(), props.accelZ]],
+                    time: props.vehicleClock
+                }
             }
         }
 
@@ -48,10 +62,12 @@ export default class SystemPanel extends React.Component {
                     AccelZ: {this.state.accelZ}<br/>
 
                     <div style={{width: "50%", position: "absolute", right: 0, bottom: 0}}>
-                        {/* <LiveSplineChart
-                                data={this.state.dataX}
-                                datanum={this.props.datanum} 
-                                title={this.props.title} />  */}
+                        <LiveSplineChart
+                                data0={this.state.dataX}
+                                data1={this.state.dataY}
+                                data2={this.state.dataZ}
+                                datanum={this.props.timeScale} 
+                                title={this.props.title} /> 
                     </div>
                 </div>
             </div>

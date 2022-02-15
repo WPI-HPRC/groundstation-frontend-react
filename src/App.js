@@ -232,6 +232,9 @@ export default class App extends React.Component {
                 vel: 0,
                 accel: 0,
                 altitude: 0,
+                accelX: 0,
+                accelY: 0,
+                accelZ: 0,
                 missionClock: new Date(),
                 missionStateStr: "Idle",
                 showConnectButton: true

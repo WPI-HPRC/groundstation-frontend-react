@@ -144,7 +144,7 @@ class Box extends React.PureComponent {
 
                     <div className={!this.state.drawGraph ? "hidden" : undefined} style={{height: "100%", width: "80%", position:"absolute", top: "50px"}}>
                         <LiveSplineChart
-                            data={this.state.data}
+                            data0={this.state.data}
                             datanum={this.props.datanum} 
                             title={this.props.title} /> 
                     </div>

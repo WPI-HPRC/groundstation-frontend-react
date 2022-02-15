@@ -2,8 +2,16 @@ import Chart from 'react-apexcharts'
 
 export default (props) => {
     const series = [{
-        name: "x",
-        data: props.data
+        name: "1",
+        data: props.data0
+    },
+    {
+        name: "2",
+        data: props.data1
+    },
+    {
+        name: "3",
+        data: props.data2
     }];
     const options = {
         chart: {
