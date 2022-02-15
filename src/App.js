@@ -4,7 +4,9 @@ import Layout from "./Components/Layout";
 import SplashScreen from "./Components/SplashScreen.js"
 import React from 'react';
 
-const dataPollingRate = 50;    // Time in ms to poll the telemetry server
+const dataPollingRate = 100;    // Time in ms to poll the telemetry server
+const server = "192.168.0.37"
+const port = "3005"
 
 export default class App extends React.Component {
 
@@ -72,7 +74,7 @@ export default class App extends React.Component {
         // .1 second timeout:
         const timeoutId = setTimeout(() => controller.abort(), 1000)
 
-        const telemetryFetch = await fetch('http://127.0.0.1:3005/api/telemetry', {method: 'GET', mode: 'cors', signal: controller.signal}).catch((error) => {
+        const telemetryFetch = await fetch('http://' + server + ':' + port + '/api/telemetry', {method: 'GET', mode: 'cors', signal: controller.signal}).catch((error) => {
 
             console.log(error);
 
@@ -162,7 +164,7 @@ export default class App extends React.Component {
     connectToReceiver = async () => {
 
         if (!this.state.receiverIsConnected) {
-            const telemetryFetch = await fetch('http://127.0.0.1:3005/api/telemetry', {method: 'GET', mode: 'cors'}).catch((error) => {
+            const telemetryFetch = await fetch('http://' + server + ':' + port + '/api/telemetry', {method: 'GET', mode: 'cors'}).catch((error) => {
 
                 // Lost connection
                 console.log(error);
@@ -206,7 +208,7 @@ export default class App extends React.Component {
         // 1 second timeout:
         const timeoutId = setTimeout(() => controller.abort(), 1000)
 
-        const telemetryFetch = await fetch('http://127.0.0.1:3005/api/telemetry', {method: 'GET', mode: 'cors', signal: controller.signal}).catch((error) => {
+        const telemetryFetch = await fetch('http://' + server + ':' + port + '/api/telemetry', {method: 'GET', mode: 'cors', signal: controller.signal}).catch((error) => {
 
             // Lost connection
             console.log(error);
