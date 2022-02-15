@@ -65,7 +65,7 @@ export default class App extends React.Component {
     }
 
     getTelem(message) {
-       
+        
         // Good connection
         let json = JSON.parse(message);
         let vehicleTime = new Date(json.Timestamp);
@@ -87,7 +87,7 @@ export default class App extends React.Component {
             accelY: json.Acceleration_Y,
             accelZ: json.Acceleration_Z,
         });
-        
+
         if (this.state.receiverIsConnected && this.state.rocketIsConnected) {
             this.setState({
                 missionStateStr: "Connected"
