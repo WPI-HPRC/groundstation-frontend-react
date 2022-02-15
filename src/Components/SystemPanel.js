@@ -62,12 +62,12 @@ export default class SystemPanel extends React.Component {
                     AccelZ: {this.state.accelZ}<br/>
 
                     <div className="subpanel" style={{width: "70%", position: "absolute", right: 0, bottom: 0}}>
-                        <LiveSplineChart
+                        {/* <LiveSplineChart
                                 data0={this.state.dataX} name0="X"
                                 data1={this.state.dataY} name1="Y"
                                 data2={this.state.dataZ} name2="Z"
                                 datanum={this.props.timeScale} 
-                                title={this.props.title} /> 
+                                title={this.props.title} />  */}
                     </div>
                 </div>
             </div>

@@ -4,7 +4,7 @@ import Layout from "./Components/Layout";
 import SplashScreen from "./Components/SplashScreen.js"
 import React from 'react';
 
-const dataPollingRate = 100;    // Time in ms to poll the telemetry server
+const dataPollingRate = 80;    // Time in ms to poll the telemetry server
 const server = "127.0.0.1"
 const port = "3005"
 
@@ -23,7 +23,6 @@ export default class App extends React.Component {
             vehicleClock: new Date(0),
             lastUpdate: 0,
             vel: 0,
-            accel: 0,
             altitude: 0,
             accelX: 0,
             accelY: 0,
@@ -113,11 +112,13 @@ export default class App extends React.Component {
             let json = telemetryFetch.response;
             let vehicleTime = new Date(json.Timestamp);
 
-            let diff = vehicleTime.getTime() - this.state.vehicleClock.getTime();
+            let diff = 0;
+            if (this.state.vehicleClock.getTime() !== 0) {
+                diff = vehicleTime.getTime() - this.state.vehicleClock.getTime();
+            }
 
             this.setState({
                 vel: json.Velocity,
-                accel: json.Acceleration_X,
                 altitude: json.Altitude,
                 battery: json.Voltage,
                 stateStr: json.State,

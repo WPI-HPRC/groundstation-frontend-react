@@ -125,7 +125,8 @@ export default class MissionStatus extends React.Component {
             receiverIsConnected: props.receiverIsConnected,
             rocketIsConnected: props.rocketIsConnected,
             missionStateStr: props.missionStateStr,
-            lastUpdate: props.lastUpdate
+            lastUpdate: props.lastUpdate,
+            lastUpdates: []
         }
     }
 
@@ -140,7 +141,8 @@ export default class MissionStatus extends React.Component {
                 receiverIsConnected: props.receiverIsConnected,
                 rocketIsConnected: props.rocketIsConnected,
                 missionStateStr: props.missionStateStr,
-                lastUpdate: props.lastUpdate
+                lastUpdate: props.lastUpdate,
+                lastUpdates: [...current_state.lastUpdates.slice(-100), props.lastUpdate]
             }
         }
 
@@ -148,6 +150,9 @@ export default class MissionStatus extends React.Component {
     }
     
     render() {
+
+        var runningAvg = parseInt(this.state.lastUpdates.reduce((a,b) => a + b, 0) / this.state.lastUpdates.length);
+
         return (
             <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`}>
                 <div className="MissionStatus">
@@ -156,7 +161,7 @@ export default class MissionStatus extends React.Component {
                         <hr/>
                         <StatusIndicator name="Receiver" connected={this.state.receiverIsConnected} level={0}/>
                         <StatusIndicator name="Rocket" connected={this.state.rocketIsConnected} level={0}/>
-                        <h4 style={{display: "inline-block", width: "70%", padding: "0px 0px 0px 20px", margin: "1.33em 0px 0px 0px"}}>Last packet: {this.state.lastUpdate}ms</h4>
+                        <h4 style={{display: "inline-block", width: "70%", padding: "0px 0px 0px 20px", margin: "1.33em 0px 0px 0px"}}>Refresh: {runningAvg}ms</h4>
                         <div style={{position: "absolute", bottom: "1%", width: "100%"}}>
                             <MissionState missionStateStr={this.state.missionStateStr}/>
                         </div>

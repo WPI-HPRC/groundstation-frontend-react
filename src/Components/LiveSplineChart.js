@@ -41,6 +41,17 @@ export default (props) => {
             width: 4,
             curve: 'smooth'
         },
+        legend: {
+            showForNullSeries: false,
+            showForZeroSeries: false,
+            position: 'top',
+            horizontalAlign: 'left',
+            floating: false,
+            labels: {
+                colors: ['#FEFEFE'],
+                useSeriesColors: false
+            }
+        },
         xaxis: {
             type: 'numeric',
             colors: ['#FEFEFE'],
