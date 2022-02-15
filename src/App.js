@@ -4,7 +4,7 @@ import Layout from "./Components/Layout";
 import SplashScreen from "./Components/SplashScreen.js"
 import React from 'react';
 
-const dataPollingRate = 100;    // Time in ms to poll the telemetry server
+const dataPollingRate = 50;    // Time in ms to poll the telemetry server
 
 export default class App extends React.Component {
 
@@ -45,14 +45,21 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
-        setInterval(() => this.testClock(), 1000);
+        // setInterval(() => this.testClock(), 1000);
         setTimeout(() => this.hideSplashScreen(), 7000);
+        // setInterval(() => this.testSpeed(), 100);
     }
 
     componentWillUnmount() {
         clearInterval(this.testClock());
         clearInterval(this.getTelemId);
         clearInterval(this.reconnId);
+    }
+
+    testSpeed() {
+        this.setState({
+            altitude: Math.ceil(Math.random() * 1000)
+        });
     }
 
     async getTelem() {
@@ -63,7 +70,7 @@ export default class App extends React.Component {
         const controller = new AbortController()
 
         // .1 second timeout:
-        const timeoutId = setTimeout(() => controller.abort(), 100)
+        const timeoutId = setTimeout(() => controller.abort(), 1000)
 
         const telemetryFetch = await fetch('http://127.0.0.1:3005/api/telemetry', {method: 'GET', mode: 'cors', signal: controller.signal}).catch((error) => {
 
@@ -107,7 +114,7 @@ export default class App extends React.Component {
 
             this.setState({
                 vel: json.Velocity,
-                accel: json.Acceleration,
+                accel: json.Acceleration_X,
                 altitude: json.Altitude,
                 battery: json.Voltage,
                 stateStr: json.State,
