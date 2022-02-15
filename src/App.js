@@ -5,9 +5,8 @@ import SplashScreen from "./Components/SplashScreen.js"
 import React from 'react';
 
 const dataPollingRate = 100;    // Time in ms to poll the telemetry server
-const server = "ws://127.0.0.1"
+const server = "ws://ted-laptop.dyn.wpi.edu"
 const port = "3005"
-var socket;
 
 export default class App extends React.Component {
 
