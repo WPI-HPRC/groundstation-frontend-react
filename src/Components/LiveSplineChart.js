@@ -2,15 +2,15 @@ import Chart from 'react-apexcharts'
 
 export default (props) => {
     const series = [{
-        name: "1",
+        name: props.name0,
         data: props.data0
     },
     {
-        name: "2",
+        name: props.name1,
         data: props.data1
     },
     {
-        name: "3",
+        name: props.name2,
         data: props.data2
     }];
     const options = {
@@ -30,7 +30,7 @@ export default (props) => {
                 show: false
             },
         },
-        colors: ['#ED5031'],
+        colors: ['#ED5031', '#00f700', '#1aa3e8'],
         markers: {
             colors: ['#ED5031']
         },
