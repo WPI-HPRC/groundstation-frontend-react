@@ -113,9 +113,9 @@ export default class App extends React.Component {
                 stateStr: json.State,
                 vehicleClock: vehicleTime,
                 rocketIsConnected: json.RocketConnected,
-                accelX: json.acceleration_x,
-                accelY: json.acceleration_y,
-                accelZ: json.acceleration_z,
+                accelX: json.Acceleration_X,
+                accelY: json.Acceleration_Y,
+                accelZ: json.Acceleration_Z,
             });
         }
 
