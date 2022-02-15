@@ -126,7 +126,9 @@ export default class MissionStatus extends React.Component {
             rocketIsConnected: props.rocketIsConnected,
             missionStateStr: props.missionStateStr,
             lastUpdate: props.lastUpdate,
-            lastUpdates: []
+            lastUpdates: [],
+            latency: props.latency,
+            latencies: [],
         }
     }
 
@@ -136,13 +138,16 @@ export default class MissionStatus extends React.Component {
         if (current_state.receiverIsConnected !== props.receiverIsConnected ||
             current_state.rocketIsConnected !== props.rocketIsConnected ||
             current_state.missionStateStr !== props.missionStateStr ||
-            current_state.lastUpdate !== props.lastUpdate) {
+            current_state.lastUpdate !== props.lastUpdate ||
+            current_state.latency !== props.latency) {
             update = {
                 receiverIsConnected: props.receiverIsConnected,
                 rocketIsConnected: props.rocketIsConnected,
                 missionStateStr: props.missionStateStr,
                 lastUpdate: props.lastUpdate,
-                lastUpdates: [...current_state.lastUpdates.slice(-100), props.lastUpdate]
+                lastUpdates: [...current_state.lastUpdates.slice(-100), props.lastUpdate],
+                latency: props.latency,
+                latencies: [...current_state.latencies.slice(-100), props.latency],
             }
         }
 
@@ -151,9 +156,10 @@ export default class MissionStatus extends React.Component {
     
     render() {
 
-        var runningAvg = parseInt(this.state.lastUpdates.reduce((a,b) => a + b, 0) / this.state.lastUpdates.length);
-
+        var runningAvgRefresh = parseInt(this.state.lastUpdates.reduce((a,b) => a + b, 0) / this.state.lastUpdates.length);
+        var runningAvgLatency = parseInt(this.state.latencies.reduce((a,b) => a + b, 0) / this.state.latencies.length);
         return (
+
             <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`}>
                 <div className="MissionStatus">
                     <div style={{display: "inline-block", position: "relative", width: "100%", height: "100%", overflow: "hidden"}}>
@@ -161,7 +167,8 @@ export default class MissionStatus extends React.Component {
                         <hr/>
                         <StatusIndicator name="Receiver" connected={this.state.receiverIsConnected} level={0}/>
                         <StatusIndicator name="Rocket" connected={this.state.rocketIsConnected} level={0}/>
-                        <h4 style={{display: "inline-block", width: "70%", padding: "0px 0px 0px 20px", margin: "1.33em 0px 0px 0px"}}>Refresh: {runningAvg}ms</h4>
+                        <h4 style={{display: "inline-block", width: "70%", padding: "0px 0px 0px 20px", margin: "1.33em 0px 0px 0px"}}>Refresh: {runningAvgRefresh}ms</h4>
+                        <h4 style={{display: "inline-block", width: "70%", padding: "0px 0px 0px 20px", margin: "1.33em 0px 0px 0px"}}>Latency: {runningAvgLatency}ms</h4>
                         <div style={{position: "absolute", bottom: "1%", width: "100%"}}>
                             <MissionState missionStateStr={this.state.missionStateStr}/>
                         </div>
