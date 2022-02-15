@@ -140,6 +140,15 @@ export default class MissionStatus extends React.Component {
             current_state.missionStateStr !== props.missionStateStr ||
             current_state.lastUpdate !== props.lastUpdate ||
             current_state.latency !== props.latency) {
+
+            if (props.latency === 0 && props.lastUpdate === 0) {
+                return {
+                    lastUpdate: props.lastUpdate,
+                    lastUpdates: [],
+                    latency: props.latency,
+                    latencies: [],
+                }
+            }
             update = {
                 receiverIsConnected: props.receiverIsConnected,
                 rocketIsConnected: props.rocketIsConnected,
@@ -158,6 +167,10 @@ export default class MissionStatus extends React.Component {
 
         var runningAvgRefresh = parseInt(this.state.lastUpdates.reduce((a,b) => a + b, 0) / this.state.lastUpdates.length);
         var runningAvgLatency = parseInt(this.state.latencies.reduce((a,b) => a + b, 0) / this.state.latencies.length);
+
+        runningAvgRefresh = runningAvgRefresh ? runningAvgRefresh : 0;
+        runningAvgLatency = runningAvgLatency ? runningAvgLatency : 0;
+
         return (
 
             <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`}>
@@ -165,8 +178,8 @@ export default class MissionStatus extends React.Component {
                     <div style={{display: "inline-block", position: "relative", width: "100%", height: "100%", overflow: "hidden"}}>
                         <h3>Ground Station Status</h3>
                         <hr/>
-                        <StatusIndicator name="Receiver" connected={this.state.receiverIsConnected} level={0}/>
-                        <StatusIndicator name="Rocket" connected={this.state.rocketIsConnected} level={0}/>
+                        <StatusIndicator name="Receiver" connected={this.state.receiverIsConnected} refresh={0} latency={0}/>
+                        <StatusIndicator name="Rocket" connected={this.state.rocketIsConnected} refresh={0} latency={0}/>
                         <h4 style={{display: "inline-block", width: "70%", padding: "0px 0px 0px 20px", margin: "1.33em 0px 0px 0px"}}>Refresh: {runningAvgRefresh}ms</h4>
                         <h4 style={{display: "inline-block", width: "70%", padding: "0px 0px 0px 20px", margin: "1.33em 0px 0px 0px"}}>Latency: {runningAvgLatency}ms</h4>
                         <div style={{position: "absolute", bottom: "1%", width: "100%"}}>
