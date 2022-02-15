@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 class StatusIndicator extends React.Component {
     constructor(props) {
         super(props);

@@ -2,7 +2,7 @@ import React from 'react';
 import { ArcGauge } from "@progress/kendo-react-gauges";
 import LiveSplineChart from './LiveSplineChart';
 
-const dataScalar = -2;
+const dataScalar = -1;
 
 function padLeadingZeros(num, size) {
     var s = num+"";
@@ -16,9 +16,9 @@ class Box extends React.PureComponent {
         super(props);
         this.state = { 
             drawGraph: false,
-            val10: props.val0,
-            val11: props.val1,
-            val12: props.val2,
+            val0: props.val0,
+            val1: props.val1,
+            val2: props.val2,
             time: props.time,
             data0: [],
             data1: [],
@@ -134,7 +134,7 @@ class Box extends React.PureComponent {
                         <div style={{display:"inline-block", width: "50%"}}>
                             <h3>{this.props.title}</h3>
                         </div>
-                        <div style={{position: "absolute", top:0, right: 0, bottom: 0, left: 0, textAlign:"right"}}>
+                        <div style={{position: "absolute", top:0, right: 0, bottom: 0, left: 0, textAlign:"right", margin: "10px 0px 0px 0px"}}>
                             <button className={"customButtonLg"} onClick={() => this.handleClick()}>
                                 {this.state.drawGraph ? "View Gauge" : "View Graph"}
                             </button>

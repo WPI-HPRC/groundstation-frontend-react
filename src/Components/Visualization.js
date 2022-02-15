@@ -44,7 +44,7 @@ export default class Visualization extends React.Component {
                         />
                     </MapContainer>
                 </div>
-                <style jsx> {`
+                <style jsx="true"> {`
                     .leaflet-container {
                         width: 100%; 
                         height: 100%;
