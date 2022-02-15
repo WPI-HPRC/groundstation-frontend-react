@@ -66,7 +66,9 @@ class StatusIndicator extends React.Component {
 class MissionState extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { missionStateStr: props.missionStateStr };
+        this.state = { 
+            missionStateStr: props.missionStateStr
+         };
     }
 
     static getDerivedStateFromProps(props, current_state) {
@@ -122,7 +124,8 @@ export default class MissionStatus extends React.Component {
             dark: props.dark,
             receiverIsConnected: props.receiverIsConnected,
             rocketIsConnected: props.rocketIsConnected,
-            missionStateStr: props.missionStateStr
+            missionStateStr: props.missionStateStr,
+            lastUpdate: props.lastUpdate
         }
     }
 
@@ -131,11 +134,13 @@ export default class MissionStatus extends React.Component {
 
         if (current_state.receiverIsConnected !== props.receiverIsConnected ||
             current_state.rocketIsConnected !== props.rocketIsConnected ||
-            current_state.missionStateStr !== props.missionStateStr) {
+            current_state.missionStateStr !== props.missionStateStr ||
+            current_state.lastUpdate !== props.lastUpdate) {
             update = {
                 receiverIsConnected: props.receiverIsConnected,
                 rocketIsConnected: props.rocketIsConnected,
-                missionStateStr: props.missionStateStr
+                missionStateStr: props.missionStateStr,
+                lastUpdate: props.lastUpdate
             }
         }
 
@@ -151,7 +156,7 @@ export default class MissionStatus extends React.Component {
                         <hr/>
                         <StatusIndicator name="Receiver" connected={this.state.receiverIsConnected} level={0}/>
                         <StatusIndicator name="Rocket" connected={this.state.rocketIsConnected} level={0}/>
-
+                        <h4 style={{display: "inline-block", width: "70%", padding: "0px 0px 0px 20px", margin: "1.33em 0px 0px 0px"}}>Last packet: {this.state.lastUpdate}ms</h4>
                         <div style={{position: "absolute", bottom: "1%", width: "100%"}}>
                             <MissionState missionStateStr={this.state.missionStateStr}/>
                         </div>

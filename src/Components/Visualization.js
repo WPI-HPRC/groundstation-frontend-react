@@ -50,9 +50,6 @@ export default class Visualization extends React.Component {
                         height: 100%;
                         z-index: 0;
                       }
-
-
-                
                 `}
 
                 </style>

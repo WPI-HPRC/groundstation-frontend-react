@@ -58,18 +58,6 @@ class Box extends React.PureComponent {
             drawGraph: !state.drawGraph
         }));
     }
-
-    handleKeyPress = (event) => {
-        console.log(event);
-        if ((event.key === '1' && this.props.title === "Velocity") ||
-            (event.key === '2' && this.props.title === "Acceleration") ||
-            (event.key === '3' && this.props.title === "Altitude")
-        ) {
-            this.setState((state, props) => ({
-                drawGraph: !state.drawGraph
-            }));
-        }
-    }
     
     initAnimation() {
         this.setState({
@@ -208,9 +196,15 @@ export default class GaugeCluster extends React.PureComponent {
         return (
             <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`}>
                 <div className="GaugeCluster" style={{height: "90%"}}>
-                    <Box title="Velocity" unit="m/s" min={0} max={300} threshold={200} digits={3} datanum={this.state.timeScale} time={this.state.vehicleClock} val={this.state.vel}/>
-                    <Box title="Acceleration" unit="m/s/s" min={0} max={99} threshold={80} digits={2} datanum={this.state.timeScale} time={this.state.vehicleClock} val={this.state.accel}/>
-                    <Box title="Altitude" unit="m" min={0} max={9999} threshold={900} digits={4} datanum={this.state.timeScale} time={this.state.vehicleClock} val={this.state.altitude}/>
+                    <Box title="Velocity" unit="m/s" min={0} max={300} 
+                        threshold={200} digits={3} 
+                        datanum={this.state.timeScale} time={this.state.vehicleClock} val={this.state.vel}/>
+                    <Box title="Acceleration" unit="m/s/s" min={0} max={99} 
+                        threshold={80} digits={2} 
+                        datanum={this.state.timeScale} time={this.state.vehicleClock} val={this.state.accel}/>
+                    <Box title="Altitude" unit="m" min={0} max={9999} 
+                        threshold={900} digits={4} 
+                        datanum={this.state.timeScale} time={this.state.vehicleClock} val={this.state.altitude}/>
                 </div>
             </div>
         );
