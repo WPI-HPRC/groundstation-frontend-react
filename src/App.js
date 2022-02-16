@@ -138,7 +138,7 @@ export default class App extends React.Component {
 
         if (this.showRawInConsole) {
             console.log("here");
-            this.pushConsoleMessage(json.RawData);
+            this.pushConsoleMessage(json.RawData, "white");
         }
 
         this.setState({
@@ -191,7 +191,7 @@ export default class App extends React.Component {
      * Parse incoming commands from console
      */
     handleConsoleCommand = (command) => {
-        this.pushConsoleMessage(command);
+        this.pushConsoleMessage(command, "white");
 
         switch(command) {
             case "clear":
@@ -202,15 +202,17 @@ export default class App extends React.Component {
                 break;
             case "raw":
                 this.showRawInConsole = true;
+                this.pushConsoleMessage("Raw data will be printed to the console...", "green");
                 break;
             case "stop":
                 this.showRawInConsole = false;
+                this.pushConsoleMessage("Raw data will no longer be printed to the console", "red");
                 break;
             case "help":
-                this.pushConsoleMessage("raw, stop, clear, help");
+                this.pushConsoleMessage("raw, stop, clear, help", "green");
                 break;
             default:
-                this.pushConsoleMessage(`Command "${command}" not recognized`)
+                this.pushConsoleMessage(`Command "${command}" not recognized`, "red")
 
         }
     }
@@ -218,11 +220,11 @@ export default class App extends React.Component {
     /**
      * Place message on console
      */
-    pushConsoleMessage = (message) => {
+    pushConsoleMessage = (message, color) => {
         var time = new Date();
         var timeStr = "[" + time.toISOString().substr(11, 11) + "]>";
 
-        this.commandHistory.push(timeStr + message);
+        this.commandHistory.push([timeStr + message, color]);
 
         this.setState((state, props) => ({
             commandHistory: this.commandHistory.slice(-1 * maxMessages)
