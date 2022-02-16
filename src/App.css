@@ -190,6 +190,13 @@
   font-weight: 400;
 }
 
+.command {
+  font-family: 'Overpass Mono Regular', monospace;
+  font-weight: 400;
+  padding: 0px 0px 0px 10px;
+  margin: 0;
+}
+
 .MissionStatus {
   height: 100%;
   width: 100%;
@@ -225,3 +232,37 @@ hr {
   border-color: #212121;
   height: 1;
 }
+
+input[type=text] {
+  color: inherit;
+  margin: 0;
+  padding: 0;
+  height: 20px;
+  position: relative;
+  left: 0;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #cdcdcd;
+  border-color: rgb(85, 85, 85);
+  background-color: #212121;
+  font-family: 'Overpass Mono Regular', monospace;
+  font-weight: 400;
+  font-size: 1em;
+}
+
+ /* width */
+ ::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: red;
+  border-radius: 10px;
+} 
