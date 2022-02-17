@@ -8,41 +8,29 @@ export default class SystemPanel extends React.Component {
         super(props);
         this.state = {
             dark: props.dark,
-            accelX: 0,
-            accelY: 0,
-            accelZ: 0,
-            dataX: [],
-            dataY: [],
-            dataZ: [],
+            gyroX: 0,
+            gyroY: 0,
+            gyroZ: 0,
             time: props.vehicleClock
         }
     }
 
     static getDerivedStateFromProps(props, current_state) {
-        if (current_state.accelX !== props.accelX ||
-            current_state.accelY !== props.accelY ||
-            current_state.accelZ !== props.accelZ ||
-            current_state.time !== props.vehicleClock) {
+        if (current_state.time !== props.vehicleClock) {
 
             if (props.vehicleClock.getTime() === 0) {
                 return {
-                    accelX: props.accelX,
-                    accelY: props.accelY,
-                    accelZ: props.accelZ,
-                    dataX: [],
-                    dataY: [],
-                    dataZ: [],
+                    gyroX: props.gyroX,
+                    gyroY: props.gyroY,
+                    gyroZ: props.gyroZ,
                     time: props.vehicleClock
                 }
             }
             else {
                 return {
-                    accelX: props.accelX,
-                    accelY: props.accelY,
-                    accelZ: props.accelZ,
-                    dataX: [...current_state.dataX.slice(props.timeScale * -1.1), [props.vehicleClock.getTime(), props.accelX]],
-                    dataY: [...current_state.dataY.slice(props.timeScale * -1.1), [props.vehicleClock.getTime(), props.accelY]],
-                    dataZ: [...current_state.dataZ.slice(props.timeScale * -1.1), [props.vehicleClock.getTime(), props.accelZ]],
+                    gyroX: props.gyroX,
+                    gyroY: props.gyroY,
+                    gyroZ: props.gyroZ,
                     time: props.vehicleClock
                 }
             }
@@ -57,19 +45,11 @@ export default class SystemPanel extends React.Component {
                 <div className="SystemPanel" style={{position: "relative", width: "100%", height: "100%"}}>
                     <h3>System</h3>
                     <hr/>
-                    AccelX: {this.state.accelX}<br/>
-                    AccelY: {this.state.accelY}<br/>
-                    AccelZ: {this.state.accelZ}<br/>
+                    gyroX: {this.state.gyroX}<br/>
+                    gyroY: {this.state.gyroY}<br/>
+                    gyroZ: {this.state.gyroZ}<br/>
 
-
-                    <div className="subpanel" style={{width: "70%", position: "absolute", right: 0, bottom: 0}}>
-                        {/* <LiveSplineChart
-                                data0={this.state.dataX} name0="X"
-                                data1={this.state.dataY} name1="Y"
-                                data2={this.state.dataZ} name2="Z"
-                                datanum={this.props.timeScale} 
-                                title={this.props.title} /> */}
-                    </div>
+                    <img src='rocket.png' style={{position: "absolute", top: 0, bottom: 0, right: 0, left: 0, margin: "auto", transform: "rotate(0.80turn)"}}/>
                 </div>
             </div>
         );

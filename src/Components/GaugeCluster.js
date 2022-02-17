@@ -206,6 +206,7 @@ export default class GaugeCluster extends React.PureComponent {
                 vehicleClock: props.vehicleClock,
                 timeScale: props.timeScale
             }
+
         }
         
         return update;

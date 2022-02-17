@@ -46,6 +46,9 @@ export default class App extends React.Component {
             accelX: 0,
             accelY: 0,
             accelZ: 0,
+            gyroX: 0,
+            gyroY: 0,
+            gyroZ: 0,
             missionClock: new Date(),
             receiverIsConnected: false,
             rocketIsConnected: false,
@@ -91,15 +94,38 @@ export default class App extends React.Component {
      * Connect to the ws server
      */
     connectToReceiver = () => {
+        this.pushConsoleMessage("Connecting to receiver...", "white");
+        
+        this.setState({
+            missionStateStr: "Connecting..."
+        });
+
         socket = new WebSocket(server+":"+port);
 
-        this.setState({
-            receiverIsConnected: true,
-            showConnectButton: false
-        });
+        // Connection opened
+        socket.addEventListener('open', function (event) {
+            this.pushConsoleMessage("Connected to receiver.", "green");
+            this.setState({
+                receiverIsConnected: true,
+                showConnectButton: false,
+                missionStateStr: "Connected"
+            });
+        }.bind(this));
+
+        // Listen for possible errors
+        socket.addEventListener('error', function (event) {
+            this.pushConsoleMessage("Could not connect to reciever.", "red");
+
+            this.setState({
+                receiverIsConnected: false,
+                showConnectButton: true,
+                missionStateStr: "Disconnected"
+            });
+        }.bind(this));
 
         // Update telemetry
         socket.onmessage = function(event) {
+
             let message = event.data;
             this.getTelem(message);
         }.bind(this);
@@ -116,6 +142,8 @@ export default class App extends React.Component {
             showConnectButton: true
         });
         socket.close();
+
+        this.pushConsoleMessage("Disconnected from receiver.", "green")
         
     }
 
@@ -137,7 +165,6 @@ export default class App extends React.Component {
         let latency = Date.now() - receiverTime.getTime();
 
         if (this.showRawInConsole) {
-            console.log("here");
             this.pushConsoleMessage(json.RawData, "white");
         }
 
@@ -192,8 +219,9 @@ export default class App extends React.Component {
      */
     handleConsoleCommand = (command) => {
         this.pushConsoleMessage(command, "white");
+        var args = command.split(' ');
 
-        switch(command) {
+        switch(args[0]) {
             case "clear":
                 this.commandHistory = [];
                 this.setState({
@@ -208,11 +236,63 @@ export default class App extends React.Component {
                 this.showRawInConsole = false;
                 this.pushConsoleMessage("Raw data will no longer be printed to the console", "red");
                 break;
+            case "set":
+                if(this.state[args[1]] !== undefined) {
+                    if (args[2] !== undefined) {
+                        var tp = typeof(this.state[args[1]]);
+                        var prop = args[1];
+                        var val = args[2];
+
+                        if (tp === 'boolean') {
+                            if (val === 'true') {
+                                val = true;
+                            }
+                            else if (val === 'false') {
+                                val = false;
+                            }
+                        }
+                        else if (tp === 'number') {
+                            val = Number(args[2]);
+                        } else if (tp === 'object') {
+                            val = new Date(args[2]);
+                        }
+
+                        this.setState({
+                            [prop]: val
+                        });
+                    }
+                } else {this.pushConsoleMessage(`Property "${args[1]}" does not exist`, "red"); }
+                break;
+            case "get":
+                this.pushConsoleMessage(this.state[args[1]], "white");
+                break;
+            case "reset":
+                this.resetTelem();
+                break;
+            case "run":
+                this.pushConsoleMessage(eval(args[1]), "white");
+                break;
+            case "tick":
+                var ms = this.state.vehicleClock.getTime() + 1;
+                this.setState({
+                    vehicleClock: new Date(ms)
+                });
+                break;
             case "help":
-                this.pushConsoleMessage("raw, stop, clear, help", "green");
+            case "h":
+                
+                this.pushConsoleMessage(`Help: Display the console commands:
+- get [prop] : return the value of a property in state
+- set [prop] [val] : change the value of a property
+- reset : clear the telemetry state
+- run [command] : execute a command in js
+- tick : increase the clock by 1ms (forces an update)
+- raw : print all incoming telemetry to console
+- stop : stop printing all telemetry to console
+- clear : clear the console buffer`, "white");
                 break;
             default:
-                this.pushConsoleMessage(`Command "${command}" not recognized`, "red")
+                this.pushConsoleMessage(`Command "${args[0]}" not recognized`, "red")
 
         }
     }
