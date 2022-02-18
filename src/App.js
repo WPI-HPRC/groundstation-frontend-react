@@ -5,7 +5,7 @@ import SplashScreen from "./Components/SplashScreen.js"
 import React from 'react';
 
 const dataPollingRate = 100;    // Time in ms to poll the telemetry server
-const maxMessages = 250;
+const maxMessages = 20;
 // const server = "ws://ted-laptop.dyn.wpi.edu"
 const server = "ws://127.0.0.1"
 const port = "3005"
@@ -177,9 +177,12 @@ export default class App extends React.Component {
             lastUpdate: diff,
             latency: latency,
             rocketIsConnected: json.RocketConnected,
-            accelX: json.Acceleration_X,
-            accelY: json.Acceleration_Y,
-            accelZ: json.Acceleration_Z,
+            accelX: json.AccelX,
+            accelY: json.AccelY,
+            accelZ: json.AccelZ,
+            gyroX: json.GyroX,
+            gyroY: json.GyroY,
+            gyroZ: json.GyroZ,
         });
 
         if (this.state.receiverIsConnected && this.state.rocketIsConnected) {
@@ -332,6 +335,9 @@ export default class App extends React.Component {
                 accelX: 0,
                 accelY: 0,
                 accelZ: 0,
+                gyroX: 0,
+                gyroY: 0,
+                gyroZ: 0,
                 rocketIsConnected: false,
                 missionClock: new Date(),
                 missionStateStr: "Idle",

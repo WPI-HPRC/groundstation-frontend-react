@@ -2,7 +2,9 @@ import React from 'react';
 import { ArcGauge } from "@progress/kendo-react-gauges";
 import LiveSplineChart from './LiveSplineChart';
 
+const config = require('../mission.cfg');
 const dataScalar = -1;
+
 
 function padLeadingZeros(num, size) {
     var s = num+"";
@@ -20,6 +22,7 @@ class Box extends React.PureComponent {
             val1: props.val1,
             val2: props.val2,
             time: props.time,
+            graphTime: props.time,
             data0: [],
             data1: [],
             data2: [],
@@ -32,6 +35,8 @@ class Box extends React.PureComponent {
 
     // Data update performed here
     static getDerivedStateFromProps(props, current_state) {
+
+        // Update on new time
         if (current_state.time !== props.time) {
 
             // Reset if rocket time returns to 0
@@ -50,13 +55,25 @@ class Box extends React.PureComponent {
 
             // Update data sets with new values
             else {
+
+                // Set graph refresh rate
+                if (props.time - current_state.graphTime > config.graphRefresh) {
+                    return {
+                        val0: props.val0,
+                        val1: props.val1,
+                        val2: props.val2,
+                        data0: [...current_state.data0.slice(props.datanum * dataScalar), [props.time.getTime(), props.val0]],
+                        data1: [...current_state.data1.slice(props.datanum * dataScalar), [props.time.getTime(), props.val1]],
+                        data2: [...current_state.data2.slice(props.datanum * dataScalar), [props.time.getTime(), props.val2]],
+                        max: current_state.max > props.val0 ? current_state.max : props.val0,
+                        time: props.time,
+                        graphTime: props.time
+                    }
+                }
                 return {
                     val0: props.val0,
                     val1: props.val1,
                     val2: props.val2,
-                    data0: [...current_state.data0.slice(props.datanum * dataScalar), [props.time.getTime(), props.val0]],
-                    data1: [...current_state.data1.slice(props.datanum * dataScalar), [props.time.getTime(), props.val1]],
-                    data2: [...current_state.data2.slice(props.datanum * dataScalar), [props.time.getTime(), props.val2]],
                     max: current_state.max > props.val0 ? current_state.max : props.val0,
                     time: props.time
                 }
