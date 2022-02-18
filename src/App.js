@@ -177,9 +177,12 @@ export default class App extends React.Component {
             lastUpdate: diff,
             latency: latency,
             rocketIsConnected: json.RocketConnected,
-            accelX: json.Acceleration_X,
-            accelY: json.Acceleration_Y,
-            accelZ: json.Acceleration_Z,
+            accelX: json.AccelX,
+            accelY: json.AccelY,
+            accelZ: json.AccelZ,
+            gyroX: json.GyroX,
+            gyroY: json.GyroY,
+            gyroZ: json.GyroZ
         });
 
         if (this.state.receiverIsConnected && this.state.rocketIsConnected) {
