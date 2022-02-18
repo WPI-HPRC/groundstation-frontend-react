@@ -182,7 +182,7 @@ export default class App extends React.Component {
             accelZ: json.AccelZ,
             gyroX: json.GyroX,
             gyroY: json.GyroY,
-            gyroZ: json.GyroZ,
+            gyroZ: json.GyroZ
         });
 
         if (this.state.receiverIsConnected && this.state.rocketIsConnected) {
