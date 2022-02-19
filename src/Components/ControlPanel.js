@@ -139,19 +139,14 @@ export default class ControlPanel extends React.Component {
 
                         <Grid style={{height: "100%", position: "absolute", bottom: 0, margin: "5px", padding: 0}}>
                             <Row style={{height: "100%"}}>
-                                <Col lg={4} style={{position: "relative", textAlign: "center"}}>    
+                                <Col lg={2} style={{position: "relative", textAlign: "center"}}>    
                                     <div style={{position: "absolute", bottom: 70, left: 0, right: 0, margin: 0}}>
-                                        <div className={this.state.showConnect ? "inline" : "hidden"}>
-                                            <button className="customButtonLg" onClick={() => this.handleConnect()}>Connect</button>
-                                        </div>
-                                        <div className={!this.state.showConnect ? "inline" : "hidden"}>
-                                            <button className="customButtonLg" onClick={() => this.handleDisconnect()}>Disconnect</button>
-                                        </div>
-                                        <button className="customButtonLg" style={{display: "inline-block"}} onClick={() => this.handleReset()}>Reset</button>
+
+                                        <button className="customButtonLg" style={{display: "inline-block"}} onClick={() => this.handleReset()}>Clear</button>
                                         {/* <button className="customButtonLg" style={{display: "inline-block"}} onClick={() => this.handleReset()}>Clear</button> */}
                                     </div>
                                     <div className="subpanel" style={{width: "100%", textAlign: "center", position: "absolute", bottom: 0, margin: 0}}>
-                                        <h4 style={{margin: "0px 0px 0px 0px"}}>Graph Timeslice (Seconds):</h4>
+                                        <h4 style={{margin: "0px 0px 0px 0px"}}>Timeslice:</h4>
    
                                         <button className="customButtonSm mono" onClick={() => this.handleTSDec()}>-</button>
                                         <input style={{margin: "5px 0px 5px 0px", textAlign: "center"}} type="text" size={4 } value={this.state.tsInput} onKeyDown={this.handleTSEnter} onChange={this.handleTSChange}/>
@@ -159,7 +154,7 @@ export default class ControlPanel extends React.Component {
                                     </div>
                                 </Col>
 
-                                <Col lg={8} style={{height: "100%", position: "relative", margin: "0px"}}>
+                                <Col lg={10} style={{height: "100%", position: "relative", margin: "0px"}}>
                                     <div className="subpanel" style={{height: "90%", width: "90%", position: "absolute", right: 20, bottom: 2}}>
                                         <Console handleCommandFunc={this.props.commandFunc} commandHistory={this.props.commandHistory}/>
                                     </div>

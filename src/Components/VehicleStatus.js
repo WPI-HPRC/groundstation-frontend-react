@@ -69,7 +69,7 @@ class FlightClock extends React.Component {
 
         return (
             <div style={{display:"inline-block", position: "relative", width: "100%", textAlign: "center"}}>
-                <h1 className="subpanel" style={{margin: "auto", color: this.state.color, width: "70%", fontSize: "3em"}}>+{clockStr}</h1>
+                <h1 className="subpanel" style={{margin: "auto", color: this.state.color, width: "70%", fontSize: "3em"}}>{clockStr}</h1>
             </div>
         )
     }

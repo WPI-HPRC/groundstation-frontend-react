@@ -29,8 +29,8 @@ export default class App extends React.Component {
             lat: 42.2743,
             long: -71.8081,
             vehicleClock: new Date(0),
-            lastUpdate: 0,
-            latency: 0,
+            lastUpdate: "-",
+            latency: "-",
             vel: 0,
             altitude: 0,
             accelX: 0,
@@ -357,8 +357,8 @@ export default class App extends React.Component {
                 lat: "-",
                 long: "-",
                 vehicleClock: new Date(0),
-                lastUpdate: 0,
-                latency: 0,
+                lastUpdate: "-",
+                latency: "-",
                 vel: 0,
                 accel: 0,
                 altitude: 0,
@@ -371,7 +371,8 @@ export default class App extends React.Component {
                 rocketIsConnected: false,
                 missionClock: new Date(),
                 missionStateStr: "Idle",
-                showConnectButton: true
+                showConnectButton: true,
+                commandHistory: []
             });
 
             clearInterval(this.reconnId);
