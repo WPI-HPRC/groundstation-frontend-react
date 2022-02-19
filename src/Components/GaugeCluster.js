@@ -54,10 +54,9 @@ class Box extends React.PureComponent {
             }
 
             // Update data sets with new values
-            else {
-
+            else {  
+                //props.time - current_state.graphTime > config.graphRefresh
                 // Set graph refresh rate
-                if (props.time - current_state.graphTime > config.graphRefresh) {
                     return {
                         val0: props.val0,
                         val1: props.val1,
@@ -69,14 +68,7 @@ class Box extends React.PureComponent {
                         time: props.time,
                         graphTime: props.time
                     }
-                }
-                return {
-                    val0: props.val0,
-                    val1: props.val1,
-                    val2: props.val2,
-                    max: current_state.max > props.val0 ? current_state.max : props.val0,
-                    time: props.time
-                }
+
             }
         }
 
