@@ -21,7 +21,7 @@ export default class App extends React.Component {
          * children should be defined here
          */
         this.state = {
-            renderSplashScreen: false,
+            renderSplashScreen: true,
             dark: true,
             battery: "-",
             temperature: 0,

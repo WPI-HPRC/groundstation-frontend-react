@@ -57,7 +57,7 @@ class Box extends React.PureComponent {
             // Update data sets with new values
             else {
 
-                if ((props.time.getTime() - current_state.graphTime.getTime()) > props.graphRefreshRate) {
+                if ((props.time.getTime() - current_state.graphTime.getTime()) >= props.graphRefreshRate) {
                     return {
                         val0: props.val0,
                         val1: props.val1,
@@ -240,7 +240,7 @@ export default class GaugeCluster extends React.PureComponent {
                         datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.altitude} name0={"Altitude"}/>
                     <Box title="Velocity" unit="m/s" min={0} max={300} defaultToGraph={false}
                         threshold={200} digits={3} graphRefreshRate={this.props.graphRefreshRate}
-                        datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.vel} name0={"Altitude"}/>
+                        datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.vel} name0={"Velocity"}/>
                     <Box title="Acceleration" unit="m/s/s (X)" min={0} max={3000} 
                         threshold={2000} digits={4} defaultToGraph={true} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} 
