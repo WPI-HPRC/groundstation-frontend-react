@@ -65,7 +65,7 @@ class FlightClock extends React.Component {
     }
 
     render() {
-        var clockStr = this.state.time.toISOString().substr(11, 11);
+        var clockStr = this.state.time.toISOString().substr(11, 12);
 
         return (
             <div style={{display:"inline-block", position: "relative", width: "100%", textAlign: "center"}}>
