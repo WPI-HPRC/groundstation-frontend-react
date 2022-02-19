@@ -119,7 +119,7 @@ export default class VehicleStatus extends React.Component {
                     <h3>Vehicle Status</h3>
                     <hr/>
                     <h4>Battery: {this.state.battery}V</h4>
-                    <h4>Temperature: {this.state.temperature}°C</h4>
+                    <h4>Temperature: {this.state.temperature} °F</h4>
                     <VehicleState stateStr={this.state.stateStr}/>
                     <hr/>
                     <h4>Position:</h4>

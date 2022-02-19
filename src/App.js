@@ -11,16 +11,6 @@ const server = "ws://127.0.0.1"
 const port = "3005"
 var socket;
 
-/* TODO
-//Sat test 20b
-Gyro XYZ
-Altitude
-Accel XYZ
-Temperature
-Timestamp
-State
-*/
-
 export default class App extends React.Component {
 
     constructor(props) {
@@ -34,7 +24,7 @@ export default class App extends React.Component {
             renderSplashScreen: false,
             dark: true,
             battery: "-",
-            temperature: "-",
+            temperature: 0,
             stateStr: "-",
             lat: 42.2743,
             long: -71.8081,
@@ -342,7 +332,7 @@ export default class App extends React.Component {
         if (!this.state.receiverIsConnected) {
             this.setState ({
                 battery: "-",
-                temperature: "-",
+                temperature: 0,
                 stateStr: "-",
                 lat: "-",
                 long: "-",
