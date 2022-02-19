@@ -49,7 +49,7 @@ class Console extends React.Component {
             <>
                 <div style={{height: "100%", position: "relative"}}>
                     <div style={{display: "flex", flexDirection: "column-reverse", height: "80%", overflowY: "auto", overflowWrap: "break-word" }}>
-                        {this.state.commandHistory.reverse().map((elem, i) => (<p className="command" style={{color: elem[1]}} key={i}>{elem[0]}</p>))}
+                        {this.state.commandHistory.slice(0).reverse().map((elem, i) => (<p className="command" style={{color: elem[1]}} key={i}>{elem[0]}</p>))}
                     </div>
                     <input style={{position: "absolute", bottom: 0, left: 0, right: 0, width: "100%"}} type="text" onKeyDown={this.handleConsoleEnter} onChange={this.handleConsoleChange} value={this.state.consoleInput}/>
                 </div>

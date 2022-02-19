@@ -191,7 +191,7 @@ export default class App extends React.Component {
 
         if (latency > 100) {
             this.setState({
-                graphRefreshRate: 250
+                graphRefreshRate: 500
             });
         } else {
             this.setState({
