@@ -183,6 +183,7 @@ export default class App extends React.Component {
         this.setState({
             vel: json.Velocity,
             altitude: json.Altitude,
+            temperature: json.Temperature,
             battery: json.Voltage,
             stateStr: json.State,
             vehicleClock: vehicleTime,
