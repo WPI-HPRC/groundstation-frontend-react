@@ -6,12 +6,19 @@ const isDev = require('electron-is-dev');
 function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1920,
+    height: 1080,
+    minWidth: 0,
+    minHeight: 0,
+    center: true,
+    icon: path.join(__dirname, "./icons/png/512x512.png"),
     webPreferences: {
       nodeIntegration: true,
     },
+    show: false
   });
+
+  win.setMenuBarVisibility(false);
 
   // and load the index.html of the app.
   // win.loadFile("index.html");
@@ -24,6 +31,10 @@ function createWindow() {
   if (isDev) {
     win.webContents.openDevTools({ mode: 'detach' });
   }
+
+  win.once('ready-to-show', () => {
+    win.show()
+  })
 }
 
 // This method will be called when Electron has finished

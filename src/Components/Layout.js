@@ -12,47 +12,68 @@ import GaugeCluster from './GaugeCluster';
 import MissionTimeline from './MissionTimeline';
 
 
-const Layout = ({ children }) => {
-    return (
-        <>
-            <div>
-                <Row className="bordered">
+export default class Layout extends React.Component {
 
-                    <Col className="bordered" lg={9}>
-                        <Row>
-                            <Col className="bordered" lg={4}>
-                                <VehicleStatus />
+    constructor(props) {
+        super(props);
+        this.state = { }
+    }
+
+    render() {
+        return (
+            <>
+                <div className="Layout">
+                    <Grid style={{width:"100%", backgroundColor: "inherit"}}>
+                        <Row style={{height:"88vh"}}>
+                            <Col lg={9}>
+                                <Row>
+                                    <Col lg={4}>
+                                        <Row style={{height:"58vh"}}>
+                                            <VehicleStatus className="VehicleStatus" 
+                                                {...this.props}/>
+                                        </Row>
+                                    </Col>
+                                    
+                                    <Col lg={8}>
+                                        <Row style={{height:"18vh"}}>
+                                            <ControlPanel className="ControlPanel" 
+                                                {...this.props}/>
+                                        </Row>
+                                        <Row style={{height:"40vh"}}>
+                                            <SystemPanel className="SystemPanel" 
+                                                {...this.props} />
+                                        </Row>
+                                    </Col>
+                                </Row>
+                                <Row style={{height:"30vh"}}>
+                                    <GaugeCluster className="GaugeCluster"
+                                        {...this.props} />
+                                </Row>
                             </Col>
-                            
-                            <Col lg={8}>
-                                <ControlPanel />
-                                <SystemPanel />
+
+                            <Col lg={3}>
+                                <Row style={{height:"13vh"}}>
+                                    <TitlePlate className="TitlePlate"
+                                        {...this.props} />
+                                </Row>
+                                <Row style={{height:"30vh"}}>
+                                    <MissionStatus
+                                        {...this.props} />
+                                </Row>
+                                <Row style={{height:"45vh"}}>
+                                    <Visualization className="Visualization"
+                                        {...this.props}/>
+                                </Row>
                             </Col>
                         </Row>
-                        <GaugeCluster />
-                    </Col>
 
-                    <Col lg={3}>
-                        <Row>
-                            <TitlePlate className="TitlePlate"/>
+                        <Row style={{height:"12vh"}}>
+                            <MissionTimeline 
+                                {...this.props}/>
                         </Row>
-                        <Row>
-                            <MissionStatus className="MissionStatus"/>
-                        </Row>
-                        <Row>
-                            <Visualization />
-                        </Row>
-                    </Col>
-
-                </Row>
-
-                <Row className="bordered">
-                    <MissionTimeline />
-                </Row>
-            </div>
-            <main>{children}</main>
-        </>
-    )
+                    </Grid>
+                </div>
+            </>
+        )
+    }
 }
-
-export default Layout;
