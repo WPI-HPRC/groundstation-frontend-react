@@ -71,7 +71,9 @@ export default (props) => {
             },
             axisTicks: {
                 show: false
-            }
+            },
+            floating: false,
+            decimalsInFloat: 2
         }
     }
 

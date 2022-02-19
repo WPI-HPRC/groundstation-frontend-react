@@ -44,6 +44,7 @@ export default class App extends React.Component {
             rocketIsConnected: false,
             missionStateStr: "Idle",
             timeScale: 50,
+            graphRefreshRate: 100,
             showConnectButton: true,
             commandHistory: []
         }
@@ -286,6 +287,15 @@ export default class App extends React.Component {
                 break;
             case "send":
                 socket.send(args[1]);
+                break;
+            case "c":
+                this.connectToReceiver();
+                break;
+            case "dc":
+                this.disconnectFromReceiver();
+                break;
+            case "z":
+                socket.send("zeroAll");
                 break;
             case "help":
             case "h":

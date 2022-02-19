@@ -49,23 +49,35 @@ class Box extends React.PureComponent {
                     data1: [],
                     data2: [],
                     max: 0,
-                    time: props.time
+                    time: props.time,
+                    graphTime: props.time
                 }
             }
 
             // Update data sets with new values
             else {
 
-                return {
-                    val0: props.val0,
-                    val1: props.val1,
-                    val2: props.val2,
-                    data0: [...current_state.data0.slice(props.datanum * dataScalar), [props.time.getTime(), props.val0]],
-                    data1: [...current_state.data1.slice(props.datanum * dataScalar), [props.time.getTime(), props.val1]],
-                    data2: [...current_state.data2.slice(props.datanum * dataScalar), [props.time.getTime(), props.val2]],
-                    max: current_state.max > props.val0 ? current_state.max : props.val0,
-                    time: props.time,
-                    graphTime: props.time
+                if ((props.time.getTime() - current_state.graphTime.getTime()) > props.graphRefreshRate) {
+                    return {
+                        val0: props.val0,
+                        val1: props.val1,
+                        val2: props.val2,
+                        data0: [...current_state.data0.slice(props.datanum * dataScalar), [props.time.getTime(), props.val0]],
+                        data1: [...current_state.data1.slice(props.datanum * dataScalar), [props.time.getTime(), props.val1]],
+                        data2: [...current_state.data2.slice(props.datanum * dataScalar), [props.time.getTime(), props.val2]],
+                        max: current_state.max > props.val0 ? current_state.max : props.val0,
+                        time: props.time,
+                        graphTime: props.time
+                    }
+                }
+                else {
+                    return {
+                        val0: props.val0,
+                        val1: props.val1,
+                        val2: props.val2,
+                        max: current_state.max > props.val0 ? current_state.max : props.val0,
+                        time: props.time,
+                    }
                 }
             }
         }
@@ -223,18 +235,18 @@ export default class GaugeCluster extends React.PureComponent {
         return (
             <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`}>
                 <div className="GaugeCluster" style={{height: "90%"}}>
+                    <Box title="Altitude" unit="m" min={0} max={9999} defaultToGraph={false}
+                        threshold={900} digits={4} graphRefreshRate={this.props.graphRefreshRate}
+                        datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.altitude} name0={"Altitude"}/>
                     <Box title="Velocity" unit="m/s" min={0} max={300} defaultToGraph={false}
-                        threshold={200} digits={3} 
-                        datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.vel}/>
+                        threshold={200} digits={3} graphRefreshRate={this.props.graphRefreshRate}
+                        datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.vel} name0={"Altitude"}/>
                     <Box title="Acceleration" unit="m/s/s (X)" min={0} max={3000} 
-                        threshold={2000} digits={4} defaultToGraph={true}
+                        threshold={2000} digits={4} defaultToGraph={true} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} 
                         val0={this.state.accelX} name0="X"
                         val1={this.state.accelY} name1="Y"
                         val2={this.state.accelZ} name2="Z"/>
-                    <Box title="Altitude" unit="m" min={0} max={9999} defaultToGraph={false}
-                        threshold={900} digits={4} 
-                        datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.altitude}/>
                 </div>
             </div>
         );
