@@ -189,6 +189,16 @@ export default class App extends React.Component {
             gyroZ: json.GyroZ
         });
 
+        if (latency > 100) {
+            this.setState({
+                graphRefreshRate: 250
+            });
+        } else {
+            this.setState({
+                graphRefreshRate: 100
+            });
+        }
+
         if (this.state.receiverIsConnected && this.state.rocketIsConnected) {
             this.setState({
                 missionStateStr: "Connected"
