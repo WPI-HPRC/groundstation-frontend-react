@@ -112,6 +112,18 @@ export default class App extends React.Component {
             });
         }.bind(this));
 
+        // Connection closed
+        socket.addEventListener('close', function (event) {
+            if (this.state.receiverIsConnected) {
+                this.pushConsoleMessage("Lost connection to receiver.", "red");
+                this.setState({
+                    receiverIsConnected: false,
+                    showConnectButton: true,
+                    missionStateStr: "Disconnected"
+                });
+            }
+        }.bind(this));
+
         // Listen for possible errors
         socket.addEventListener('error', function (event) {
             this.pushConsoleMessage("Could not connect to reciever.", "red");
@@ -281,6 +293,9 @@ export default class App extends React.Component {
                     vehicleClock: new Date(ms)
                 });
                 break;
+            case "send":
+                socket.send(args[1]);
+                break;
             case "help":
             case "h":
                 
@@ -312,6 +327,10 @@ export default class App extends React.Component {
         this.setState((state, props) => ({
             commandHistory: this.commandHistory.slice(-1 * maxMessages)
         }));
+    }
+
+    zeroGauges() {
+        socket.send("Here is a message!");
     }
     
     /**
