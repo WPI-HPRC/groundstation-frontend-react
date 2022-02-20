@@ -125,7 +125,7 @@ class MissionState extends React.Component {
 
         return (
             <div style={{display:"inline-block", width: "100%", textAlign: "center", padding: "10px"}}>
-                <h4 style={{margin: "0px 0px 10px"}}>Groundstation State</h4>
+                {/* <h4 style={{margin: "0px 0px 10px"}}>Groundstation State</h4> */}
                 <div className="statusIndicator" style={{display: "inline-block", backgroundColor: color}}>
                     <h3>
                     {this.state.missionStateStr}
@@ -148,7 +148,9 @@ export default class MissionStatus extends React.Component {
             lastUpdates: [],
             latency: props.latency,
             latencies: [],
-            showConnect: props.showConnectButton
+            showConnect: props.showConnectButton,
+            slowLog: props.slowLog,
+            fastLog: props.fastLog
         }
 
         this.handleConnect = this.handleConnect.bind(this);
@@ -163,7 +165,9 @@ export default class MissionStatus extends React.Component {
             current_state.missionStateStr !== props.missionStateStr ||
             current_state.lastUpdate !== props.lastUpdate ||
             current_state.latency !== props.latency ||
-            current_state.showConnect !== props.showConnectButton) {
+            current_state.showConnect !== props.showConnectButton ||
+            current_state.slowLog !== props.slowLog ||
+            current_state.fastLog !== props.fastLog) {
 
             if (props.latency === "-" && props.lastUpdate === "-") {
                 return {
@@ -174,6 +178,8 @@ export default class MissionStatus extends React.Component {
                     latency: props.latency,
                     latencies: [],
                     showConnect: props.showConnectButton,
+                    slowLog: props.slowLog,
+                    fastLog: props.fastLog
                 }
             }
             update = {
@@ -185,6 +191,8 @@ export default class MissionStatus extends React.Component {
                 latency: props.latency,
                 latencies: [...current_state.latencies.slice(-100), props.latency],
                 showConnect: props.showConnectButton,
+                slowLog: props.slowLog,
+                fastLog: props.fastLog
             }
         }
 
@@ -229,6 +237,13 @@ export default class MissionStatus extends React.Component {
                         </div>
                         <div style={{position: "absolute", top: "120px", width: "100%"}}>
                             <StatusIndicator name="Rocket" connected={this.state.rocketIsConnected} refresh={"-"} latency={"-"}/>
+                        </div>
+                        <div style={{position: "absolute", top: "140px", width: "100%"}}>
+                            <div style={{position: "relative", width: "100%"}}>
+                                {/* <h4 style={{display: "inline-block", position: "absolute", left: 0}}>Logging:</h4>  */}
+                                <h4 style={{display: "inline-block", position: "absolute", right: 80}}>Slow Log: <font style={{color: this.slowLog ? "#00f700" : "#ED5031"}}>{this.slowLog ? "On" : "Off"}</font></h4>
+                                <h4 style={{display: "inline-block", position: "absolute", right: 220}}>Fast Log: <font  style={{color: this.fastLog ? "#00f700" : "#ED5031"}}>{this.fastLog ? "On" : "Off"}</font></h4>
+                            </div>
                         </div>
                         <div style={{position: "absolute", bottom: "1%", width: "100%"}}>
                             <MissionState missionStateStr={this.state.missionStateStr}/>

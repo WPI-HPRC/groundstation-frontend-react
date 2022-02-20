@@ -85,7 +85,7 @@ export default class SystemPanel extends React.Component {
                     >
                         {padLeadingZeros(value, 3)}
                     </h3>
-                    <font style={{fontSize: "1.5em"}}>°/s</font>
+                    <font style={{fontSize: "1.5em"}}>dps</font>
                 </>
             );
         };
@@ -117,7 +117,7 @@ export default class SystemPanel extends React.Component {
         return (
             <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`}>
                 <div className="SystemPanel" style={{position: "relative", width: "100%", height: "100%"}}>
-                    <h3>System</h3>
+                    <h3>Gyroscope</h3>
                     <hr/>
                     <div className="subpanel" style={{display: "inline-block", height: "80%", margin: "0px 0px 0px 5px"}}>
                         <div style={{display: "inline-block", textAlign: "center", margin: "0px 0px 0px 10px"}}>

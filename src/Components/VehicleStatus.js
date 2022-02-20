@@ -30,6 +30,9 @@ class VehicleState extends React.PureComponent {
             case "Powered Ascent":
                 color = "red";
                 break;
+            case 0:
+                color = '#1aa3e8';
+                break;
             default:
                 color = "gray";
                 break;

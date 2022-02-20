@@ -24,10 +24,10 @@ export default class App extends React.Component {
             renderSplashScreen: true,
             dark: true,
             battery: "-",
-            temperature: 0,
+            temperature: "-",
             stateStr: "-",
-            lat: 42.2743,
-            long: -71.8081,
+            lat: "-",
+            long: "-",
             vehicleClock: new Date(0),
             lastUpdate: "-",
             latency: "-",
@@ -121,6 +121,7 @@ export default class App extends React.Component {
 
             this.setState({
                 receiverIsConnected: false,
+                rocketIsConnected: false,
                 showConnectButton: true,
                 missionStateStr: "Disconnected"
             });
@@ -186,7 +187,9 @@ export default class App extends React.Component {
             accelZ: json.AccelZ,
             gyroX: json.GyroX,
             gyroY: json.GyroY,
-            gyroZ: Math.abs(json.GyroZ)
+            gyroZ: Math.abs(json.GyroZ),
+            slowLog: json.SlowLogging,
+            fastLog: json.FastLogging
         });
 
         if (latency > 100) {
@@ -305,7 +308,16 @@ export default class App extends React.Component {
                 this.disconnectFromReceiver();
                 break;
             case "z":
-                socket.send("zeroAll");
+                socket.send("zeroTm");
+                break;
+            case "x":
+                socket.send("clearOffset");
+                break;
+            case "rec":
+                socket.send("recRaw");
+                break;
+            case "dump":
+                socket.send("dump");
                 break;
             case "help":
             case "h":
@@ -352,7 +364,7 @@ export default class App extends React.Component {
         if (!this.state.receiverIsConnected) {
             this.setState ({
                 battery: "-",
-                temperature: 0,
+                temperature: "-",
                 stateStr: "-",
                 lat: "-",
                 long: "-",
@@ -372,7 +384,6 @@ export default class App extends React.Component {
                 missionClock: new Date(),
                 missionStateStr: "Idle",
                 showConnectButton: true,
-                commandHistory: []
             });
         }
         else {
