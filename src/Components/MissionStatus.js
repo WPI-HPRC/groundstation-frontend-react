@@ -207,7 +207,7 @@ export default class MissionStatus extends React.Component {
         this.props.disconnFunc();
     }
     
-    render() {
+    render() { 
 
         var runningAvgRefresh = parseInt(this.state.lastUpdates.reduce((a,b) => a + b, 0) / this.state.lastUpdates.length);
         var runningAvgLatency = parseInt(this.state.latencies.reduce((a,b) => a + b, 0) / this.state.latencies.length);
@@ -241,8 +241,8 @@ export default class MissionStatus extends React.Component {
                         <div style={{position: "absolute", top: "140px", width: "100%"}}>
                             <div style={{position: "relative", width: "100%"}}>
                                 {/* <h4 style={{display: "inline-block", position: "absolute", left: 0}}>Logging:</h4>  */}
-                                <h4 style={{display: "inline-block", position: "absolute", right: 80}}>Slow Log: <font style={{color: this.slowLog ? "#00f700" : "#ED5031"}}>{this.slowLog ? "On" : "Off"}</font></h4>
-                                <h4 style={{display: "inline-block", position: "absolute", right: 220}}>Fast Log: <font  style={{color: this.fastLog ? "#00f700" : "#ED5031"}}>{this.fastLog ? "On" : "Off"}</font></h4>
+                                <h4 style={{display: "inline-block", position: "absolute", right: 80}}>Slow Log: <font style={{color: this.state.slowLog ? "#00f700" : "#ED5031"}}>{this.state.slowLog ? "On" : "Off"}</font></h4>
+                                <h4 style={{display: "inline-block", position: "absolute", right: 220}}>Fast Log: <font  style={{color: this.state.fastLog ? "#00f700" : "#ED5031"}}>{this.state.fastLog ? "On" : "Off"}</font></h4>
                             </div>
                         </div>
                         <div style={{position: "absolute", bottom: "1%", width: "100%"}}>
