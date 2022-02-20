@@ -186,7 +186,7 @@ export default class App extends React.Component {
             accelZ: json.AccelZ,
             gyroX: json.GyroX,
             gyroY: json.GyroY,
-            gyroZ: json.GyroZ
+            gyroZ: Math.abs(json.GyroZ)
         });
 
         if (latency > 100) {
@@ -374,12 +374,20 @@ export default class App extends React.Component {
                 showConnectButton: true,
                 commandHistory: []
             });
-
-            clearInterval(this.reconnId);
-            this.reconnId = 0;
-
-            clearInterval(this.getTelemId);
-            this.getTelemId = 0;
+        }
+        else {
+            this.setState({
+                vel: 0,
+                accel: 0,
+                altitude: 0,
+                accelX: 0,
+                accelY: 0,
+                accelZ: 0,
+                gyroX: 0,
+                gyroY: 0,
+                gyroZ: 0,
+                vehicleClock: new Date(0)
+            })
         }
     }
 

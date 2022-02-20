@@ -123,7 +123,8 @@ export default class VehicleStatus extends React.Component {
                     <VehicleState stateStr={this.state.stateStr}/>
                     <hr/>
                     <h4>Position:</h4>
-                    <h4>{this.state.lat}, {this.state.long}</h4>
+                    <h4 style={{margin: "0px 0px 0px 0px"}}>Lat: {this.state.lat}</h4>
+                    <h4>Long: {this.state.long}</h4>
                     <div style={{position: "absolute", bottom: "2%", width: "100%"}}>
                         <hr/>
                         <h4>Flight Clock:</h4>

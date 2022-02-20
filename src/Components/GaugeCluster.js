@@ -140,7 +140,7 @@ class Box extends React.PureComponent {
                         margin: "0px 0px 20px 0px",
                         }}
                     >
-                        {padLeadingZeros(value, this.props.digits)}
+                        {padLeadingZeros(parseInt(value), this.props.digits)}
                     </h3>
                 </>
             );

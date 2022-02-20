@@ -52,7 +52,7 @@ class StatusIndicator extends React.Component {
     render() {
         const renderWarning = () => {
             if (this.state.blinkOn) {
-                return <h4 style={{display: "inline-block", width: "15%",textAlign: "right", padding: "0px", color: "#ED5031", margin: "0px 0px 20px 0px"}}>!</h4>;
+                return <h4 style={{position: "absolute", right: 10 ,textAlign: "right", padding: "0px", color: "#ED5031", margin: "0px 0px 20px 0px"}}>!</h4>;
             }
         }
 
@@ -66,14 +66,14 @@ class StatusIndicator extends React.Component {
         }
 
         return (
-            <div>
-                <h4 style={{display: "inline-block", width: "40%", padding: "0px 0px 0px 20px", margin: "0px 0px 20px 0px"}}>
+            <div style={{position: "relative", width: "100%"}}>
+                <h4 style={{position: "absolute", left: 0, padding: "0px 0px 0px 20px", margin: "0px 0px 20px 0px"}}>
                     {this.state.systemName}: <font style={{color: this.state.connected ? "#00f700" : "#ED5031"}}>{this.state.connected ? "Connected" : "Disconnected"} </font>
                 </h4>
-                <h4 style={{display: "inline-block", width: "15%", padding: "0px 0px 0px 20px", margin: "0px 0px 20px 0px"}}>
+                <h4 style={{position: "absolute", left: "40%", padding: "0px 0px 0px 20px", margin: "0px 0px 20px 0px"}}>
                     RFS: <font style={{color: getColor(this.state.refresh)}}>{this.state.refresh}</font>ms
                 </h4>
-                <h4 style={{display: "inline-block", width: "15%", padding: "0px 0px 0px 20px", margin: "0px 0px 20px 0px"}}>
+                <h4 style={{position: "absolute", left: "60%", padding: "0px 0px 0px 20px", margin: "0px 0px 20px 0px"}}>
                     LAT: <font style={{color: getColor(this.state.latency)}}>{this.state.latency}</font>ms
                 </h4>
                 {renderWarning()}
@@ -167,6 +167,8 @@ export default class MissionStatus extends React.Component {
 
             if (props.latency === "-" && props.lastUpdate === "-") {
                 return {
+                    receiverIsConnected: props.receiverIsConnected,
+                    rocketIsConnected: props.rocketIsConnected,
                     lastUpdate: props.lastUpdate,
                     lastUpdates: [],
                     latency: props.latency,
@@ -215,15 +217,19 @@ export default class MissionStatus extends React.Component {
                         </div>
                         <div style={{display: "inline-block", width: "50%", textAlign: "right"}}>
                             <div className={!this.state.showConnect ? "inline" : "hidden"}>
-                                <button className="customButtonLg" onClick={() => this.handleDisconnect()}>Disconnect</button>
+                                <button className="customButtonLg" style={{margin: "0px 20px 0px 0px"}} onClick={() => this.handleDisconnect()}>Disconnect</button>
                             </div>
                             <div className={this.state.showConnect ? "inline" : "hidden"}>
                                 <button className="customButtonLg" style={{margin: "0px 20px 0px 0px"}} onClick={() => this.handleConnect()}>Connect</button>
                             </div>
                         </div>
                         <hr/>
-                        <StatusIndicator name="Receiver" connected={this.state.receiverIsConnected} refresh={runningAvgRefresh} latency={runningAvgLatency}/>
-                        <StatusIndicator name="Rocket" connected={this.state.rocketIsConnected} refresh={"-"} latency={"-"}/>
+                        <div style={{position: "absolute", top: "80px", width: "100%"}}>
+                            <StatusIndicator name="Receiver" connected={this.state.receiverIsConnected} refresh={runningAvgRefresh} latency={runningAvgLatency}/>
+                        </div>
+                        <div style={{position: "absolute", top: "120px", width: "100%"}}>
+                            <StatusIndicator name="Rocket" connected={this.state.rocketIsConnected} refresh={"-"} latency={"-"}/>
+                        </div>
                         <div style={{position: "absolute", bottom: "1%", width: "100%"}}>
                             <MissionState missionStateStr={this.state.missionStateStr}/>
                         </div>
