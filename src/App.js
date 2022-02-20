@@ -46,7 +46,9 @@ export default class App extends React.Component {
             timeScale: 50,
             graphRefreshRate: 100,
             showConnectButton: true,
-            commandHistory: []
+            commandHistory: [],
+            slowLog: true,
+            fastLog: true
         }
 
         /**
