@@ -204,7 +204,7 @@ export default class App extends React.Component {
             accelZ: json.AccelZ,
             gyroX: json.GyroX,
             gyroY: json.GyroY,
-            gyroZ: Math.abs(json.GyroY),
+            gyroZ: Math.abs(json.GyroZ),
             slowLog: json.SlowLogging,
             fastLog: json.FastLogging
         });
