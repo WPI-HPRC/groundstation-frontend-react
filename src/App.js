@@ -11,6 +11,9 @@ const server = "ws://127.0.0.1"
 const port = "3005"
 var socket;
 
+const HIGH_REFRESH = 500;
+const LOW_REFRESH = 100;
+
 export default class App extends React.Component {
 
     constructor(props) {
@@ -112,7 +115,11 @@ export default class App extends React.Component {
                 this.setState({
                     receiverIsConnected: false,
                     showConnectButton: true,
-                    missionStateStr: "Disconnected"
+                    missionStateStr: "Disconnected",
+                    lastUpdate: "-",
+                    latency: "-",
+                    slowLog: false,
+                    fastLog: false
                 });
             }
         }.bind(this));
@@ -125,7 +132,11 @@ export default class App extends React.Component {
                 receiverIsConnected: false,
                 rocketIsConnected: false,
                 showConnectButton: true,
-                missionStateStr: "Disconnected"
+                missionStateStr: "Disconnected",
+                lastUpdate: "-",
+                latency: "-",
+                slowLog: false,
+                fastLog: false
             });
         }.bind(this));
 
@@ -145,11 +156,15 @@ export default class App extends React.Component {
             receiverIsConnected: false,
             rocketIsConnected: false,
             missionStateStr: "Disconnected",
-            showConnectButton: true
+            showConnectButton: true,
+            lastUpdate: "-",
+            latency: "-",
+            slowLog: false,
+            fastLog: false
         });
         socket.close();
 
-        this.pushConsoleMessage("Disconnected from receiver.", "green")
+        this.pushConsoleMessage("Disconnected from receiver.", "green");
         
     }
 
@@ -189,18 +204,19 @@ export default class App extends React.Component {
             accelZ: json.AccelZ,
             gyroX: json.GyroX,
             gyroY: json.GyroY,
-            gyroZ: Math.abs(json.GyroZ),
+            gyroZ: Math.abs(json.GyroY),
             slowLog: json.SlowLogging,
             fastLog: json.FastLogging
         });
 
-        if (latency > 100) {
+        if (latency > 100 && this.state.graphRefreshRate < HIGH_REFRESH) {
             this.setState({
-                graphRefreshRate: 500
+                graphRefreshRate: HIGH_REFRESH
             });
-        } else {
+        } 
+        else if (this.state.graphRefreshRate > LOW_REFRESH) {
             this.setState({
-                graphRefreshRate: 100
+                graphRefreshRate: LOW_REFRESH
             });
         }
 
@@ -386,6 +402,8 @@ export default class App extends React.Component {
                 missionClock: new Date(),
                 missionStateStr: "Idle",
                 showConnectButton: true,
+                slowLog: false,
+                fastLog: false
             });
         }
         else {
@@ -399,7 +417,7 @@ export default class App extends React.Component {
                 gyroX: 0,
                 gyroY: 0,
                 gyroZ: 0,
-                vehicleClock: new Date(0)
+                vehicleClock: new Date(0),
             })
         }
     }
