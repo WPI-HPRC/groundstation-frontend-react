@@ -4,7 +4,13 @@ import LiveSplineChart from './LiveSplineChart';
 
 function padLeadingZeros(num, size) {
     var s = num+"";
-    while (s.length < size) s = "0" + s;
+    while (s.replace(".", "").length < size) s = "0" + s;
+    return s;
+}
+
+function rPadLeadingZeros(num, size) {
+    var s = num+"";
+    while (s.replace(".", "").length < size) s = s + "0";
     return s;
 }
 
@@ -83,7 +89,7 @@ export default class SystemPanel extends React.Component {
                         padding: "0px 0px 0px 0px"
                         }}
                     >
-                        {padLeadingZeros(value, 3)}
+                        {rPadLeadingZeros(value, 3)}
                     </h3>
                     <font style={{fontSize: "1.5em"}}>dps</font>
                 </>
@@ -102,7 +108,7 @@ export default class SystemPanel extends React.Component {
                         margin: "0px 0px 0px 0px",
                         }}
                     >
-                        {padLeadingZeros(value, 4)}
+                        {padLeadingZeros(value, 3)}
                     </h3>
                     <font style={{fontSize: "1.5em"}}>rpm</font>
                 </>
@@ -110,7 +116,7 @@ export default class SystemPanel extends React.Component {
         };
 
         const arcOptions = {
-            value: (this.state.gyroZ)
+            value: (this.state.gyroY)
         }
 
 
@@ -141,15 +147,15 @@ export default class SystemPanel extends React.Component {
                             />
                         </div>
                         <div style={{display: "inline-block", margin: "0px 0px 0px 0px", textAlign: "center", position: "relative"}}>
-                            <h3>Roll (Z)</h3>
+                            <h3>Roll (Y)</h3>
                             <ArcGauge {...arcOptions} centerRender={arcCenterRenderer} 
                                 style={{position: "absolute", width: "300px", bottom: "10px", margin: "0px 0px 0px 0px"}} 
-                                scale={{startAngle: -40, endAngle: 220, rangeSize: 10, min: 0, max: 9999}}/>
+                                scale={{startAngle: -40, endAngle: 220, rangeSize: 10, min: 0, max: 300}}/>
                         </div>
                         <div style={{display: "inline-block", margin: "0px 10px 0px 0px", textAlign: "center"}}>
-                            <h3>Yaw (Y)</h3>
+                            <h3>Yaw (Z)</h3>
                             <CircularGauge
-                                value={Math.abs(this.state.gyroY)}
+                                value={Math.abs(this.state.gyroZ)}
                                 colors={colors}
                                 transitions={true}
                                 centerRender={circCenterRenderer}

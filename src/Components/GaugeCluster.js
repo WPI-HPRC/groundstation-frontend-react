@@ -240,12 +240,12 @@ export default class GaugeCluster extends React.PureComponent {
                         datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.altitude} name0={"Altitude"}/>
                     <Box title="Velocity" unit="m/s" min={0} max={300} defaultToGraph={false}
                         threshold={200} digits={3} graphRefreshRate={this.props.graphRefreshRate}
-                        datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.vel} name0={"Velocity"}/>
-                    <Box title="Acceleration" unit="m/s/s (X)" min={0} max={3000} 
+                        datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.vel} name0={"Velocity ΔA"}/>
+                    <Box title="Acceleration" unit="m/s/s (Y)" min={0} max={3000} 
                         threshold={2000} digits={4} defaultToGraph={true} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} 
-                        val0={this.state.accelX} name0="X"
-                        val1={this.state.accelY} name1="Y"
+                        val0={this.state.accelY} name0="Y"
+                        val1={this.state.accelX} name1="X"
                         val2={this.state.accelZ} name2="Z"/>
                 </div>
             </div>
