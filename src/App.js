@@ -199,12 +199,12 @@ export default class App extends React.Component {
             lastUpdate: diff,
             latency: latency,
             rocketIsConnected: json.RocketConnected,
-            accelX: json.AccelX,
-            accelY: json.AccelY,
-            accelZ: json.AccelZ,
-            gyroX: json.GyroX,
-            gyroY: json.GyroY,
-            gyroZ: Math.abs(json.GyroZ),
+            accelX: (json.AccelX * (1/2048)).toFixed(2),
+            accelY: (json.AccelY * (1/2048)).toFixed(2),
+            accelZ: (json.AccelZ * (1/2048)).toFixed(2),
+            gyroX: (json.GyroX * (1/16.4)).toFixed(2),
+            gyroY: ((json.GyroY * (1/16.4)).toFixed(2) / 60),
+            gyroZ: (json.GyroZ * (1/16.4)).toFixed(2),
             slowLog: json.SlowLogging,
             fastLog: json.FastLogging
         });
