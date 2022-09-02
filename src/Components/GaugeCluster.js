@@ -208,6 +208,9 @@ export default class GaugeCluster extends React.PureComponent {
             altitude: props.altitude,
             vehicleClock: props.vehicleClock,
             timeScale: props.timeScale,
+            showMetric: props.showMetric,
+            altUnit: "m",
+            accelUnit: "m/s/s",
         }
     }
 
@@ -216,14 +219,31 @@ export default class GaugeCluster extends React.PureComponent {
 
         if (current_state.vehicleClock !== props.vehicleClock ||
             current_state.timeScale !== props.timeScale) {
-            update = {
-                vel: props.vel,
-                accelX: props.accelX,
-                accelY: props.accelY,
-                accelZ: props.accelZ,
-                altitude: props.altitude,
-                vehicleClock: props.vehicleClock,
-                timeScale: props.timeScale
+
+            if(props.showMetric) {
+                update = {
+                    vel: props.vel,
+                    accelX: (props.accelX / 9.80665).toFixed(2),
+                    accelY: (props.accelY / 9.80665).toFixed(2),
+                    accelZ: (props.accelZ / 9.80665).toFixed(2),
+                    altitude: (props.altitude * 3.281).toFixed(2),
+                    vehicleClock: props.vehicleClock,
+                    timeScale: props.timeScale,
+                    altUnit: "ft",
+                    accelUnit: "G"
+                }
+            } else {
+                update = {
+                    vel: props.vel,
+                    accelX: props.accelX,
+                    accelY: props.accelY,
+                    accelZ: props.accelZ,
+                    altitude: props.altitude,
+                    vehicleClock: props.vehicleClock,
+                    timeScale: props.timeScale,
+                    altUnit: "m",
+                    accelUnit: "m/s/s"
+                }
             }
 
         }
@@ -235,13 +255,13 @@ export default class GaugeCluster extends React.PureComponent {
         return (
             <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`}>
                 <div className="GaugeCluster" style={{height: "90%"}}>
-                    <Box title="Altitude" unit="m" min={0} max={9999} defaultToGraph={false}
+                    <Box title="Altitude" unit={this.state.altUnit} min={0} max={9999} defaultToGraph={false}
                         threshold={900} digits={4} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.altitude} name0={"Altitude"}/>
                     <Box title="Velocity" unit="m/s" min={0} max={300} defaultToGraph={false}
                         threshold={200} digits={3} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.vel} name0={"Velocity ΔA"}/>
-                    <Box title="Acceleration" unit="m/s/s (Y)" min={0} max={3000} 
+                    <Box title="Acceleration" unit={this.state.accelUnit} min={0} max={3000} 
                         threshold={2000} digits={4} defaultToGraph={true} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} 
                         val0={this.state.accelY} name0="Y"

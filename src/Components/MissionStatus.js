@@ -150,11 +150,14 @@ export default class MissionStatus extends React.Component {
             latencies: [],
             showConnect: props.showConnectButton,
             slowLog: props.slowLog,
-            fastLog: props.fastLog
+            fastLog: props.fastLog,
+            showMetric: props.showMetric,
+            altitude: props.altitude
         }
 
         this.handleConnect = this.handleConnect.bind(this);
         this.handleDisonnect = this.handleDisconnect.bind(this);
+        this.handleUnitSwitch = this.handleUnitSwitch.bind(this);
     }
 
     static getDerivedStateFromProps(props, current_state) {
@@ -199,6 +202,24 @@ export default class MissionStatus extends React.Component {
         return update;
     }
 
+    handleUnitSwitch(event) {
+        this.setState({
+            showMetric: !this.state.showMetric
+        });
+        
+        this.props.unitFunc(this.state.showMetric);
+        
+        switch(this.state.showMetric) {
+            case true:
+                break;
+            case false:
+                this.setState({
+                    altitude: this.state.altitude * 1000
+                });
+                break;
+        }
+    }
+
     handleConnect(event) {
         this.props.connFunc();
     }
@@ -220,16 +241,25 @@ export default class MissionStatus extends React.Component {
             <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`}>
                 <div className="MissionStatus">
                     <div style={{display: "inline-block", position: "relative", width: "100%", height: "100%", overflow: "hidden"}}>
-                        <div style={{display: "inline-block", width: "50%"}}>
-                            <h3>Ground Station Status</h3>
+                        <div style={{display: "inline-block", width: "10%"}}>
+                            <h3>Status</h3>
                         </div>
-                        <div style={{display: "inline-block", width: "50%", textAlign: "right"}}>
+                        <div style={{display: "inline-block", width: "90%", textAlign: "right"}}>
                             <div className={!this.state.showConnect ? "inline" : "hidden"}>
-                                <button className="customButtonLg" style={{margin: "0px 20px 0px 0px"}} onClick={() => this.handleDisconnect()}>Disconnect</button>
+                                <button className="customButtonLg" style={{margin: "0px 10px 0px 0px"}} onClick={() => this.handleDisconnect()}>Disconnect</button>
                             </div>
                             <div className={this.state.showConnect ? "inline" : "hidden"}>
-                                <button className="customButtonLg" style={{margin: "0px 20px 0px 0px"}} onClick={() => this.handleConnect()}>Connect</button>
+                                <button className="customButtonLg" style={{margin: "0px 10px 0px 0px"}} onClick={() => this.handleConnect()}>Connect</button>
                             </div>
+
+                            <div className={this.state.showMetric ? "inline" : "hidden"}>
+                                <button className="customButtonLg" style={{margin: "0px 20px 0px 0px"}} onClick={() => this.handleUnitSwitch()}>Metric</button>
+                            </div>
+
+                            <div className={!this.state.showMetric ? "inline" : "hidden"}>
+                                <button className="customButtonLg" style={{margin: "0px 10px 0px 0px"}} onClick={() => this.handleUnitSwitch()}>Imperial</button>
+                            </div>
+
                         </div>
                         <hr/>
                         <div style={{position: "absolute", top: "80px", width: "100%"}}>

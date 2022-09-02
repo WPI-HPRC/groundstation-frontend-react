@@ -58,6 +58,7 @@ export default class Layout extends React.Component {
                                 </Row>
                                 <Row style={{height:"30vh"}}>
                                     <MissionStatus
+                                        unitFunc = {this.props.unitFunc}
                                         {...this.props} />
                                 </Row>
                                 <Row style={{height:"45vh"}}>
