@@ -211,6 +211,7 @@ export default class GaugeCluster extends React.PureComponent {
             showMetric: props.showMetric,
             altUnit: "m",
             accelUnit: "m/s/s",
+            velUnit: "m/s"
         }
     }
 
@@ -222,7 +223,7 @@ export default class GaugeCluster extends React.PureComponent {
 
             if(props.showMetric) {
                 update = {
-                    vel: props.vel,
+                    vel: (props.vel * 3.281).toFixed(2),
                     accelX: (props.accelX / 9.80665).toFixed(2),
                     accelY: (props.accelY / 9.80665).toFixed(2),
                     accelZ: (props.accelZ / 9.80665).toFixed(2),
@@ -230,7 +231,8 @@ export default class GaugeCluster extends React.PureComponent {
                     vehicleClock: props.vehicleClock,
                     timeScale: props.timeScale,
                     altUnit: "ft",
-                    accelUnit: "G"
+                    accelUnit: "G",
+                    velUnit: "ft/s"
                 }
             } else {
                 update = {
@@ -242,7 +244,8 @@ export default class GaugeCluster extends React.PureComponent {
                     vehicleClock: props.vehicleClock,
                     timeScale: props.timeScale,
                     altUnit: "m",
-                    accelUnit: "m/s/s"
+                    accelUnit: "m/s/s",
+                    velUnit: "m/s"
                 }
             }
 
@@ -258,7 +261,7 @@ export default class GaugeCluster extends React.PureComponent {
                     <Box title="Altitude" unit={this.state.altUnit} min={0} max={9999} defaultToGraph={false}
                         threshold={900} digits={4} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.altitude} name0={"Altitude"}/>
-                    <Box title="Velocity" unit="m/s" min={0} max={300} defaultToGraph={false}
+                    <Box title="Velocity" unit={this.state.velUnit} min={0} max={300} defaultToGraph={false}
                         threshold={200} digits={3} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.vel} name0={"Velocity ΔA"}/>
                     <Box title="Acceleration" unit={this.state.accelUnit} min={0} max={3000} 
