@@ -217,10 +217,10 @@ export default class GaugeCluster extends React.PureComponent {
 
     static getDerivedStateFromProps(props, current_state) {
         let update = null;
-
         if (current_state.vehicleClock !== props.vehicleClock ||
-            current_state.timeScale !== props.timeScale) {
-
+            current_state.timeScale !== props.timeScale || 
+            current_state.showMetric !== props.showMetric) {
+            
             if(props.showMetric) {
                 update = {
                     vel: (props.vel * 3.281).toFixed(2),
@@ -232,7 +232,9 @@ export default class GaugeCluster extends React.PureComponent {
                     timeScale: props.timeScale,
                     altUnit: "ft",
                     accelUnit: "G",
-                    velUnit: "ft/s"
+                    velUnit: "ft/s",
+                    showMetric: props.showMetric
+
                 }
             } else {
                 update = {
@@ -245,7 +247,8 @@ export default class GaugeCluster extends React.PureComponent {
                     timeScale: props.timeScale,
                     altUnit: "m",
                     accelUnit: "m/s/s",
-                    velUnit: "m/s"
+                    velUnit: "m/s",
+                    showMetric: props.showMetric
                 }
             }
 
