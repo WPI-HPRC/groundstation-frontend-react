@@ -221,22 +221,7 @@ export default class GaugeCluster extends React.PureComponent {
             current_state.timeScale !== props.timeScale || 
             current_state.showMetric !== props.showMetric) {
             
-            if(props.showMetric) {
-                update = {
-                    vel: (props.vel * 3.281).toFixed(2),
-                    accelX: (props.accelX / 9.80665).toFixed(2),
-                    accelY: (props.accelY / 9.80665).toFixed(2),
-                    accelZ: (props.accelZ / 9.80665).toFixed(2),
-                    altitude: (props.altitude * 3.281).toFixed(2),
-                    vehicleClock: props.vehicleClock,
-                    timeScale: props.timeScale,
-                    altUnit: "ft",
-                    accelUnit: "G",
-                    velUnit: "ft/s",
-                    showMetric: props.showMetric
-
-                }
-            } else {
+            if(!props.showMetric) {
                 update = {
                     vel: props.vel,
                     accelX: props.accelX,
@@ -248,6 +233,21 @@ export default class GaugeCluster extends React.PureComponent {
                     altUnit: "m",
                     accelUnit: "m/s/s",
                     velUnit: "m/s",
+                    showMetric: props.showMetric
+
+                }
+            } else {
+                update = {
+                    vel: (props.vel * 3.281).toFixed(2),
+                    accelX: (props.accelX / 9.80665).toFixed(2),
+                    accelY: (props.accelY / 9.80665).toFixed(2),
+                    accelZ: (props.accelZ / 9.80665).toFixed(2),
+                    altitude: (props.altitude * 3.281).toFixed(2),
+                    vehicleClock: props.vehicleClock,
+                    timeScale: props.timeScale,
+                    altUnit: "ft",
+                    accelUnit: "G",
+                    velUnit: "ft/s",
                     showMetric: props.showMetric
                 }
             }
@@ -268,7 +268,7 @@ export default class GaugeCluster extends React.PureComponent {
                         threshold={200} digits={3} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.vel} name0={"Velocity ΔA"}/>
                     <Box title="Acceleration" unit={this.state.accelUnit} min={0} max={3000} 
-                        threshold={2000} digits={4} defaultToGraph={true} graphRefreshRate={this.props.graphRefreshRate}
+                        threshold={2000} digits={4} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} 
                         val0={this.state.accelY} name0="Y"
                         val1={this.state.accelX} name1="X"
