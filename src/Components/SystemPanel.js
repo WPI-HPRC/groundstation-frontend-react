@@ -106,11 +106,13 @@ export default class SystemPanel extends React.Component {
                         color: "#F7F7F7",
                         fontSize: "2.5em",
                         margin: "0px 0px 0px 0px",
+                        padding: "5px 5px 5px 5px",
+                        
                         }}
                     >
                         {padLeadingZeros(value, 3)}
                     </h3>
-                    <font style={{fontSize: "1.5em"}}>rpm</font>
+                    <font style={{fontSize: "1.5em" }}>rpm</font>
                 </>
             );
         };
