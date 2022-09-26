@@ -37,6 +37,7 @@ class Box extends React.PureComponent {
     static getDerivedStateFromProps(props, current_state) {
 
         // Update on new time
+        // check if time has changed
         if (current_state.time !== props.time) {
 
             // Reset if rocket time returns to 0
@@ -56,7 +57,7 @@ class Box extends React.PureComponent {
 
             // Update data sets with new values
             else {
-
+                // check if it is time to update
                 if ((props.time.getTime() - current_state.graphTime.getTime()) >= props.graphRefreshRate) {
                     return {
                         val0: props.val0,
@@ -70,6 +71,7 @@ class Box extends React.PureComponent {
                         graphTime: props.time
                     }
                 }
+                // do nothing if it is not time to refresh yet
                 else {
                     return {
                         val0: props.val0,
@@ -84,22 +86,32 @@ class Box extends React.PureComponent {
 
         return null
     }
-
+    // perform initialization animation 8 seconds after system loads to give time for loading screen
     componentDidMount() {
+
         setTimeout(() => {this.initAnimation()}, 8000);
     }
-
+    
+    // switch from gauge to graph and back again
     handleClick() {
         this.setState((state, props) => ({
             drawGraph: !state.drawGraph
         }));
     }
     
+    /*
+    * Gauge start animation: 
+    *  - go from zero to max
+    *  - set value to zero
+    *  - go from max to zero
+    */
+
     initAnimation() {
+        // setting gauge to max value
         this.setState({
             gaugeLevel: this.props.max
         });
-
+        // set gauge back to zero 1 second after, giving time for animation to complete
         setTimeout(() => {
             this.setState({
                 enable: true,
@@ -208,11 +220,12 @@ export default class GaugeCluster extends React.PureComponent {
             altitude: props.altitude,
             vehicleClock: props.vehicleClock,
             timeScale: props.timeScale,
-            showMetric: props.showMetric,
+            showMetric: false,
             altUnit: "m",
             accelUnit: "m/s/s",
             velUnit: "m/s"
         }
+
     }
 
     static getDerivedStateFromProps(props, current_state) {
@@ -221,6 +234,7 @@ export default class GaugeCluster extends React.PureComponent {
             current_state.timeScale !== props.timeScale || 
             current_state.showMetric !== props.showMetric) {
             
+
             if(!props.showMetric) {
                 update = {
                     vel: props.vel,

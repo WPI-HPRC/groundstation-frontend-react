@@ -203,12 +203,11 @@ export default class MissionStatus extends React.Component {
     }
 
     handleUnitSwitch(event) {
+        
+        this.props.unitFunc(!this.state.showMetric)
         this.setState({
             showMetric: !this.state.showMetric
         });
-        
-        this.props.unitFunc(this.state.showMetric);
-        
         switch(this.state.showMetric) {
             case true:
                 break;
@@ -217,7 +216,7 @@ export default class MissionStatus extends React.Component {
                     altitude: this.state.altitude * 1000
                 });
                 break;
-        }
+        } 
     }
 
     handleConnect(event) {
@@ -228,6 +227,7 @@ export default class MissionStatus extends React.Component {
         this.props.disconnFunc();
     }
     
+
     render() { 
 
         var runningAvgRefresh = parseInt(this.state.lastUpdates.reduce((a,b) => a + b, 0) / this.state.lastUpdates.length);
