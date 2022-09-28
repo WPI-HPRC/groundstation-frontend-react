@@ -2,6 +2,11 @@ import React from 'react';
 import { CircularGauge, ArcGauge } from '@progress/kendo-react-gauges';
 import LiveSplineChart from './LiveSplineChart';
 
+/**
+ *  the panel containing the 3 gyroscope gauges (x/y/z, pitch/roll/yaw)
+ *  not to be confused with GaugeCluster which handles the position gauges (alt/vel/accel)
+ */
+
 function padLeadingZeros(num, size) {
     var s = num+"";
     while (s.replace(".", "").length < size) s = "0" + s;

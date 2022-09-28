@@ -3,6 +3,11 @@ import 'leaflet.offline';
 import {MapContainer, TileLayer} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css'
 
+/**
+ *  for visualization of things imported from outside React
+ *  current usage: map
+ *  planning to add 3D model of rocket (and quad?)
+ */
 
 export default class Visualization extends React.Component {
     constructor(props) {

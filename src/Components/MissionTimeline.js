@@ -1,6 +1,11 @@
 import React from 'react';
 import ProgressBar from "@ramonak/react-progress-bar";
 
+/**
+ *  bottom bar which contains the timestamps and current progress of the mission as well as 
+ *  the time and date
+ */
+
 function padLeadingZeros(num, size) {
     var s = num+"";
     while (s.length < size) s = "0" + s;

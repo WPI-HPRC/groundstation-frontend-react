@@ -5,6 +5,10 @@ import LiveSplineChart from './LiveSplineChart';
 const config = require('../mission.cfg');
 const dataScalar = -1;
 
+/**
+ *  The group of gauges that handles the altitude, velocity, and acceleration
+ *  not to be confused with SystemPanel which handles gyroscopes
+ */
 
 function padLeadingZeros(num, size) {
     var s = num+"";
@@ -17,7 +21,7 @@ class Box extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = { 
-            drawGraph: false,
+            drawGraph: false, // show graph vs gauge display
             val0: props.val0,
             val1: props.val1,
             val2: props.val2,

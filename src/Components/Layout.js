@@ -11,6 +11,36 @@ import SystemPanel from './SystemPanel';
 import GaugeCluster from './GaugeCluster';
 import MissionTimeline from './MissionTimeline';
 
+/**
+ *  general layout of the screen
+ *  all top-level components are organized here, then they can have their own sub-components
+ *  mostly panels etc 
+ * 
+ *  VehicleStatus
+ *    - top right corner
+ *    - contains info on temp, power, lat/long, mission time
+ *  ControlPanel
+ *    - top center
+ *    - console + timesplice control
+ *  SystemPanel
+ *    - below ControlPanel
+ *    - contains the 3 gyro gauges
+ *  GaugeCluser
+ *    - below SystemPanel
+ *    - contains the pos/vel/accel gauges
+ *  TitlePlate
+ *    - top right
+ *    - contains logo + name
+ *  MissionStatus
+ *    - below TitlePlate
+ *    - contains connection, latency info + conncect, units buttons
+ *  Visualization
+ *    - below MissionStatus
+ *    - map viewer
+ *  MissionTimeline
+ *    - bottom row
+ *    - timestamps for mission objectives + current local time
+ */
 
 export default class Layout extends React.Component {
 
@@ -18,7 +48,6 @@ export default class Layout extends React.Component {
         super(props);
         this.state = { }
     }
-
     render() {
         return (
             <>
@@ -34,6 +63,7 @@ export default class Layout extends React.Component {
                                         </Row>
                                     </Col>
                                     
+
                                     <Col lg={8}>
                                         <Row style={{height:"18vh"}}>
                                             <ControlPanel className="ControlPanel" 
