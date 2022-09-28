@@ -151,9 +151,10 @@ class Box extends React.PureComponent {
                     <h3
                         className="subpanel"
                         style={{
-                        color: "#F7F7F7",
-                        fontSize: "3.5em",
-                        margin: "0px 0px 20px 0px",
+                            color: "#F7F7F7",
+                            fontSize: "3.5em",
+                            margin: "0px 0px 20px 0px",
+                            textAlign: "center"
                         }}
                     >
                         {padLeadingZeros(parseInt(value), this.props.digits)}
