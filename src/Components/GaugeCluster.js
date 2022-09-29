@@ -147,18 +147,21 @@ class Box extends React.PureComponent {
 
             return (
                 <>
-                    <h4>{this.props.unit}</h4>
-                    <h3
-                        className="subpanel"
-                        style={{
-                            color: "#F7F7F7",
-                            fontSize: "3.5em",
-                            margin: "0px 0px 20px 0px",
-                            textAlign: "center"
-                        }}
-                    >
-                        {padLeadingZeros(parseInt(value), this.props.digits)}
-                    </h3>
+                    <div>
+                        <h4>{this.props.unit}</h4>
+                        <h3
+                            className="subpanel"
+                            style={{
+                                color: "#F7F7F7",
+                                fontSize: "3.5em",
+                                margin: "0px 20px 20px 20px",
+                                textAlign: "center",
+                                position: 'relative',
+                            }}
+                        >
+                            {padLeadingZeros(parseInt(value), this.props.digits)}
+                        </h3>
+                    </div>
                 </>
             );
         };
@@ -240,7 +243,7 @@ export default class GaugeCluster extends React.PureComponent {
             current_state.showMetric !== props.showMetric) {
             
 
-            if(!props.showMetric) {
+            if(props.showMetric) {
                 update = {
                     vel: props.vel,
                     accelX: props.accelX,
