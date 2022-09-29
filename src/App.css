@@ -8,21 +8,40 @@
   src: url('../public/OverpassMono-Regular.ttf');
 }
 
+:root {
+  --dark-app-bg-color: #141414;
+  --light-app-bg-color: #fdffcf;
+
+  --dark-app-fg-color: #ffffff;
+  --light-app-fg-color: #000000;
+
+  --dark-app-panel-color: #212121;
+  --light-app-panel-color: #fdffcf;
+
+  --custom-button-border-color: #ED5031;
+  --custom-button-bg-color: #2e2e2e;
+
+  --hr-color: var(--dark-app-panel-color);
+
+  --box-shadow-opacity: 0;
+  --box-shadow-color: rgba(0, 0, 0, var(--box-shadow-opacity));
+  --box-shadow-secondary-color: rgba(46, 46, 46, var(--box-shadow-opacity));
+}
+
 .darkApp {
   width: 100vw;
   height: 100vh;
   text-align: left;
-  color: #ffffff;
+  color: var(--dark-app-fg-color);
   position: relative;
-  background-color: #141414;
-  /* background-color: #212121; */
+  background-color: var(--dark-app-bg-color);
 }
 
 .lightApp {
   text-align: left;
-  color: #000000;
+  color: var(--light-app-fg-color);
   position: relative;
-  background-color: #fdffcf;
+  background-color: var(--light-app-bg-color);
 }
 
 .Layout {
@@ -37,9 +56,9 @@
 
 .darkPanel {
   border-radius: 5px;
-  background-color: #212121;
+  background-color: var(--dark-app-panel-color);
   /* background-color: #191919; */
-  box-shadow: 2px 2px 5px #000000, -2px -2px 5px #2e2e2e; 
+  box-shadow: 2px 2px 5px var(--box-shadow-color), -2px -2px 5px var(--box-shadow-secondary-color); 
   overflow: hidden;
   width: 100%;
   margin: 5px;
@@ -47,8 +66,8 @@
 
 .lightPanel {
   border-radius: 5px;
-  background-color: #fdffcf;
-  box-shadow: 2px 2px 5px #000000; 
+  background-color: var(--light-app-panel-color);
+  box-shadow: 2px 2px 5px var(--box-shadow-color); 
   overflow: hidden;
   width: 100%;
   margin: 5px;
@@ -57,7 +76,7 @@
 .subpanel {
   border-radius: 5px;
   background-color: inherit;
-  box-shadow: 2px 2px 5px #000000, -2px -2px 5px #2e2e2e;
+  box-shadow: 2px 2px 5px var(--box-shadow-color), -2px -2px 5px var(--box-shadow-secondary-color);
 }
 
 .bordered {
@@ -93,7 +112,7 @@
 .statusIndicator {
   border-radius: 5px;
   width: 50%; 
-  box-shadow: 2px 2px 5px #000000;
+  box-shadow: 2px 2px 5px var(--box-shadow-color);
 }
 
 .customButtonLg {
@@ -102,11 +121,11 @@
   margin: 0px 0px 0px 5px;
   letter-spacing: 0.5px;
   font-weight: 550;
-  background-color: #2e2e2e;
+  background-color: var(--custom-button-bg-color);
   color: #ffffff;
-  box-shadow: 2px 2px 5px #000000; 
+  box-shadow: 2px 2px 5px var(--box-shadow-color); 
   font-size: 1em;
-  border: 2px solid #ED5031;
+  border: 2px solid var(--custom-button-border-color);
   border-radius: 20px;
   cursor: pointer;
 }
@@ -116,37 +135,37 @@
   height: auto;
   margin: 5px;
   letter-spacing: 0.5px;
-  background-color: #2e2e2e;
+  background-color: var(--custom-button-bg-color);
   color: #ffffff;
-  box-shadow: 2px 2px 5px #000000; 
+  box-shadow: 2px 2px 5px var(--box-shadow-color); 
   font-size: 1em;
-  border: 1.5px solid #ED5031;
+  border: 1.5px solid var(--custom-button-border-color);
   border-radius: 20px;
   cursor: pointer;
 }
 
 .customButtonLg:hover {
-  border: 3px solid #ED5031;
-  box-shadow: 2px 2px 5px 2px #000000;
+  border: 3px solid var(--custom-button-border-color);
+  box-shadow: 2px 2px 5px 2px var(--box-shadow-color);
 }
 
 .customButtonLg:active {
-  background-color: #ED5031;
-  border: 1.5px solid #ED5031;
-  box-shadow: 0px 0px 0px 0px #000000;
+  background-color: var(--custom-button-border-color);
+  border: 1.5px solid var(--custom-button-border-color);
+  box-shadow: 0px 0px 0px 0px var(--box-shadow-color);
 }
 
 
 .customButtonSm:hover {
-  background-color: #ED5031;
-  border: 1.5px solid #ED5031;
-  box-shadow: 2px 2px 5px 2px #000000;
+  background-color: var(--custom-button-border-color);
+  border: 1.5px solid var(--custom-button-border-color);
+  box-shadow: 2px 2px 5px 2px var(--box-shadow-color);
 }
 
 .active{
-  background-color: #ED5031;
-  border: 1.5px solid #ED5031;
-  box-shadow: 4px 4px 5px 2px #000000; 
+  background-color: var(--custom-button-border-color);
+  border: 1.5px solid var(--custom-button-border-color);
+  box-shadow: 4px 4px 5px 2px var(--box-shadow-color); 
 }
 
 
@@ -212,7 +231,7 @@
 
 h1 {
   font-family: 'Trebuchet MS', 'Courier New', monospace;
-  text-shadow: 2px 2px 5px #000000;
+  text-shadow: 2px 2px 5px var(--box-shadow-color);
   padding-bottom: 0px;
   margin-bottom: 0px;
 }
@@ -227,9 +246,9 @@ h4 {
 }
 
 hr {
-  color: #212121;
-  background-color: #212121;
-  border-color: #212121;
+  color: var(--hr-color);
+  background-color: var(--hr-color);
+  border-color: var(--hr-color);
   height: 1;
 }
 
@@ -263,6 +282,6 @@ input[type=text] {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #ED5031;
+  background: var(--custom-button-border-color);
   border-radius: 10px;
 } 
