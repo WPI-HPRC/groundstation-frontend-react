@@ -1,5 +1,9 @@
 import React from 'react';
-
+ 
+/**
+ *   Indicator on middle-right showing status of vehicle
+ *   currently used inside MissionStatus
+ */
 
 class VehicleState extends React.PureComponent {
 

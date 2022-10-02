@@ -1,6 +1,10 @@
 import React from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 
+/**
+ *  handles console and timesplice
+ */
+
 function isNumeric(value) {
     return /^-?\d+$/.test(value);
 }

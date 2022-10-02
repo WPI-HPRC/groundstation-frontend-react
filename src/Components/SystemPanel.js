@@ -2,6 +2,11 @@ import React from 'react';
 import { CircularGauge, ArcGauge } from '@progress/kendo-react-gauges';
 import LiveSplineChart from './LiveSplineChart';
 
+/**
+ *  the panel containing the 3 gyroscope gauges (x/y/z, pitch/roll/yaw)
+ *  not to be confused with GaugeCluster which handles the position gauges (alt/vel/accel)
+ */
+
 function padLeadingZeros(num, size) {
     var s = num+"";
     while (s.replace(".", "").length < size) s = "0" + s;
@@ -106,11 +111,13 @@ export default class SystemPanel extends React.Component {
                         color: "#F7F7F7",
                         fontSize: "2.5em",
                         margin: "0px 0px 0px 0px",
+                        padding: "5px 5px 5px 5px",
+                        
                         }}
                     >
                         {padLeadingZeros(value, 3)}
                     </h3>
-                    <font style={{fontSize: "1.5em"}}>rpm</font>
+                    <font style={{fontSize: "1.5em" }}>rpm</font>
                 </>
             );
         };

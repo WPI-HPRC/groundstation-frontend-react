@@ -1,5 +1,10 @@
 import React from 'react';
 
+/**
+ *  plate in top-right which contains club name and logo
+ *  Current: WPI <img> HPRC
+ *             AQUILA GS
+ */
 
 export default class TitlePlate extends React.Component {
 

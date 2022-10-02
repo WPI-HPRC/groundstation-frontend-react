@@ -1,6 +1,10 @@
 import React from 'react';
 import '../App.css';
 
+/**
+ *  The black screen that hides everything while loading animation plays
+ */
+
 export default class SpashScreen extends React.Component {
 
     render() {

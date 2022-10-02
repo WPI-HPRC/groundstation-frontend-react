@@ -1,5 +1,11 @@
 import React from 'react';
 
+/**
+ *  Everything in the right panel except for the map panel
+ *  map panel is in Visualization
+ */
+
+
 class StatusIndicator extends React.Component {
     constructor(props) {
         super(props);
@@ -104,6 +110,10 @@ class MissionState extends React.Component {
 
     render() {
         
+        /**
+         *  Define colors for the Status indicator
+         */
+
         var color = "red"
         switch (this.state.missionStateStr) {
             case "Connected": 
@@ -203,12 +213,22 @@ export default class MissionStatus extends React.Component {
     }
 
     handleUnitSwitch(event) {
+        
+        /**
+         *  IMPORTANT: make sure to pass the correct value into the configFuncs
+         *  setState is an async function so if you did
+         * 
+         *  this.setState({state});
+         *  this.props.unitFunc(state);
+         * 
+         *  it would still pass the old value of state into unitFunc, meaning the state of the button/trigger
+         *  and the state of the component using the value would be desynced
+         */
+
+        this.props.unitFunc(!this.state.showMetric)
         this.setState({
             showMetric: !this.state.showMetric
         });
-        
-        this.props.unitFunc(this.state.showMetric);
-        
         switch(this.state.showMetric) {
             case true:
                 break;
@@ -217,7 +237,7 @@ export default class MissionStatus extends React.Component {
                     altitude: this.state.altitude * 1000
                 });
                 break;
-        }
+        } 
     }
 
     handleConnect(event) {
@@ -228,6 +248,7 @@ export default class MissionStatus extends React.Component {
         this.props.disconnFunc();
     }
     
+
     render() { 
 
         var runningAvgRefresh = parseInt(this.state.lastUpdates.reduce((a,b) => a + b, 0) / this.state.lastUpdates.length);

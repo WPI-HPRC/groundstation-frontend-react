@@ -5,6 +5,10 @@ import LiveSplineChart from './LiveSplineChart';
 const config = require('../mission.cfg');
 const dataScalar = -1;
 
+/**
+ *  The group of gauges that handles the altitude, velocity, and acceleration
+ *  not to be confused with SystemPanel which handles gyroscopes
+ */
 
 function padLeadingZeros(num, size) {
     var s = num+"";
@@ -17,7 +21,7 @@ class Box extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = { 
-            drawGraph: false,
+            drawGraph: false, // show graph vs gauge display
             val0: props.val0,
             val1: props.val1,
             val2: props.val2,
@@ -37,6 +41,7 @@ class Box extends React.PureComponent {
     static getDerivedStateFromProps(props, current_state) {
 
         // Update on new time
+        // check if time has changed
         if (current_state.time !== props.time) {
 
             // Reset if rocket time returns to 0
@@ -56,7 +61,7 @@ class Box extends React.PureComponent {
 
             // Update data sets with new values
             else {
-
+                // check if it is time to update
                 if ((props.time.getTime() - current_state.graphTime.getTime()) >= props.graphRefreshRate) {
                     return {
                         val0: props.val0,
@@ -70,6 +75,7 @@ class Box extends React.PureComponent {
                         graphTime: props.time
                     }
                 }
+                // do nothing if it is not time to refresh yet
                 else {
                     return {
                         val0: props.val0,
@@ -84,22 +90,32 @@ class Box extends React.PureComponent {
 
         return null
     }
-
+    // perform initialization animation 8 seconds after system loads to give time for loading screen
     componentDidMount() {
+
         setTimeout(() => {this.initAnimation()}, 8000);
     }
-
+    
+    // switch from gauge to graph and back again
     handleClick() {
         this.setState((state, props) => ({
             drawGraph: !state.drawGraph
         }));
     }
     
+    /*
+    * Gauge start animation: 
+    *  - go from zero to max
+    *  - set value to zero
+    *  - go from max to zero
+    */
+
     initAnimation() {
+        // setting gauge to max value
         this.setState({
             gaugeLevel: this.props.max
         });
-
+        // set gauge back to zero 1 second after, giving time for animation to complete
         setTimeout(() => {
             this.setState({
                 enable: true,
@@ -131,17 +147,21 @@ class Box extends React.PureComponent {
 
             return (
                 <>
-                    <h4>{this.props.unit}</h4>
-                    <h3
-                        className="subpanel"
-                        style={{
-                        color: "#F7F7F7",
-                        fontSize: "3.5em",
-                        margin: "0px 0px 20px 0px",
-                        }}
-                    >
-                        {padLeadingZeros(parseInt(value), this.props.digits)}
-                    </h3>
+                    <div>
+                        <h4>{this.props.unit}</h4>
+                        <h3
+                            className="subpanel"
+                            style={{
+                                color: "#F7F7F7",
+                                fontSize: "3.5em",
+                                margin: "0px 20px 20px 20px",
+                                textAlign: "center",
+                                position: 'relative',
+                            }}
+                        >
+                            {padLeadingZeros(parseInt(value), this.props.digits)}
+                        </h3>
+                    </div>
                 </>
             );
         };
@@ -208,31 +228,22 @@ export default class GaugeCluster extends React.PureComponent {
             altitude: props.altitude,
             vehicleClock: props.vehicleClock,
             timeScale: props.timeScale,
-            showMetric: props.showMetric,
+            showMetric: false,
             altUnit: "m",
             accelUnit: "m/s/s",
+            velUnit: "m/s"
         }
+
     }
 
     static getDerivedStateFromProps(props, current_state) {
         let update = null;
-
         if (current_state.vehicleClock !== props.vehicleClock ||
-            current_state.timeScale !== props.timeScale) {
+            current_state.timeScale !== props.timeScale || 
+            current_state.showMetric !== props.showMetric) {
+            
 
             if(props.showMetric) {
-                update = {
-                    vel: props.vel,
-                    accelX: (props.accelX / 9.80665).toFixed(2),
-                    accelY: (props.accelY / 9.80665).toFixed(2),
-                    accelZ: (props.accelZ / 9.80665).toFixed(2),
-                    altitude: (props.altitude * 3.281).toFixed(2),
-                    vehicleClock: props.vehicleClock,
-                    timeScale: props.timeScale,
-                    altUnit: "ft",
-                    accelUnit: "G"
-                }
-            } else {
                 update = {
                     vel: props.vel,
                     accelX: props.accelX,
@@ -242,7 +253,24 @@ export default class GaugeCluster extends React.PureComponent {
                     vehicleClock: props.vehicleClock,
                     timeScale: props.timeScale,
                     altUnit: "m",
-                    accelUnit: "m/s/s"
+                    accelUnit: "m/s/s",
+                    velUnit: "m/s",
+                    showMetric: props.showMetric
+
+                }
+            } else {
+                update = {
+                    vel: (props.vel * 3.281).toFixed(2),
+                    accelX: (props.accelX / 9.80665).toFixed(2),
+                    accelY: (props.accelY / 9.80665).toFixed(2),
+                    accelZ: (props.accelZ / 9.80665).toFixed(2),
+                    altitude: (props.altitude * 3.281).toFixed(2),
+                    vehicleClock: props.vehicleClock,
+                    timeScale: props.timeScale,
+                    altUnit: "ft",
+                    accelUnit: "G",
+                    velUnit: "ft/s",
+                    showMetric: props.showMetric
                 }
             }
 
@@ -258,11 +286,11 @@ export default class GaugeCluster extends React.PureComponent {
                     <Box title="Altitude" unit={this.state.altUnit} min={0} max={9999} defaultToGraph={false}
                         threshold={900} digits={4} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.altitude} name0={"Altitude"}/>
-                    <Box title="Velocity" unit="m/s" min={0} max={300} defaultToGraph={false}
+                    <Box title="Velocity" unit={this.state.velUnit} min={0} max={300} defaultToGraph={false}
                         threshold={200} digits={3} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.vel} name0={"Velocity ΔA"}/>
                     <Box title="Acceleration" unit={this.state.accelUnit} min={0} max={3000} 
-                        threshold={2000} digits={4} defaultToGraph={true} graphRefreshRate={this.props.graphRefreshRate}
+                        threshold={2000} digits={4} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} 
                         val0={this.state.accelY} name0="Y"
                         val1={this.state.accelX} name1="X"

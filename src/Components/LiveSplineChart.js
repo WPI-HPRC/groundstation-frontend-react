@@ -1,5 +1,9 @@
 import Chart from 'react-apexcharts'
 
+/**
+ *  handles the charts for pos, vel, accel used by GaugeCluster
+ */
+
 export default (props) => {
     const series = [{
         name: props.name0,
