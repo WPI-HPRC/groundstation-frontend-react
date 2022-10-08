@@ -90,6 +90,8 @@ export default class VehicleStatus extends React.Component {
             dark: props.dark,
             battery: props.battery,
             temperature: props.temperature,
+            pressure: props.pressure,
+            humidity: props.humidity,
             stateStr: props.stateStr,
             lat: props.lat,
             long: props.long,
@@ -102,13 +104,17 @@ export default class VehicleStatus extends React.Component {
 
         if (current_state.battery !== props.battery ||
             current_state.temperature !== props.temperature ||
+            current_state.pressure != props.pressure ||
+            current_state.humidity != props.humidity ||
             current_state.stateStr !== props.stateStr ||
             current_state.lat !== props.lat ||
             current_state.long !== props.log ||
             current_state.vehicleClock !== props.vehicleClock) {
             update = {
                 battery: props.battery,
-                temperature: props.temperature,
+                temperature: parseFloat(props.temperature).toFixed(2),
+                pressure: parseFloat(props.pressure).toFixed(2),
+                humidity: parseFloat(props.humidity).toFixed(2),
                 stateStr: props.stateStr,
                 lat: props.lat,
                 long: props.long,
@@ -127,6 +133,8 @@ export default class VehicleStatus extends React.Component {
                     <hr/>
                     <h4>Battery: {this.state.battery}V</h4>
                     <h4>Temperature: {this.state.temperature} °F</h4>
+                    <h4>Pressure: {this.state.pressure} inHg</h4>
+                    <h4>Humidity: {this.state.humidity} %</h4>
                     <VehicleState stateStr={this.state.stateStr}/>
                     <hr/>
                     <h4>Position:</h4>
