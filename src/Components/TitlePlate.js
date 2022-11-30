@@ -15,7 +15,7 @@ export default class TitlePlate extends React.Component {
             <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`}>
                 <div className="TitlePlate">
                     <h1 className="title">WPI <img src="hprc logo red.png" style={{height: "4vh", width: "3vh"}}/> HPRC</h1>
-                    <h4 className="subTitle">Aquila GS</h4>
+                    <h4 className="subTitle">Capricornus GS</h4>
                 </div>
             </div>
         );
