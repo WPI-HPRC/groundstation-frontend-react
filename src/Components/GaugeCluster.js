@@ -2,6 +2,9 @@ import React from 'react';
 import { ArcGauge } from "@progress/kendo-react-gauges";
 import LiveSplineChart from './LiveSplineChart';
 
+import { dataOut as data } from './data';
+// import { ResponsiveScatterPlot } from '@nivo/scatterplot';
+import { ResponsiveLine } from '@nivo/line';
 const config = require('../mission.cfg');
 const dataScalar = -1;
 
@@ -33,8 +36,29 @@ class Box extends React.PureComponent {
             enable: false,
             gaugeLevel: 0,
             max: 0,
+            timeScale: props.datanum,
             rollingAvg: 0,
+            finalAccel: [
+                {
+                    id: "Acceleration",
+                    data: []
+                },
+            ],
+            finalVel: [
+                {
+                    id: "Velocity",
+                    data: []
+                },
+            ],
+            finalPos: [
+                {
+                    id: "Position",
+                    data: []
+                },
+            ],
+            graphType: props.graphType,
         };
+
     }
 
     // Data update performed here
@@ -126,6 +150,44 @@ class Box extends React.PureComponent {
 
     render() {
 
+        let timeOffset = this.props.datanum / 10 ?? 10; // use the timesplice to determine how many seconds of data to show
+
+        // if the time is less than TS seconds, show graph from 0 to TS anyway
+        // once time gets past TS seconds, graph will show previous TS seconds of data
+        let graphMax = this.props.time.getTime() ?? 10; // make sure that the Date prop (time) isn't undefined
+        let graphMin = this.props.time.getTime() - timeOffset * 1000;
+        if(graphMax < timeOffset * 1000) // if time less than offset
+        {
+            graphMax = timeOffset * 1000; // max value of graph = offset
+            graphMin = 0;
+        }
+
+        // search through data array (data) and find anything between min and max
+        // data[0] --> acceleration data[1] --> velocity data[2] --> position
+
+        this.state.finalAccel[0].data = [];
+        this.state.finalVel[0].data = [];
+        this.state.finalPos[0].data = [];
+
+        data[0].data.forEach(element => {
+            if(element.x >= graphMin/1000 && element.x <= graphMax/1000)
+            {
+                this.state.finalAccel[0].data.push(element);
+            } 
+        });
+        data[1].data.forEach(element => {
+            if(element.x >= graphMin/1000 && element.x <= graphMax/1000)
+            {
+                this.state.finalVel[0].data.push(element);
+            } 
+        });
+        data[2].data.forEach(element => {
+            if(element.x >= graphMin/1000 && element.x <= graphMax/1000)
+            {
+                this.state.finalPos[0].data.push(element);
+            } 
+        });
+
         const colors = [
             {
               to: this.props.threshold,
@@ -188,12 +250,87 @@ class Box extends React.PureComponent {
                     </div>
 
                     <div className={!this.state.drawGraph ? "hidden" : undefined} style={{height: "100%", width: "80%", position:"absolute", top: "50px"}}>
-                        <LiveSplineChart
-                            data0={this.state.data0} name0={this.props.name0}
-                            data1={this.state.data1} name1={this.props.name1}
-                            data2={this.state.data2} name2={this.props.name2}
-                            datanum={this.props.datanum} 
-                            title={this.props.title} /> 
+                        <ResponsiveLine
+                            data={
+                                this.state.graphType == "accel" ? this.state.finalAccel 
+                                : this.state.graphType == "vel" ? this.state.finalVel 
+                                : this.state.graphType == "pos" ? this.state.finalPos 
+                                : undefined 
+                            }
+                            margin={{ top: 10, right: 10, bottom: 80, left: 90 }}
+                            xScale={{ type: 'linear', min: graphMin/1000 ?? 10, max: graphMax/1000 ?? 10 }}
+                            xFormat=">-.2f"
+                            yScale={{ type: 'linear', min: 0, max: 100 }}
+                            yFormat=">-.2f"
+                            blendMode="normal"
+                            animate={false}
+                            nodeSize={10}
+                            theme={{
+                                textColor: '#ffffff',
+                                fontSize: '14px',
+                                axis: {
+                                    legend: {
+                                        text: {
+                                            fontSize: '14px'
+                                        }   
+                                    }
+                                },
+                                tooltip: {
+                                    container: {
+                                        background: "#000000",
+                                        textColor: "#333333",
+                                        fontSize: "14px"
+                                    }
+                                },
+                            }}
+                            colors={{ scheme: 'red_yellow_blue'}}
+                            axisTop={null}
+                            axisRight={null}
+                            enableGridX={false}
+                            useMesh={true}
+                            axisBottom={{
+                                orient: 'bottom',
+                                tickSize: 5,
+                                tickPadding: 5,
+                                tickRotation: 0,
+                                legend: 'Time (seconds)',
+                                legendPosition: 'middle',
+                                legendOffset: 46,
+                            }}
+                            axisLeft={{
+                                orient: 'left',
+                                tickSize: 5,
+                                tickPadding: 5,
+                                tickRotation: 0,
+                                fontSize: '14px',
+                                legend: this.props.unit,
+                                legendPosition: 'middle',
+                                legendOffset: -60
+                            }}
+                            legends={[
+                            {
+                                anchor: 'bottom-right',
+                                direction: 'column',
+                                justify: false,
+                                translateX: 130,
+                                translateY: 0,
+                                itemWidth: 100,
+                                itemHeight: 12,
+                                itemsSpacing: 5,
+                                itemDirection: 'left-to-right',
+                                symbolSize: 12,
+                                symbolShape: 'circle',
+                                effects: [
+                                {
+                                    on: 'hover',
+                                    style: {
+                                        itemOpacity: 1
+                                    }
+                                }
+                                ]
+                            }
+                            ]}
+                        />
                     </div>
                     <div className={!this.state.drawGraph ? "hidden" : undefined} style={{position: "absolute", top: "25%", right: 0, height: "0%", textAlign: "right"}}>
                         <h3 style={{fontSize: "2.5em", margin: 0, padding: 0}}>
@@ -285,16 +422,19 @@ export default class GaugeCluster extends React.PureComponent {
                 <div className="GaugeCluster" style={{height: "90%"}}>
                     <Box title="Altitude" unit={this.state.altUnit} min={0} max={9999} defaultToGraph={false}
                         threshold={900} digits={4} graphRefreshRate={this.props.graphRefreshRate}
-                        datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.altitude} name0={"Altitude"}/>
+                        datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.altitude} name0={"Altitude"}
+                        graphType={"pos"}/>
                     <Box title="Velocity" unit={this.state.velUnit} min={0} max={300} defaultToGraph={false}
                         threshold={200} digits={3} graphRefreshRate={this.props.graphRefreshRate}
-                        datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.vel} name0={"Velocity ΔA"}/>
+                        datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.vel} name0={"Velocity ΔA"}
+                        graphType={"vel"}/>
                     <Box title="Acceleration" unit={this.state.accelUnit} min={0} max={3000} 
                         threshold={2000} digits={4} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} 
                         val0={this.state.accelY} name0="Y"
                         val1={this.state.accelX} name1="X"
-                        val2={this.state.accelZ} name2="Z"/>
+                        val2={this.state.accelZ} name2="Z"
+                        graphType={"accel"}/>
                 </div>
             </div>
         );

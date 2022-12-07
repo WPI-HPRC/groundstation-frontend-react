@@ -3,6 +3,7 @@ import '@progress/kendo-theme-default/dist/all.css';
 import Layout from "./Components/Layout";
 import SplashScreen from "./Components/SplashScreen.js"
 import React from 'react';
+import { wait } from '@testing-library/user-event/dist/utils';
 
 const dataPollingRate = 100;    // Time in ms to poll the telemetry server
 const maxMessages = 20;
@@ -347,11 +348,25 @@ export default class App extends React.Component {
             case "rec":
                 socket.send("recRaw");
                 break;
+            case "st": // testing command: running data at 100 hz to start
+                let x = 0;
+                while(x < 10000)
+                {
+                    setTimeout(() => {
+                        var ms = this.state.vehicleClock.getTime() + 10;
+                        this.setState({
+                            vehicleClock: new Date(ms)
+                        });
+                    }, 0);
+                    x += 10;
+                }
+                break;
             case "dump":
                 socket.send("dump");
                 break;
             case "help":
             case "h":
+            
                 
                 this.pushConsoleMessage(`Help: Display the console commands:
 - get [prop] : return the value of a property in state

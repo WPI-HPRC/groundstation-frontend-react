@@ -10,6 +10,8 @@ import ControlPanel from './ControlPanel';
 import SystemPanel from './SystemPanel';
 import GaugeCluster from './GaugeCluster';
 import MissionTimeline from './MissionTimeline';
+// import ScatterPlot from './Chart';
+
 
 /**
  *  general layout of the screen
@@ -62,6 +64,7 @@ export default class Layout extends React.Component {
                                                 {...this.props}/>
                                         </Row>
                                     </Col>
+                                    
                                     
 
                                     <Col lg={8}>
