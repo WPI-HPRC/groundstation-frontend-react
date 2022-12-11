@@ -104,8 +104,8 @@ export default class VehicleStatus extends React.Component {
 
         if (current_state.battery !== props.battery ||
             current_state.temperature !== props.temperature ||
-            current_state.pressure != props.pressure ||
-            current_state.humidity != props.humidity ||
+            current_state.pressure !== props.pressure ||
+            current_state.humidity !== props.humidity ||
             current_state.stateStr !== props.stateStr ||
             current_state.lat !== props.lat ||
             current_state.long !== props.log ||
