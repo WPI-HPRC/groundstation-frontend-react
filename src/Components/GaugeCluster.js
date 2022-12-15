@@ -178,7 +178,7 @@ class Box extends React.PureComponent {
             graphMin = 0;
         }
 
-        let testTimeFactor = 10; // for testing purposes, treating 1ms as 100ms aka time / 10 rather than time / 1000
+        let testTimeFactor = 1000; // for testing purposes, treating 1ms as 100ms aka time / 10 rather than time / 1000
 
         if((this.state.data[0].data[0] == undefined) || (this.state.data[0].data[this.state.data[0].data.length - 1].x !== this.props.time.getTime() / testTimeFactor)) 
         {
@@ -213,23 +213,34 @@ class Box extends React.PureComponent {
         this.state.finalVel[0].data = [];
         this.state.finalPos[0].data = [];
 
+        // index of each data point.  allows to use resolution variable to change what % of the points are displayed
+        // for example, resolution of 2 would be 50%, 100 would be 1%, etc.
+        let accelInd = 0;
+        let velInd = 0;
+        let posInd = 0;
+
+        let resolution = 100;
+
         this.state.data[0].data.forEach(element => {
-            if(element.x >= graphMin/1000 && element.x <= graphMax/1000)
+            if(element.x >= graphMin/1000 && element.x <= graphMax/1000 && accelInd % resolution == 0)
             {
                 this.state.finalAccel[0].data.push(element);
             } 
+            accelInd += 1;
         });
         this.state.data[1].data.forEach(element => {
-            if(element.x >= graphMin/1000 && element.x <= graphMax/1000)
+            if(element.x >= graphMin/1000 && element.x <= graphMax/1000 && velInd % resolution == 0)
             {
                 this.state.finalVel[0].data.push(element);
             } 
+            velInd += 1;
         });
         this.state.data[2].data.forEach(element => {
-            if(element.x >= graphMin/1000 && element.x <= graphMax/1000)
+            if(element.x >= graphMin/1000 && element.x <= graphMax/1000 && posInd % resolution == 0)
             {
                 this.state.finalPos[0].data.push(element);
             } 
+            posInd += 1;
         });
 
         const colors = [
