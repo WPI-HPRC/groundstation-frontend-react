@@ -2,7 +2,7 @@ import React from 'react';
 import { ArcGauge } from "@progress/kendo-react-gauges";
 import LiveSplineChart from './LiveSplineChart';
 
-import { dataOut as data } from './data';
+// import { dataOut as data } from './data';
 // import { ResponsiveScatterPlot } from '@nivo/scatterplot';
 import { ResponsiveLine } from '@nivo/line';
 const config = require('../mission.cfg');
@@ -33,12 +33,26 @@ class Box extends React.PureComponent {
             data0: [],
             data1: [],
             data2: [],
+            data: [
+                {
+                    id: "Acceleration",
+                    data: []
+                },
+                {
+                    id: "Velocity",
+                    data: []
+                },
+                {
+                    id: "Position",
+                    data: []
+                }
+            ],
             enable: false,
             gaugeLevel: 0,
             max: 0,
             timeScale: props.datanum,
             rollingAvg: 0,
-            finalAccel: [
+            finalAccel: [ // the data for each graph; 1: accel 2: vel 3: pos
                 {
                     id: "Acceleration",
                     data: []
@@ -57,6 +71,7 @@ class Box extends React.PureComponent {
                 },
             ],
             graphType: props.graphType,
+            timeToRefresh: true
         };
 
     }
@@ -96,7 +111,8 @@ class Box extends React.PureComponent {
                         data2: [...current_state.data2.slice(props.datanum * dataScalar), [props.time.getTime(), props.val2]],
                         max: current_state.max > props.val0 ? current_state.max : props.val0,
                         time: props.time,
-                        graphTime: props.time
+                        graphTime: props.time,
+                        
                     }
                 }
                 // do nothing if it is not time to refresh yet
@@ -107,11 +123,11 @@ class Box extends React.PureComponent {
                         val2: props.val2,
                         max: current_state.max > props.val0 ? current_state.max : props.val0,
                         time: props.time,
+                        
                     }
                 }
             }
         }
-
         return null
     }
     // perform initialization animation 8 seconds after system loads to give time for loading screen
@@ -162,6 +178,34 @@ class Box extends React.PureComponent {
             graphMin = 0;
         }
 
+        let testTimeFactor = 10; // for testing purposes, treating 1ms as 100ms aka time / 10 rather than time / 1000
+
+        if((this.state.data[0].data[0] == undefined) || (this.state.data[0].data[this.state.data[0].data.length - 1].x !== this.props.time.getTime() / testTimeFactor)) 
+        {
+
+            // make some new data points for the current values
+            let accelEl = {
+                x: this.props.time.getTime() / testTimeFactor,
+                y: 0 // MAKE SURE TO UPDATE THIS FOR TESTING
+                // what are the odds i forget?  probably high
+            }
+            let velEl = {
+                x: this.props.time.getTime() / testTimeFactor,
+                y: 5
+            }
+            let posEl = {
+                x: this.props.time.getTime() / testTimeFactor,
+                y: 10
+            }
+
+            // add them to the base array
+            this.state.data[0].data.push(accelEl);
+            this.state.data[1].data.push(velEl);
+            this.state.data[2].data.push(posEl);
+        }
+
+        
+
         // search through data array (data) and find anything between min and max
         // data[0] --> acceleration data[1] --> velocity data[2] --> position
 
@@ -169,19 +213,19 @@ class Box extends React.PureComponent {
         this.state.finalVel[0].data = [];
         this.state.finalPos[0].data = [];
 
-        data[0].data.forEach(element => {
+        this.state.data[0].data.forEach(element => {
             if(element.x >= graphMin/1000 && element.x <= graphMax/1000)
             {
                 this.state.finalAccel[0].data.push(element);
             } 
         });
-        data[1].data.forEach(element => {
+        this.state.data[1].data.forEach(element => {
             if(element.x >= graphMin/1000 && element.x <= graphMax/1000)
             {
                 this.state.finalVel[0].data.push(element);
             } 
         });
-        data[2].data.forEach(element => {
+        this.state.data[2].data.forEach(element => {
             if(element.x >= graphMin/1000 && element.x <= graphMax/1000)
             {
                 this.state.finalPos[0].data.push(element);
