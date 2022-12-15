@@ -430,7 +430,7 @@ export default class GaugeCluster extends React.PureComponent {
                     accelX: props.accelX,
                     accelY: props.accelY,
                     accelZ: props.accelZ,
-                    altitude: props.altitude,
+                    altitude: parseFloat(props.altitude).toFixed(2),
                     vehicleClock: props.vehicleClock,
                     timeScale: props.timeScale,
                     altUnit: "m",
