@@ -5,6 +5,7 @@ import LiveSplineChart from './LiveSplineChart';
 // import { dataOut as data } from './data';
 // import { ResponsiveScatterPlot } from '@nivo/scatterplot';
 import { ResponsiveLine } from '@nivo/line';
+import { quantizeColorScalePropType } from 'nivo/lib/props/colors';
 const config = require('../mission.cfg');
 const dataScalar = -1;
 
@@ -38,38 +39,19 @@ class Box extends React.PureComponent {
                     id: "Acceleration",
                     data: []
                 },
-                {
-                    id: "Velocity",
-                    data: []
-                },
-                {
-                    id: "Position",
-                    data: []
-                }
             ],
             enable: false,
             gaugeLevel: 0,
             max: 0,
             timeScale: props.datanum,
             rollingAvg: 0,
-            finalAccel: [ // the data for each graph; 1: accel 2: vel 3: pos
+            finalData: [ // the data for each graph; 1: accel 2: vel 3: pos
                 {
-                    id: "Acceleration",
+                    id: "dataInput",
                     data: []
                 },
             ],
-            finalVel: [
-                {
-                    id: "Velocity",
-                    data: []
-                },
-            ],
-            finalPos: [
-                {
-                    id: "Position",
-                    data: []
-                },
-            ],
+
             graphType: props.graphType,
             timeToRefresh: true
         };
@@ -184,24 +166,14 @@ class Box extends React.PureComponent {
         {
 
             // make some new data points for the current values
-            let accelEl = {
+            let element = {
                 x: this.props.time.getTime() / testTimeFactor,
-                y: 0 // MAKE SURE TO UPDATE THIS FOR TESTING
+                y: this.state.val0 // MAKE SURE TO UPDATE THIS FOR TESTING
                 // what are the odds i forget?  probably high
-            }
-            let velEl = {
-                x: this.props.time.getTime() / testTimeFactor,
-                y: 5
-            }
-            let posEl = {
-                x: this.props.time.getTime() / testTimeFactor,
-                y: 10
             }
 
             // add them to the base array
-            this.state.data[0].data.push(accelEl);
-            this.state.data[1].data.push(velEl);
-            this.state.data[2].data.push(posEl);
+            this.state.data[0].data.push(element);
         }
 
         
@@ -209,39 +181,51 @@ class Box extends React.PureComponent {
         // search through data array (data) and find anything between min and max
         // data[0] --> acceleration data[1] --> velocity data[2] --> position
 
-        this.state.finalAccel[0].data = [];
-        this.state.finalVel[0].data = [];
-        this.state.finalPos[0].data = [];
+        // let tempData = [];
 
-        // index of each data point.  allows to use resolution variable to change what % of the points are displayed
+        // this.state.data[0].data.forEach(element => {
+        //     if(element.x >= graphMin/1000 && element.x <= (this.props.time.getTime()/1000))
+        //     {
+        //         tempData.push(element);
+        //     } 
+        // });
+
+        // this.state.data[0].data = [];
+
+        // tempData.forEach(element => {
+        //     if(element.x >= graphMin/1000 && element.x <= (this.props.time.getTime()/1000))
+        //     {
+        //         this.state.data[0].data.push(element);
+        //     } 
+        // });
+        
+        if(this.state.data[0].data[0].x < graphMin/1000)
+        {
+            this.state.data[0].data.shift();
+        }
+
+        console.log(this.state.data[0].data.length);
+
+        
+
+        
+
+
+        // index of each data point.  allows to use resolution variable to change what fraction of the points are displayed
         // for example, resolution of 2 would be 50%, 100 would be 1%, etc.
-        let accelInd = 0;
-        let velInd = 0;
-        let posInd = 0;
+        let ind = 0;
 
-        let resolution = 100;
+        let resolution = 10;
 
         this.state.data[0].data.forEach(element => {
-            if(element.x >= graphMin/1000 && element.x <= graphMax/1000 && accelInd % resolution == 0)
+            if(element.x >= graphMin/1000 && element.x <= this.state.time.getTime()/1000 && ind % resolution == 0)
             {
-                this.state.finalAccel[0].data.push(element);
+                this.state.finalData[0].data.push(element);
             } 
-            accelInd += 1;
+            ind += 1;
         });
-        this.state.data[1].data.forEach(element => {
-            if(element.x >= graphMin/1000 && element.x <= graphMax/1000 && velInd % resolution == 0)
-            {
-                this.state.finalVel[0].data.push(element);
-            } 
-            velInd += 1;
-        });
-        this.state.data[2].data.forEach(element => {
-            if(element.x >= graphMin/1000 && element.x <= graphMax/1000 && posInd % resolution == 0)
-            {
-                this.state.finalPos[0].data.push(element);
-            } 
-            posInd += 1;
-        });
+       
+
 
         const colors = [
             {
@@ -306,16 +290,12 @@ class Box extends React.PureComponent {
 
                     <div className={!this.state.drawGraph ? "hidden" : undefined} style={{height: "100%", width: "80%", position:"absolute", top: "50px"}}>
                         <ResponsiveLine
-                            data={
-                                this.state.graphType == "accel" ? this.state.finalAccel 
-                                : this.state.graphType == "vel" ? this.state.finalVel 
-                                : this.state.graphType == "pos" ? this.state.finalPos 
-                                : undefined 
-                            }
+                            data={ this.state.finalData }
                             margin={{ top: 10, right: 10, bottom: 80, left: 90 }}
                             xScale={{ type: 'linear', min: graphMin/1000 ?? 10, max: graphMax/1000 ?? 10 }}
                             xFormat=">-.2f"
-                            yScale={{ type: 'linear', min: 0, max: 100 }}
+                            yScale={{ type: 'linear', min: 0, max: 'auto' }}
+                            // yScale={{ type: 'auto' }}
                             yFormat=">-.2f"
                             blendMode="normal"
                             animate={false}
@@ -478,18 +458,18 @@ export default class GaugeCluster extends React.PureComponent {
                     <Box title="Altitude" unit={this.state.altUnit} min={0} max={9999} defaultToGraph={false}
                         threshold={900} digits={4} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.altitude} name0={"Altitude"}
-                        graphType={"pos"}/>
+                        />
                     <Box title="Velocity" unit={this.state.velUnit} min={0} max={300} defaultToGraph={false}
                         threshold={200} digits={3} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.vel} name0={"Velocity ΔA"}
-                        graphType={"vel"}/>
+                        />
                     <Box title="Acceleration" unit={this.state.accelUnit} min={0} max={3000} 
                         threshold={2000} digits={4} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} 
                         val0={this.state.accelY} name0="Y"
                         val1={this.state.accelX} name1="X"
                         val2={this.state.accelZ} name2="Z"
-                        graphType={"accel"}/>
+                        />
                 </div>
             </div>
         );
