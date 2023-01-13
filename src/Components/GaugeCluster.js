@@ -204,7 +204,6 @@ class Box extends React.PureComponent {
             this.state.data[0].data.shift();
         }
 
-        console.log(this.state.data[0].data.length);
 
         
 

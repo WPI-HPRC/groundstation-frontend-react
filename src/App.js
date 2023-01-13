@@ -377,7 +377,8 @@ export default class App extends React.Component {
                             this.setState({
                                 vehicleClock: new Date(ms)
                             });
-                            var diff = t.getTime() - startTime();
+                            var t2 = new Date();
+                            var diff = t2.getTime() - startTime;
                             this.pushConsoleMessage("Test complete!  Total time elapsed: " + diff + " ms");
                             var div = msToRun / msTick;
                             this.pushConsoleMessage("Average latency: " + diff / div + " ms");
