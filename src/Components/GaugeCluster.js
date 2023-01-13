@@ -217,8 +217,10 @@ class Box extends React.PureComponent {
 
         let resolution = 10;
 
+        this.state.finalData[0].data = [];
+
         this.state.data[0].data.forEach(element => {
-            if(element.x >= graphMin/1000 && element.x <= this.state.time.getTime()/1000 && ind % resolution == 0)
+            if(ind % resolution == 0 && element.x >= graphMin/1000 && element.x <= this.state.time.getTime()/1000)
             {
                 this.state.finalData[0].data.push(element);
             } 
