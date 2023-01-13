@@ -352,17 +352,37 @@ export default class App extends React.Component {
             case "rec":
                 socket.send("recRaw");
                 break;
-            case "st": // testing command: running data at 100 hz to start
+            case "st": // testing command: running data at 100 hz to start - benchmark
                 let x = 0;
-                while(x < 10000)
+
+                // test conditions definition
+                let msToRun = 10000;
+                let msTick = 10;
+
+                var t = new Date();
+                let startTime = t.getTime();
+                while(x < msToRun - msTick)
                 {
                     setTimeout(() => {
-                        var ms = this.state.vehicleClock.getTime() + 10;
+                        var ms = this.state.vehicleClock.getTime() + msTick;
                         this.setState({
                             vehicleClock: new Date(ms)
                         });
                     }, 0);
-                    x += 10;
+                    x += msTick;
+                    if(x == msToRun - msTick - msTick)
+                    {
+                        setTimeout(() => {
+                            var ms = this.state.vehicleClock.getTime() + msTick;
+                            this.setState({
+                                vehicleClock: new Date(ms)
+                            });
+                            var diff = t.getTime() - startTime();
+                            this.pushConsoleMessage("Test complete!  Total time elapsed: " + diff + " ms");
+                            var div = msToRun / msTick;
+                            this.pushConsoleMessage("Average latency: " + diff / div + " ms");
+                        }, 0);
+                    }
                 }
                 break;
             case "dump":
