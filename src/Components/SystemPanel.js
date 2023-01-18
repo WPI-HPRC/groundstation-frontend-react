@@ -1,6 +1,5 @@
 import React from 'react';
 import { CircularGauge, ArcGauge } from '@progress/kendo-react-gauges';
-import LiveSplineChart from './LiveSplineChart';
 
 /**
  *  the panel containing the 3 gyroscope gauges (x/y/z, pitch/roll/yaw)
