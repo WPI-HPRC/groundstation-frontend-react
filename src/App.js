@@ -353,7 +353,7 @@ export default class App extends React.Component {
                 socket.send("recRaw");
                 break;
             case "benchmark": // testing command: running data at 100 hz to start - benchmark
-                let x = 0;
+                let benchIter = 0;
 
                 let msToRun = 10000;
 
@@ -368,7 +368,7 @@ export default class App extends React.Component {
 
                 var t = new Date();
                 let startTime = t.getTime();
-                while(x < msToRun - msTick)
+                while(benchIter < msToRun - msTick)
                 {
                     setTimeout(() => {
                         var ms = this.state.vehicleClock.getTime() + msTick;
@@ -376,8 +376,8 @@ export default class App extends React.Component {
                             vehicleClock: new Date(ms)
                         });
                     }, 0);
-                    x += msTick;
-                    if(x == msToRun - msTick - msTick)
+                    benchIter += msTick;
+                    if(benchIter == msToRun - msTick - msTick)
                     {
                         setTimeout(() => {
                             var ms = this.state.vehicleClock.getTime() + msTick;
