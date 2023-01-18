@@ -18,6 +18,7 @@ export default class ScatterPlot extends React.Component {
     }
     render () {
         return (
+            <>
             <ResponsiveScatterPlot
             data={this.state.data}
             margin={{ top: 60, right: 140, bottom: 70, left: 90 }}
@@ -70,6 +71,7 @@ export default class ScatterPlot extends React.Component {
                 }
             ]}
             />
+        </>
         )
     }
 }
