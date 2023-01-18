@@ -54,7 +54,6 @@ export default class App extends React.Component {
             showConnectButton: true,
             commandHistory: [],
             slowLog: false,
-            fastLog: false,
             showMetric: false
         }
 
@@ -128,7 +127,6 @@ export default class App extends React.Component {
                     lastUpdate: "-",
                     latency: "-",
                     slowLog: false,
-                    fastLog: false
                 });
             }
         }.bind(this));
@@ -145,7 +143,6 @@ export default class App extends React.Component {
                 lastUpdate: "-",
                 latency: "-",
                 slowLog: false,
-                fastLog: false
             });
         }.bind(this));
 
@@ -169,7 +166,6 @@ export default class App extends React.Component {
             lastUpdate: "-",
             latency: "-",
             slowLog: false,
-            fastLog: false
         });
         socket.close();
 
@@ -217,7 +213,6 @@ export default class App extends React.Component {
             gyroY: ((json.GyroY * (1/16.4)) / 60).toFixed(2),
             gyroZ: (json.GyroZ * (1/16.4)).toFixed(2),
             slowLog: json.SlowLogging,
-            fastLog: json.FastLogging
         });
 
         if (latency > 100 && this.state.graphRefreshRate < HIGH_REFRESH) {
@@ -365,6 +360,7 @@ export default class App extends React.Component {
                 {
                     setTimeout(() => {
                         var ms = this.state.vehicleClock.getTime() + msTick;
+                        
                         this.setState({
                             vehicleClock: new Date(ms)
                         });
@@ -374,6 +370,7 @@ export default class App extends React.Component {
                     {
                         setTimeout(() => {
                             var ms = this.state.vehicleClock.getTime() + msTick;
+                            
                             this.setState({
                                 vehicleClock: new Date(ms)
                             });
@@ -458,7 +455,6 @@ export default class App extends React.Component {
                 missionStateStr: "Idle",
                 showConnectButton: true,
                 slowLog: false,
-                fastLog: false
             });
         }
         else {

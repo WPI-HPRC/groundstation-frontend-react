@@ -167,7 +167,6 @@ export default class MissionStatus extends React.Component {
             latencies: [],
             showConnect: props.showConnectButton,
             slowLog: props.slowLog,
-            fastLog: props.fastLog,
             showMetric: props.showMetric,
             altitude: props.altitude
         }
@@ -186,8 +185,7 @@ export default class MissionStatus extends React.Component {
             current_state.lastUpdate !== props.lastUpdate ||
             current_state.latency !== props.latency ||
             current_state.showConnect !== props.showConnectButton ||
-            current_state.slowLog !== props.slowLog ||
-            current_state.fastLog !== props.fastLog) {
+            current_state.slowLog !== props.slowLog ) {
 
             if (props.latency === "-" && props.lastUpdate === "-") {
                 return {
@@ -199,7 +197,6 @@ export default class MissionStatus extends React.Component {
                     latencies: [],
                     showConnect: props.showConnectButton,
                     slowLog: props.slowLog,
-                    fastLog: props.fastLog
                 }
             }
             update = {
@@ -212,7 +209,6 @@ export default class MissionStatus extends React.Component {
                 latencies: [...current_state.latencies.slice(-100), props.latency],
                 showConnect: props.showConnectButton,
                 slowLog: props.slowLog,
-                fastLog: props.fastLog
             }
         }
 
@@ -300,7 +296,7 @@ export default class MissionStatus extends React.Component {
                             <div style={{position: "relative", width: "100%"}}>
                                 {/* <h4 style={{display: "inline-block", position: "absolute", left: 0}}>Logging:</h4>  */}
                                 <h4 style={{display: "inline-block", position: "absolute", right: 80}}>Slow Log: <font style={{color: this.state.slowLog ? "#00f700" : "#ED5031"}}>{this.state.slowLog ? "On" : "Off"}</font></h4>
-                                <h4 style={{display: "inline-block", position: "absolute", right: 220}}>Fast Log: <font  style={{color: this.state.fastLog ? "#00f700" : "#ED5031"}}>{this.state.fastLog ? "On" : "Off"}</font></h4>
+                                {/* <h4 style={{display: "inline-block", position: "absolute", right: 220}}>Fast Log: <font  style={{color: this.state.fastLog ? "#00f700" : "#ED5031"}}>{this.state.fastLog ? "On" : "Off"}</font></h4> */}
                             </div>
                         </div>
                         <div style={{position: "absolute", bottom: "1%", width: "100%"}}>

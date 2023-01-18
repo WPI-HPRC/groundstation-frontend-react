@@ -3,6 +3,8 @@ import React from 'react';
 /**
  *   Indicator on middle-right showing status of vehicle
  *   currently used inside MissionStatus
+ * 
+ *   THERE'S A MEMORY LEAK IN HERE AND I DON'T KNOW WHERE OR WHY
  */
 
 class VehicleState extends React.PureComponent {
