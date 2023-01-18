@@ -9,11 +9,15 @@ import React from 'react';
 class StatusIndicator extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { connected: props.connected,
-                       refresh: "-",
-                       latency: "-",
-                       systemName: props.name,
-                       blinkOn: false};
+        this.state = { 
+            connected: props.connected,
+            refresh: "-",
+            latency: "-",
+            systemName: props.name,
+            blinkOn: false,
+            ID: null
+        };
+            
         this.blinkWarning = this.blinkWarning.bind(this)
     }
 
@@ -33,12 +37,15 @@ class StatusIndicator extends React.Component {
         return update;
     }
 
+
     componentDidMount() {
-        setInterval(this.blinkWarning, 1000);
+        this.setState({
+            ID: setInterval(this.blinkWarning, 1000)
+        });
     }
 
-    componentWillUnmount() {
-        clearInterval(this.blinkWarning);
+    componentWillUnmount() { // Fixed this.  Clearing a callback uses an ID supplied by the set function, not the name of the function itself.
+        clearInterval(this.state.ID);
     }
     
     blinkWarning = () => {
