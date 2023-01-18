@@ -3,6 +3,7 @@ import '@progress/kendo-theme-default/dist/all.css';
 import Layout from "./Components/Layout";
 import SplashScreen from "./Components/SplashScreen.js"
 import React from 'react';
+import { wait } from '@testing-library/user-event/dist/utils';
 
 const dataPollingRate = 100;    // Time in ms to poll the telemetry server
 const maxMessages = 20;
@@ -351,11 +352,53 @@ export default class App extends React.Component {
             case "rec":
                 socket.send("recRaw");
                 break;
+            case "benchmark": // testing command: running data at 100 hz to start - benchmark
+                let benchIter = 0;
+
+                let msToRun = 10000;
+
+                if([args[1]] !== undefined)
+                {
+                    msToRun = Number([args[1]]);
+
+                }
+
+                // test conditions definition
+                let msTick = 10;
+
+                var t = new Date();
+                let startTime = t.getTime();
+                while(benchIter < msToRun - msTick)
+                {
+                    setTimeout(() => {
+                        var ms = this.state.vehicleClock.getTime() + msTick;
+                        this.setState({
+                            vehicleClock: new Date(ms)
+                        });
+                    }, 0);
+                    benchIter += msTick;
+                    if(benchIter == msToRun - msTick - msTick)
+                    {
+                        setTimeout(() => {
+                            var ms = this.state.vehicleClock.getTime() + msTick;
+                            this.setState({
+                                vehicleClock: new Date(ms)
+                            });
+                            var t2 = new Date();
+                            var diff = t2.getTime() - startTime;
+                            this.pushConsoleMessage("Test complete!  Total time elapsed: " + diff + " ms");
+                            var div = msToRun / msTick;
+                            this.pushConsoleMessage("Average latency: " + diff / div + " ms");
+                        }, 0);
+                    }
+                }
+                break;
             case "dump":
                 socket.send("dump");
                 break;
             case "help":
             case "h":
+            
                 
                 this.pushConsoleMessage(`Help: Display the console commands:
 - get [prop] : return the value of a property in state
@@ -365,7 +408,8 @@ export default class App extends React.Component {
 - tick : increase the clock by 1ms (forces an update)
 - raw : print all incoming telemetry to console
 - stop : stop printing all telemetry to console
-- clear : clear the console buffer`, "white");
+- clear : clear the console buffer
+- benchmark [milliseconds]: run a benchmarking test for the specified time, or 10s`, "white");
                 break;
             default:
                 this.pushConsoleMessage(`Command "${args[0]}" not recognized`, "red")
