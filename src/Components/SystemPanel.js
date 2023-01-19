@@ -40,14 +40,12 @@ export default class SystemPanel extends React.Component {
     static getDerivedStateFromProps(props, current_state) {
         if (current_state.time !== props.vehicleClock) {
 
-            if (props.vehicleClock.getTime() === 0) {
+            if (props.vehicleClock.getTime() === 0) { // FLAG
                 return {
                     gyroX: props.gyroX,
                     gyroY: props.gyroY,
                     gyroZ: props.gyroZ,
-                    data0: [],
-                    data1: [],
-                    data2: [],
+
                     time: props.vehicleClock
                 }
             }
@@ -56,9 +54,7 @@ export default class SystemPanel extends React.Component {
                     gyroX: props.gyroX,
                     gyroY: props.gyroY,
                     gyroZ: props.gyroZ,
-                    data0: [...current_state.data0.slice(props.datanum * dataScalar), [props.vehicleClock.getTime(), props.gyroX]],
-                    data1: [...current_state.data1.slice(props.datanum * dataScalar), [props.vehicleClock.getTime(), props.gyroY]],
-                    data2:[...current_state.data2.slice(props.datanum * dataScalar), [props.vehicleClock.getTime(), props.gyroZ]],
+
                     time: props.vehicleClock
                 }
             }

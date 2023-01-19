@@ -54,6 +54,7 @@ export default class App extends React.Component {
             showConnectButton: true,
             commandHistory: [],
             slowLog: false,
+            fastLog: false,
             showMetric: false
         }
 
@@ -127,6 +128,7 @@ export default class App extends React.Component {
                     lastUpdate: "-",
                     latency: "-",
                     slowLog: false,
+                    fastLog: false
                 });
             }
         }.bind(this));
@@ -143,6 +145,7 @@ export default class App extends React.Component {
                 lastUpdate: "-",
                 latency: "-",
                 slowLog: false,
+                fastLog: false
             });
         }.bind(this));
 
@@ -166,6 +169,7 @@ export default class App extends React.Component {
             lastUpdate: "-",
             latency: "-",
             slowLog: false,
+            fastLog: false
         });
         socket.close();
 
@@ -213,6 +217,7 @@ export default class App extends React.Component {
             gyroY: ((json.GyroY * (1/16.4)) / 60).toFixed(2),
             gyroZ: (json.GyroZ * (1/16.4)).toFixed(2),
             slowLog: json.SlowLogging,
+            fastLog: json.FastLogging
         });
 
         if (latency > 100 && this.state.graphRefreshRate < HIGH_REFRESH) {
@@ -347,11 +352,18 @@ export default class App extends React.Component {
             case "rec":
                 socket.send("recRaw");
                 break;
-            case "st": // testing command: running data at 100 hz to start - benchmark
+            case "benchmark": // testing command: running data at 100 hz to start - benchmark
                 let x = 0;
 
-                // test conditions definition
                 let msToRun = 10000;
+
+                if([args[1]] !== undefined)
+                {
+                    msToRun = Number([args[1]]);
+
+                }
+
+                // test conditions definition
                 let msTick = 10;
 
                 var t = new Date();
@@ -360,7 +372,6 @@ export default class App extends React.Component {
                 {
                     setTimeout(() => {
                         var ms = this.state.vehicleClock.getTime() + msTick;
-                        
                         this.setState({
                             vehicleClock: new Date(ms)
                         });
@@ -370,7 +381,6 @@ export default class App extends React.Component {
                     {
                         setTimeout(() => {
                             var ms = this.state.vehicleClock.getTime() + msTick;
-                            
                             this.setState({
                                 vehicleClock: new Date(ms)
                             });
@@ -398,7 +408,8 @@ export default class App extends React.Component {
 - tick : increase the clock by 1ms (forces an update)
 - raw : print all incoming telemetry to console
 - stop : stop printing all telemetry to console
-- clear : clear the console buffer`, "white");
+- clear : clear the console buffer
+- benchmark [milliseconds]: run a benchmarking test for the specified time, or 10s`, "white");
                 break;
             default:
                 this.pushConsoleMessage(`Command "${args[0]}" not recognized`, "red")
@@ -455,6 +466,7 @@ export default class App extends React.Component {
                 missionStateStr: "Idle",
                 showConnectButton: true,
                 slowLog: false,
+                fastLog: false
             });
         }
         else {

@@ -30,9 +30,6 @@ class Box extends React.PureComponent {
             val2: props.val2,
             time: props.time,
             graphTime: props.time,
-            data0: [],
-            data1: [],
-            data2: [],
             data: [
                 {
                     id: "Acceleration",
@@ -58,7 +55,7 @@ class Box extends React.PureComponent {
     }
 
     // Data update performed here
-    static getDerivedStateFromProps(props, current_state) {
+    static getDerivedStateFromProps(props, current_state) { // FLAG
 
         // Update on new time
         // check if time has changed
@@ -70,9 +67,6 @@ class Box extends React.PureComponent {
                     val0: 0,
                     val1: 0,
                     val2: 0,
-                    data0: [],
-                    data1: [],
-                    data2: [],
                     max: 0,
                     time: props.time,
                     graphTime: props.time
@@ -87,9 +81,7 @@ class Box extends React.PureComponent {
                         val0: props.val0,
                         val1: props.val1,
                         val2: props.val2,
-                        data0: [...current_state.data0.slice(props.datanum * dataScalar), [props.time.getTime(), props.val0]],
-                        data1: [...current_state.data1.slice(props.datanum * dataScalar), [props.time.getTime(), props.val1]],
-                        data2: [...current_state.data2.slice(props.datanum * dataScalar), [props.time.getTime(), props.val2]],
+
                         max: current_state.max > props.val0 ? current_state.max : props.val0,
                         time: props.time,
                         graphTime: props.time,
