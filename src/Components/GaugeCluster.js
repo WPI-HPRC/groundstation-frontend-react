@@ -139,7 +139,9 @@ class Box extends React.PureComponent {
 
     render() {
 
-        let timeOffset = this.props.datanum / 10 ?? 10; // use the timesplice to determine how many seconds of data to show
+        // let timeOffset = this.props.datanum / 10 ?? 10; // use the timesplice to determine how many seconds of data to show
+
+        let timeOffset = 5;
 
         // if the time is less than TS seconds, show graph from 0 to TS anyway
         // once time gets past TS seconds, graph will show previous TS seconds of data
@@ -205,16 +207,15 @@ class Box extends React.PureComponent {
         // for example, resolution of 2 would be 50%, 100 would be 1%, etc.
         let ind = 0;
 
-        let resolution = 10;
+        let resolution = this.props.datanum;
 
         this.state.finalData[0].data = [];
 
         this.state.data[0].data.forEach(element => {
-            if(ind % resolution == 0 && element.x >= graphMin/1000 && element.x <= this.state.time.getTime()/1000)
+            if(element.x * 1000 % resolution == 0 && element.x >= graphMin/1000 && element.x <= this.state.time.getTime()/1000)
             {
                 this.state.finalData[0].data.push(element);
             } 
-            ind += 1;
         });
        
 

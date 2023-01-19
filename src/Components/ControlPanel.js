@@ -150,7 +150,7 @@ export default class ControlPanel extends React.Component {
                                         {/* <button className="customButtonLg" style={{display: "inline-block"}} onClick={() => this.handleReset()}>Clear</button> */}
                                     </div>
                                     <div className="subpanel" style={{width: "100%", textAlign: "center", position: "absolute", bottom: 0, margin: 0}}>
-                                        <h4 style={{margin: "0px 0px 0px 0px"}}>Timeslice:</h4>
+                                        <h4 style={{margin: "0px 0px 0px 0px"}}>Resolution:</h4>
    
                                         <button className="customButtonSm mono" onClick={() => this.handleTSDec()}>-</button>
                                         <input style={{margin: "5px 0px 5px 0px", textAlign: "center"}} type="text" size={4 } value={this.state.tsInput} onKeyDown={this.handleTSEnter} onChange={this.handleTSChange}/>
