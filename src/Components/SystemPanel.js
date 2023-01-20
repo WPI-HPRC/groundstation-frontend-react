@@ -29,9 +29,6 @@ export default class SystemPanel extends React.Component {
             gyroX: 0,
             gyroY: 0,
             gyroZ: 0,
-            data0: [],
-            data1: [],
-            data2: [],
             roll: 0,
             time: props.vehicleClock
         }

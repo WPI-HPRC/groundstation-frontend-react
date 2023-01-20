@@ -49,7 +49,8 @@ class Box extends React.PureComponent {
             ],
 
             graphType: props.graphType,
-            timeToRefresh: true
+            timeToRefresh: true,
+            ID: null,
         };
 
     }
@@ -68,6 +69,19 @@ class Box extends React.PureComponent {
                     val1: 0,
                     val2: 0,
                     max: 0,
+                    data: [
+                        {
+                            id: "Acceleration",
+                            data: []
+                        },
+                    ],
+                    finalData: [ // the data for each graph; 1: accel 2: vel 3: pos
+                        {
+                            id: "dataInput",
+                            data: []
+                        },
+                    ],
+
                     time: props.time,
                     graphTime: props.time
                 }
@@ -103,12 +117,20 @@ class Box extends React.PureComponent {
         }
         return null
     }
-    // perform initialization animation 8 seconds after system loads to give time for loading screen
+    // perform initialization animation 8 seconds after system loads to give time for loading screen - could this be causing an issue?
     componentDidMount() {
-
-        setTimeout(() => {this.initAnimation()}, 8000);
+        this.setState({
+            ID: setTimeout(() => {this.initAnimation()}, 8000)
+        }); 
     }
     
+    componentWillUnmount() {
+        if(this.state.ID !== null)
+        {
+            clearTimeout(this.state.ID);
+        }
+    }
+
     // switch from gauge to graph and back again
     handleClick() {
         this.setState((state, props) => ({
@@ -218,7 +240,7 @@ class Box extends React.PureComponent {
             } 
         });
        
-
+        console.log(this.state.finalData[0].data.length + " " + this.state.data[0].data.length);
 
         const colors = [
             {
