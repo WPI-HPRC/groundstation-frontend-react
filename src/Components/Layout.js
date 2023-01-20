@@ -19,7 +19,7 @@ import MissionTimeline from './MissionTimeline';
  *  mostly panels etc 
  * 
  *  VehicleStatus
- *    - top right corner
+ *    - top left corner
  *    - contains info on temp, power, lat/long, mission time
  *  ControlPanel
  *    - top center

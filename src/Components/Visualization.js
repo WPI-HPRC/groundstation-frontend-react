@@ -3,6 +3,7 @@ import 'leaflet.offline';
 import {MapContainer, TileLayer} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css'
 import RocketViewer from './RocketViewer';
+import img from '../rocket_icon_2.png';
 /**
  *  for visualization of things imported from outside React
  *  current usage: map
@@ -20,6 +21,7 @@ export default class Visualization extends React.Component {
             dark: props.dark,
             showMap: true,
             imgToShow: 0,
+
         }
 
         this.map = 0;
@@ -58,12 +60,16 @@ export default class Visualization extends React.Component {
                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                 url="Maps/{z}/{x}/{y}.png"
                             />
-                            <button className={!this.state.showMap ? "hidden" : "visToggle"} id="visToggle" onClick={() => this.toggleVis()}>3D</button> 
+                            <button className={!this.state.showMap ? "hidden" : "visToggle"} id="visToggle" onClick={() => this.toggleVis()}>
+                                <img className={"visIcon"} src={img} ></img>
+                            </button> 
                         </MapContainer>
                     </div>
                     <div className={this.state.showMap ? "hidden" : "visDiv"} id={"canvas3D"}>
-                        <button className={"showMap"} onClick={() => this.toggleVis()}>Map</button>
-                        <RocketViewer className={this.state.showMap ? "hidden" : undefined} ></RocketViewer>
+                        <button className={"showMap customButtonLg"} onClick={() => this.toggleVis()}>
+                            Map
+                        </button>
+                        <RocketViewer className={this.state.showMap ? "hidden" : undefined} {...this.props}/>
 
 
                     </div>

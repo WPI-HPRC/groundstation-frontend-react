@@ -168,38 +168,63 @@
   box-shadow: 4px 4px 5px 2px var(--box-shadow-color); 
 }
 
-.visToggle{
+.visToggle{ /* button that is below the zoom controls to activate the 3D visualization */
   position: relative;
   top: 120px;
   right: -10px;
   padding: 5px;
   z-index: 1000;
   width: 33px;
+  height: 33px;
   text-align: center;
 }
 
-.mapDiv{
+.mapDiv{ /* Div containing the map */ 
   width: 100%;
   height: 100%;
 }
 
-.showMap{
+.showMap{ /* button inside 3D visualization to show map */ 
   position: relative;
-  top: 120px;
-  right: -10px;
+  top: 60px;
+  left: 17vw;
   padding: 5px;
   z-index: 10;
-  width: 40px;
+  /* width: 75px; */
+  /* height: 30px; */
   text-align: center;
 }
 
-.visDiv {
+.visDiv { /* Div containing the 3D renderer */ 
   position: relative;
   width: 45px;
   height: 40vh;
   top: -40px;
   left: 0px;
   z-index: 100;
+}
+
+.visIcon { /* The icon inside the toggleVis button */
+  position: relative;
+  width: 22px;
+  height: 22px;
+  right: 1px;
+  top: -1px;
+}
+
+.airbrakesIconBG {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  z-index: 10;
+}
+
+.airbrakesFin {
+  width: 75px;
+  height: 75px;
+  position: relative;
+  z-index: 0;
+  /* top: -155px; */
 }
 
 .VehicleStatus {

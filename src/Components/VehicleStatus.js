@@ -1,10 +1,16 @@
 import React from 'react';
  
+import airbrakesBackground from '../Airbrakes Diagram.png';
+import airbrakesFinTR from '../AirbrakesFinTR.png';
+import airbrakesFinTL from '../AirbrakesFinTL.png';
+import airbrakesFinBR from '../AirbrakesFinBR.png';
+import airbrakesFinBL from '../AirbrakesFinBL.png';
+
 /**
- *   Indicator on middle-right showing status of vehicle
+ *   Indicator on middle-left showing status of vehicle
  *   currently used inside MissionStatus
  * 
- *   THERE'S A MEMORY LEAK IN HERE AND I DON'T KNOW WHERE OR WHY
+ *   
  */
 
 class VehicleState extends React.PureComponent {
@@ -97,6 +103,7 @@ export default class VehicleStatus extends React.Component {
             stateStr: props.stateStr,
             lat: props.lat,
             long: props.long,
+            airbrakesDeploy: props.airbrakesDeploy,
             vehicleClock: props.vehicleClock
         };
     }
@@ -111,7 +118,8 @@ export default class VehicleStatus extends React.Component {
             current_state.stateStr !== props.stateStr ||
             current_state.lat !== props.lat ||
             current_state.long !== props.log ||
-            current_state.vehicleClock !== props.vehicleClock) {
+            current_state.vehicleClock !== props.vehicleClock ||
+            current_state.airbrakesDeploy !== props.airbrakesDeploy) {
             update = {
                 battery: props.battery,
                 temperature: parseFloat(props.temperature).toFixed(2),
@@ -120,6 +128,7 @@ export default class VehicleStatus extends React.Component {
                 stateStr: props.stateStr,
                 lat: props.lat,
                 long: props.long,
+                airbrakesDeploy: props.airbrakesDeploy,
                 vehicleClock: props.vehicleClock
             }
         }
@@ -128,20 +137,53 @@ export default class VehicleStatus extends React.Component {
     }
 
     render() {
+        var fin1X = -109 + this.state.airbrakesDeploy/5;
+        var fin2X = -211 - this.state.airbrakesDeploy/5;
+        var fin3X = -259 + this.state.airbrakesDeploy/5;
+        var fin4X = -135 - this.state.airbrakesDeploy/5;
+        var fin1Y = -20 - this.state.airbrakesDeploy/5;
+        var fin2Y = -20 - this.state.airbrakesDeploy/5;
+        var fin3Y = 8 + this.state.airbrakesDeploy/5;
+        var fin4Y = -68 + this.state.airbrakesDeploy/5;
+
+
+
+
         return (
             <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`} style={{position: "relative", width: "100%"}}>
                 <div className="VehicleStatus">
                     <h3>Vehicle Status</h3>
                     <hr/>
-                    <h4>Battery: {this.state.battery}V</h4>
-                    <h4>Temperature: {this.state.temperature} °F</h4>
-                    <h4>Pressure: {this.state.pressure} inHg</h4>
-                    <h4>Humidity: {this.state.humidity} %</h4>
-                    <VehicleState stateStr={this.state.stateStr}/>
+                    <div className={"row"}>
+                        <div className={"col-lg-6"}>
+                            <h4>Battery: {this.state.battery}V</h4>
+                            <h4>Temperature: {this.state.temperature} °F</h4>
+                        </div>
+                        <div className={"col-lg-6"}>
+                            <h4>Pressure: {this.state.pressure} inHg</h4>
+                            <h4>Humidity: {this.state.humidity} %</h4>
+                        </div>
+                    </div>
+                    <VehicleState stateStr={this.state.stateStr} />
                     <hr/>
-                    <h4>Position:</h4>
-                    <h4 style={{margin: "0px 0px 0px 0px"}}>Lat: {this.state.lat}</h4>
-                    <h4>Long: {this.state.long}</h4>
+                    <div className={"row"}>
+                        <div className={"col-lg-4"}>
+                            <img src={airbrakesBackground} className={"airbrakesIconBG"}/>
+                            
+                        </div>
+                        <div className={"col-lg-7"}>
+                            <h4>Airbrakes: {this.state.airbrakesDeploy} %</h4>
+                            <div className={"row"}>
+                                <img src={airbrakesFinTR} className={"airbrakesFin"} style={{top:fin1Y, left:fin1X}}/>
+                                <img src={airbrakesFinTL} className={"airbrakesFin"} style={{top:fin2Y, left:fin2X}}/>
+                                <img src={airbrakesFinBR} className={"airbrakesFin"} style={{top:fin3Y, left:fin3X}}/>                            
+                                <img src={airbrakesFinBL} className={"airbrakesFin"} style={{top:fin4Y, left:fin4X}}/>
+                            </div>
+
+                        </div>
+                    </div>
+                    {/* Airbrakes indicator goes here */}
+
                     <div style={{position: "absolute", bottom: "2%", width: "100%"}}>
                         <hr/>
                         <h4>Flight Clock:</h4>

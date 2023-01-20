@@ -55,7 +55,8 @@ export default class App extends React.Component {
             commandHistory: [],
             slowLog: false,
             fastLog: false,
-            showMetric: false
+            showMetric: false,
+            airbrakesDeploy: 0,
         }
 
         /**
