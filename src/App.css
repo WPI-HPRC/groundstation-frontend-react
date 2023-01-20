@@ -188,9 +188,18 @@
   top: 120px;
   right: -10px;
   padding: 5px;
-  z-index: 1000;
+  z-index: 10;
   width: 40px;
   text-align: center;
+}
+
+.visDiv {
+  position: relative;
+  width: 45px;
+  height: 40vh;
+  top: -40px;
+  left: 0px;
+  z-index: 100;
 }
 
 .VehicleStatus {

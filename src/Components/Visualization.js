@@ -19,6 +19,7 @@ export default class Visualization extends React.Component {
             map: null,
             dark: props.dark,
             showMap: true,
+            imgToShow: 0,
         }
 
         this.map = 0;
@@ -43,6 +44,7 @@ export default class Visualization extends React.Component {
         console.log(this.state.showMap);
     }
 
+
     render() {
 
         var position = [42.27470400012541,-71.80915315792504];
@@ -59,9 +61,11 @@ export default class Visualization extends React.Component {
                             <button className={!this.state.showMap ? "hidden" : "visToggle"} id="visToggle" onClick={() => this.toggleVis()}>3D</button> 
                         </MapContainer>
                     </div>
-                    <div className={this.state.showMap ? "hidden" : "mapDiv"}>
+                    <div className={this.state.showMap ? "hidden" : "visDiv"} id={"canvas3D"}>
                         <button className={"showMap"} onClick={() => this.toggleVis()}>Map</button>
-                        <RocketViewer></RocketViewer>
+                        <RocketViewer className={this.state.showMap ? "hidden" : undefined} ></RocketViewer>
+
+
                     </div>
                 </div>
                 <style jsx="true"> {`

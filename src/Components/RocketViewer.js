@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import * as THREE from 'three';
-import ReactDOM from 'react-dom/client';
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { Object3D, Vector3 } from 'three';
-import filePath from './hprc2.gltf';
-import { chart } from './chart.tsx';
+import filePath from '../hprc3.gltf';
+import imgPath from '../space_2.jpg';
 
 export default class RocketViewer extends Component {
 
 
 
   componentDidMount() {
+
+    const bgLoader = new THREE.TextureLoader();
+    const backgroundPicture = bgLoader.load(imgPath);
 
     const loader = new GLTFLoader();
     var model;
@@ -20,7 +21,7 @@ export default class RocketViewer extends Component {
         model = gltf.scene;
         model.name = 'rocket';
 		    scene.add( model );
-        model.rotation.z = (3.1415)/2; // this is in radians => 90 degrees
+        // model.rotation.z = (3.1415)/2; // this is in radians => 90 degrees
 
 	    },
   	  // called while loading is progressing
@@ -38,17 +39,18 @@ export default class RocketViewer extends Component {
 
 	    }
     );
+    var canvas = document.getElementById('canvas3D');
 
     var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 10000000 );
+    var camera = new THREE.PerspectiveCamera( 75, 1, 0.1, 10000 );
     var renderer = new THREE.WebGLRenderer({ antialias: true });
-    var lineChart = new chart();
-    renderer.setSize( window.innerWidth, window.innerHeight );
-    document.body.appendChild( renderer.domElement );
-    document.body.appendChild( lineChart.domElement );
+    renderer.setSize(476, 460, false);
+    canvas.appendChild( renderer.domElement );
 
     var light2 = new THREE.AmbientLight(0xa0a0a0);
     scene.add(light2);
+
+    scene.background = backgroundPicture;
 
     camera.position.z = 5;
 
@@ -59,18 +61,23 @@ export default class RocketViewer extends Component {
 
       if( model ) {
         model.scale.set(0.1, 0.1, 0.1);
-        model.position.set(0, -5, -5);
-        model.rotation.x += 0.01;
+        model.position.set(0, -2, -2);
+        model.rotation.y += 0.01;
 
       }
+
+      var canvas = document.getElementById('canvas3D');
+      camera.aspect = canvas.clientWidth / camera.clientHeight;
+
       renderer.render( scene, camera );
     };
     animate();
   }
   render() {
-    return (
-      <div ref={ref => (this.mount = ref)} />
-    )
+    // return (
+    //   // <div ref={ref => (this.mount = ref)} />
+    // )
+    return(null)
   }
 }
 
