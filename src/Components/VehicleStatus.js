@@ -137,14 +137,14 @@ export default class VehicleStatus extends React.Component {
     }
 
     render() {
-        var fin1X = -109 + this.state.airbrakesDeploy/5;
+        var fin1X = -105 + this.state.airbrakesDeploy/5;
         var fin2X = -211 - this.state.airbrakesDeploy/5;
-        var fin3X = -259 + this.state.airbrakesDeploy/5;
+        var fin3X = -256 + this.state.airbrakesDeploy/5;
         var fin4X = -135 - this.state.airbrakesDeploy/5;
-        var fin1Y = -20 - this.state.airbrakesDeploy/5;
+        var fin1Y = -18 - this.state.airbrakesDeploy/5;
         var fin2Y = -20 - this.state.airbrakesDeploy/5;
         var fin3Y = 8 + this.state.airbrakesDeploy/5;
-        var fin4Y = -68 + this.state.airbrakesDeploy/5;
+        var fin4Y = -66 + this.state.airbrakesDeploy/5;
 
 
 
