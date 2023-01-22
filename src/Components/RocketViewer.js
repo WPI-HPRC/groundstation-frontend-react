@@ -13,7 +13,8 @@ export default class RocketViewer extends Component {
             gyroX: props.gyroX,
             gyroY: props.gyroY,
             gyroZ: props.gyroZ,
-            time: props.time,
+            time: props.vehicleClock,
+            rocketQuaternion: props.rocketQuaternion,
         }
 
         this.map = 0;
@@ -24,12 +25,14 @@ export default class RocketViewer extends Component {
         if (current_state.gyroX !== props.gyroX ||
             current_state.gyroY !== props.gyroY ||
             current_state.gyroZ !== props.gyroZ || 
-            current_state.time !== props.time ) {
+            current_state.time !== props.vehicleClock0 ||
+            current_state.rocketQuaternion !== props.rocketQuaternion) {
             return {
                 gyroX: props.gyroX,
                 gyroY: props.gyroY,
                 gyroZ: props.gyroZ,
-                time: props.time,
+                time: props.vehicleClock,
+                rocketQuaternion: props.rocketQuaternion,
             }
         }
         return null
@@ -86,9 +89,7 @@ export default class RocketViewer extends Component {
 
     camera.position.z = 5;
 
-    let xRotation = this.props.gyroX;
-    let yRotation = this.props.gyroY;
-    let zRotation = this.props.gyroZ;
+    
 
 
     var animate = function () {
@@ -97,10 +98,20 @@ export default class RocketViewer extends Component {
       if( model ) { // animation
         model.scale.set(0.1, 0.1, 0.1);
         model.position.set(0, -2, -2);
-        model.rotation.x += xRotation;
-        model.rotation.y += yRotation;
-        model.rotation.z += zRotation;
+        let rocketQ = new THREE.Quaternion();
+        rocketQ.set(root.state.rocketQuaternion[0], root.state.rocketQuaternion[1], root.state.rocketQuaternion[2], root.state.rocketQuaternion[3]);
+        rocketQ.normalize();
+        model.applyQuaternion(rocketQ);
+        // let xRotation = root.state.gyroX;
+        // let yRotation = root.state.gyroY;
+        // let zRotation = root.state.gyroZ;
+        // model.rotation.x += xRotation;
+        // model.rotation.y += yRotation;
+        // model.rotation.z += zRotation;
+
       }
+
+
 
       var canvas = document.getElementById('canvas3D');
       camera.aspect = canvas.clientWidth / camera.clientHeight;

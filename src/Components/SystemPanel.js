@@ -38,7 +38,10 @@ export default class SystemPanel extends React.Component {
     }
 
     static getDerivedStateFromProps(props, current_state) {
-        if (current_state.time !== props.vehicleClock) {
+        if (current_state.time !== props.vehicleClock || 
+            current_state.gyroX !== props.gyroX ||
+            current_state.gyroY !== props.gyroY ||
+            current_state.gyroZ !== props.gyroZ) {
 
             if (props.vehicleClock.getTime() === 0) { // FLAG
                 return {

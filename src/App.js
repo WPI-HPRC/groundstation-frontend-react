@@ -57,6 +57,7 @@ export default class App extends React.Component {
             fastLog: false,
             showMetric: false,
             airbrakesDeploy: 0,
+            rocketQuaternion: [0, 0, 0, 0],
         }
 
         /**
@@ -396,6 +397,16 @@ export default class App extends React.Component {
                 break;
             case "dump":
                 socket.send("dump");
+                break;
+            case "rq":
+                if([args[1]] !== undefined &&
+                    [args[2]] !== undefined &&
+                    [args[3]] !== undefined &&
+                    [args[4]] !== undefined) {
+                    this.setState({
+                        rocketQuaternion: [Number([args[1]]), Number([args[2]]), Number([args[3]]), Number([args[4]])]
+                    });
+                }
                 break;
             case "help":
             case "h":
