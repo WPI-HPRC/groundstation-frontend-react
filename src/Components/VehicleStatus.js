@@ -172,7 +172,7 @@ export default class VehicleStatus extends React.Component {
                             
                         </div>
                         <div className={"col-lg-7"}>
-                            <h4>Airbrakes: {this.state.airbrakesDeploy} %</h4>
+                            <h4>Airbrakes: {this.state.airbrakesDeploy}%</h4>
                             <div className={"row"}>
                                 <img src={airbrakesFinTR} className={"airbrakesFin"} style={{top:fin1Y, left:fin1X}}/>
                                 <img src={airbrakesFinTL} className={"airbrakesFin"} style={{top:fin2Y, left:fin2X}}/>

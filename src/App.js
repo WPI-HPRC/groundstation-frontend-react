@@ -412,16 +412,17 @@ export default class App extends React.Component {
             case "h":
             
                 
-                this.pushConsoleMessage(`Help: Display the console commands:
-- get [prop] : return the value of a property in state
-- set [prop] [val] : change the value of a property
-- reset : clear the telemetry state
-- run [command] : execute a command in js
-- tick : increase the clock by 1ms (forces an update)
-- raw : print all incoming telemetry to console
-- stop : stop printing all telemetry to console
-- clear : clear the console buffer
-- benchmark [milliseconds]: run a benchmarking test for the specified time, or 10s`, "white");
+                this.pushConsoleMessage(`Help: Display the console commands: 
+- get [prop] : return the value of a property in state 
+- set [prop] [val] : change the value of a property 
+- reset : clear the telemetry state 
+- run [command] : execute a command in js 
+- tick : increase the clock by 1ms (forces an update) 
+- raw : print all incoming telemetry to console 
+- stop : stop printing all telemetry to console 
+- clear : clear the console buffer 
+- benchmark [milliseconds]: run a benchmarking test for the specified time, or 10s 
+- rq [x] [y] [z] [w]: set the rocket model's rotation to a given quaternion`, "white");
                 break;
             default:
                 this.pushConsoleMessage(`Command "${args[0]}" not recognized`, "red")

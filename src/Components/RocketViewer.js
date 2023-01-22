@@ -4,7 +4,8 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import filePath from '../hprc3.gltf';
 // import imgPath from '../space_2.jpg';
 // import imgPath from '../image.png';
-import imgPath from '../Toby_wtf.png';
+// import imgPath from '../Toby_wtf.png';
+import imgPath from '../blank_background.png';
 
 export default class RocketViewer extends Component {
     constructor(props) {
