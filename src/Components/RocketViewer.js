@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import filePath from '../hprc3.gltf';
-// import imgPath from '../space_2.jpg';
-// import imgPath from '../image.png';
-// import imgPath from '../Toby_wtf.png';
-import imgPath from '../blank_background.png';
+// import filePath from '../hprc3.gltf';
+
+
+/*
+*  The panel showing the 3D visual of the rocket's orientation
+*  hidden behind map by default
+*/ 
+
+// locations of the different backgrounds, if you want them.
+//'space_2.jpg'; <-- what you get when you google 'cool space background'
+//'image.png'; <-- Max
+//'Toby_wtf.png'; <-- Toby
+//'blank_background.png'; <-- the real one
 
 export default class RocketViewer extends Component {
     constructor(props) {
@@ -45,13 +53,13 @@ export default class RocketViewer extends Component {
 
     // load the background texture
     const bgLoader = new THREE.TextureLoader();
-    const backgroundPicture = bgLoader.load(imgPath);
+    const backgroundPicture = bgLoader.load("blank_background.png");
 
     // load the model
     const loader = new GLTFLoader();
     var model;
     loader.load(
-	    filePath,
+	    "hprc3.gltf",
 	    ( gltf ) => { // all info to set up at start
         model = gltf.scene;
         model.name = 'rocket';

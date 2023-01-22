@@ -177,6 +177,8 @@
   width: 33px;
   height: 33px;
   text-align: center;
+  background-color: #ffffff;
+  border-color: #cdcdcd;
 }
 
 .mapDiv{ /* Div containing the map */ 

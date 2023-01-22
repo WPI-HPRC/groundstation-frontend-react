@@ -1,10 +1,5 @@
 import React from 'react';
- 
-import airbrakesBackground from '../Airbrakes Diagram.png';
-import airbrakesFinTR from '../AirbrakesFinTR.png';
-import airbrakesFinTL from '../AirbrakesFinTL.png';
-import airbrakesFinBR from '../AirbrakesFinBR.png';
-import airbrakesFinBL from '../AirbrakesFinBL.png';
+
 
 /**
  *   Indicator on middle-left showing status of vehicle
@@ -168,16 +163,16 @@ export default class VehicleStatus extends React.Component {
                     <hr/>
                     <div className={"row"}>
                         <div className={"col-lg-4"}>
-                            <img src={airbrakesBackground} className={"airbrakesIconBG"}/>
+                            <img src={'Airbrakes Diagram.png'} className={"airbrakesIconBG"}/>
                             
                         </div>
                         <div className={"col-lg-7"}>
                             <h4>Airbrakes: {this.state.airbrakesDeploy}%</h4>
                             <div className={"row"}>
-                                <img src={airbrakesFinTR} className={"airbrakesFin"} style={{top:fin1Y, left:fin1X}}/>
-                                <img src={airbrakesFinTL} className={"airbrakesFin"} style={{top:fin2Y, left:fin2X}}/>
-                                <img src={airbrakesFinBR} className={"airbrakesFin"} style={{top:fin3Y, left:fin3X}}/>                            
-                                <img src={airbrakesFinBL} className={"airbrakesFin"} style={{top:fin4Y, left:fin4X}}/>
+                                <img src={'AirbrakesFinTR.png'} className={"airbrakesFin"} style={{top:fin1Y, left:fin1X}}/>
+                                <img src={'AirbrakesFinTL.png'} className={"airbrakesFin"} style={{top:fin2Y, left:fin2X}}/>
+                                <img src={'AirbrakesFinBR.png'} className={"airbrakesFin"} style={{top:fin3Y, left:fin3X}}/>                            
+                                <img src={'AirbrakesFinBL.png'} className={"airbrakesFin"} style={{top:fin4Y, left:fin4X}}/>
                             </div>
 
                         </div>

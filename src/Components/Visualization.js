@@ -3,7 +3,6 @@ import 'leaflet.offline';
 import {MapContainer, TileLayer} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css'
 import RocketViewer from './RocketViewer';
-import img from '../rocket_icon_2.png';
 /**
  *  for visualization of things imported from outside React
  *  current usage: map
@@ -61,7 +60,7 @@ export default class Visualization extends React.Component {
                                 url="Maps/{z}/{x}/{y}.png"
                             />
                             <button className={!this.state.showMap ? "hidden" : "visToggle"} id="visToggle" onClick={() => this.toggleVis()}>
-                                <img className={"visIcon"} src={img} ></img>
+                                <img className={"visIcon"} src={'rocket_icon_2.png'} ></img>
                             </button> 
                         </MapContainer>
                     </div>
