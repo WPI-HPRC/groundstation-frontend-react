@@ -58,6 +58,10 @@ export default class App extends React.Component {
             showMetric: false,
             airbrakesDeploy: 0,
             rocketQuaternion: [0, 0, 0, 0],
+            window: 0,
+            lastTemp: 0,
+            lastHmid: 0,
+            lastPres: 0,
         }
 
         /**
@@ -71,7 +75,8 @@ export default class App extends React.Component {
             disconnFunc: this.disconnectFromReceiver,
             resetFunc: this.resetTelem,
             commandFunc: this.handleConsoleCommand,
-            unitFunc: this.updateMetric
+            unitFunc: this.updateMetric,
+            modeFunc: this.updateMode,
         }
 
         /**
@@ -87,6 +92,7 @@ export default class App extends React.Component {
         this.getTelem = this.getTelem.bind(this);
         this.handleConsoleCommand = this.handleConsoleCommand.bind(this);
         this.updateMetric = this.updateMetric.bind(this);
+        this.updateMode = this.updateMode.bind(this);
         
     }
 
@@ -270,6 +276,12 @@ export default class App extends React.Component {
             showMetric: unit
         })
 
+    }
+
+    updateMode = (mode) => {
+        this.setState({
+            dark: mode
+        })
     }
 
     /**
@@ -501,11 +513,13 @@ export default class App extends React.Component {
         return (
             <div className={`App ${this.state.dark ? "darkApp" : "lightApp"}`}>
                 <main>
-                    <Layout
+                    <Layout 
                         {...this.state}
                         {...this.configFuncs}
                         />
 
+
+                    
                     <div className={this.state.renderSplashScreen ? 'splash' : 'splashFade'}>
                         <SplashScreen/>
                     </div>

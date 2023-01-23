@@ -49,7 +49,8 @@ class Box extends React.PureComponent {
             ],
 
             graphType: props.graphType,
-            timeToRefresh: true
+            timeToRefresh: true,
+            animationID: null,
         };
 
     }
@@ -106,9 +107,15 @@ class Box extends React.PureComponent {
     // perform initialization animation 8 seconds after system loads to give time for loading screen
     componentDidMount() {
 
-        setTimeout(() => {this.initAnimation()}, 8000);
+        this.setState({
+            animationID: setTimeout(() => {this.initAnimation()}, 8000),
+        });
     }
     
+    componentWillUnmount() {
+        clearTimeout(this.state.animationID);
+    }
+
     // switch from gauge to graph and back again
     handleClick() {
         this.setState((state, props) => ({

@@ -229,6 +229,28 @@
   /* top: -155px; */
 }
 
+.CubeWindow {
+  height: 99.5vh;
+  width: 99.5vw;
+}
+
+.settingsPanel {
+  height: 19vh;
+  width: 20vw;
+  border-color: var(--dark-app-bg-color);
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+}
+
+.CubeTopbar {
+
+}
+
+.CubeDisplayPanel {
+
+}
+
 .VehicleStatus {
 
 }
