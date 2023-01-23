@@ -77,7 +77,7 @@ export default class Layout extends React.Component {
         return (
             <>
                 <div className={this.state.window == 0 ? "Layout" : "hidden"}>
-                    <Grid style={{width:"100%", backgroundColor: "inherit"}}>
+                    <Grid style={{width:"100%"}}>
                         <Row style={{height:"88vh"}}>
                             <Col lg={9}>
                                 <Row>
@@ -137,6 +137,7 @@ export default class Layout extends React.Component {
                             <CubeTopbar className="CubeTopbar" 
                                 unitFunc = {this.props.unitFunc}
                                 modeFunc = {this.props.modeFunc}
+                                windowFunc = {this.props.windowFunc}
                                 {...this.props}/>
                         </div>
                     </Row>

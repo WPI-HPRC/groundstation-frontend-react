@@ -15,7 +15,8 @@ class StatusIndicator extends React.Component {
             latency: "-",
             systemName: props.name,
             blinkOn: false,
-            ID: null
+            ID: null,
+            dark: props.dark,
         };
             
         this.blinkWarning = this.blinkWarning.bind(this)
@@ -26,7 +27,8 @@ class StatusIndicator extends React.Component {
 
         if (current_state.connected !== props.connected ||
             current_state.refresh !== props.refresh ||
-            current_state.latency !== props.latency) {
+            current_state.latency !== props.latency ||
+            current_state.dark !== props.dark) {
             update = {
                 connected: props.connected,
                 refresh: props.refresh,

@@ -50,7 +50,8 @@ export default class CubeDisplayPanel extends React.Component{
             current_state.time !== props.vehicleClock ||
             current_state.lastHmid !== props.lastHmid ||
             current_state.lastPres !== props.lastPres ||
-            current_state.lastTemp !== props.lastTemp) {
+            current_state.lastTemp !== props.lastTemp ||
+            current_state.dark !== props.dark) {
             
             if(props.vehicleClock.getTime() === 0){
                 return {
@@ -91,6 +92,7 @@ export default class CubeDisplayPanel extends React.Component{
                     legendString: "",
                     showMetric: props.showMetric,
                     time: props.vehicleClock,
+                    dark: props.dark,
                 }
             } else {
                 return {
@@ -206,6 +208,29 @@ export default class CubeDisplayPanel extends React.Component{
             }
         }
 
+        // change the color of various elements depending on whether we're in light or dark mode 
+
+        let tooltipColor = null;
+        if(this.props.dark) {
+            tooltipColor = "#ffffff";
+        } else {
+            tooltipColor = "#000000";
+        }
+
+        let textColor = null;
+        if(this.props.dark) {
+            textColor = "#ffffff";
+        } else {
+            textColor = "#000000";
+        }
+
+        let tooltipBG = null;
+        if(this.props.dark) {
+            tooltipBG = "#141414";
+        } else {
+            tooltipBG = "#607d8b";
+        }
+
         return(
             <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`} style={{height:"100%"}}>
                 <div style={{height:"1vh"}}></div>
@@ -230,6 +255,7 @@ export default class CubeDisplayPanel extends React.Component{
                 <div /* all the data from this cube */ >
                     <div className={"row"} style={{height: "30vh"}}>
                         <ResponsiveLine
+                            className={this.props.dark ? "LineGraphDark" : "LineGraphLight"}
                             data={ this.state.cubeData }
                             margin={{ top: 20, right: 150, bottom: 60, left: 90 }}
                             xScale={{ type: 'linear', min: graphMin ?? 10, max: graphMax ?? 10 }}
@@ -241,19 +267,19 @@ export default class CubeDisplayPanel extends React.Component{
                             animate={false}
                             nodeSize={10}
                             theme={{
-                                textColor: '#ffffff',
+                                textColor: textColor,
                                 fontSize: '14px',
                                 axis: {
                                     legend: {
                                         text: {
-                                            fontSize: '14px'
+                                            fontSize: '14px',
                                         }   
                                     }
                                 },
                                 tooltip: {
                                     container: {
-                                        background: "#000000",
-                                        textColor: "#333333",
+                                        background: tooltipBG,
+                                        textColor: tooltipColor,
                                         fontSize: "14px"
                                     }
                                 },
@@ -311,13 +337,13 @@ export default class CubeDisplayPanel extends React.Component{
                 <div style={{height: "5vh"}}/>
                 <div className={"row"} style={{height:"5vh"}}>
                         <div style={{width:"11vw", textAlign: "center"}}>
-                            <button className={"customButtonLg"} onClick={() => this.toggleT()}>Temperature</button>
+                            <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleT()}>Temperature</button>
                         </div>
                         <div style={{width:"11vw", textAlign: "center"}}>
-                            <button className={"customButtonLg"} onClick={() => this.toggleH()}>Humidity</button>
+                            <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleH()}>Humidity</button>
                         </div>
                         <div style={{width:"11vw", textAlign: "center"}}>
-                            <button className={"customButtonLg"} onClick={() => this.toggleP()}>Pressure</button>
+                            <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleP()}>Pressure</button>
                         </div>
                     </div>
             </div>

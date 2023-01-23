@@ -77,6 +77,7 @@ export default class App extends React.Component {
             commandFunc: this.handleConsoleCommand,
             unitFunc: this.updateMetric,
             modeFunc: this.updateMode,
+            windowFunc: this.updateWindow,
         }
 
         /**
@@ -93,6 +94,7 @@ export default class App extends React.Component {
         this.handleConsoleCommand = this.handleConsoleCommand.bind(this);
         this.updateMetric = this.updateMetric.bind(this);
         this.updateMode = this.updateMode.bind(this);
+        this.updateWindow = this.updateWindow.bind(this);
         
     }
 
@@ -281,6 +283,12 @@ export default class App extends React.Component {
     updateMode = (mode) => {
         this.setState({
             dark: mode
+        })
+    }
+
+    updateWindow = (window) => {
+        this.setState({
+            window: window
         })
     }
 

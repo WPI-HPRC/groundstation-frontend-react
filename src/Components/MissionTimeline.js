@@ -15,10 +15,12 @@ function padLeadingZeros(num, size) {
 class MissionPoint extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { name: props.name,
-                       percentStart: props.percentStart,
-                       percentEnd: props.percentEnd,
-                       time: props.time };
+        this.state = { 
+            name: props.name,
+            percentStart: props.percentStart,
+            percentEnd: props.percentEnd,
+            time: props.time,
+        };
     }
 
     render() {
@@ -64,10 +66,12 @@ export default class MissionTimeline extends React.Component {
         let update = null;
 
         if (current_state.stateStr !== props.stateStr ||
-            current_state.vehicleTime !== props.vehicleClock) {
+            current_state.vehicleTime !== props.vehicleClock ||
+            current_state.dark !== props.dark) {
             update = {
                 stateStr: props.stateStr,
                 vehicleTime: props.vehicleClock,
+                dark: props.dark,
             }
         }
         
