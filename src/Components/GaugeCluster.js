@@ -50,6 +50,7 @@ class Box extends React.PureComponent {
             graphType: props.graphType,
             timeToRefresh: true,
             animationID: null,
+            window: props.window,
         };
 
     }
@@ -60,7 +61,8 @@ class Box extends React.PureComponent {
         // Update on new time
         // check if time has changed
         if (current_state.time !== props.time ||
-            current_state.dark !== props.dark) {
+            current_state.dark !== props.dark ||
+            current_state.window !== props.window) {
 
             // Reset if rocket time returns to 0
             if (props.time.getTime() === 0) {
@@ -289,7 +291,7 @@ class Box extends React.PureComponent {
                     </div>
 
                     <div className={this.state.drawGraph ? "hidden" : undefined} style={{height: "80%"}}>
-                        <ArcGauge {...arcOptions} centerRender={centerRenderer} style={{width: "100%", height: "100%"}} scale={{startAngle: -40, endAngle: 220, rangeSize: 10, min: this.props.min, max: this.props.max}}/>
+                        <ArcGauge path={{stroke:"black"}} className={"lightGauge"} {...arcOptions} centerRender={centerRenderer} style={{width: "100%", height: "100%"}} scale={{startAngle: -40, endAngle: 220, rangeSize: 10, min: this.props.min, max: this.props.max}}/>
                     </div>
                     <div className={this.state.drawGraph ? "hidden" : undefined} style={{position: "absolute", bottom: 0, right: 0, height: "15%", textAlign: "right"}}>
                             <h3 style={{margin: 0, padding: 5}}>Max: {this.state.max}</h3>
@@ -411,6 +413,7 @@ export default class GaugeCluster extends React.PureComponent {
             altUnit: "m",
             accelUnit: "m/s/s",
             velUnit: "m/s",
+            window: props.window,
         }
 
     }
@@ -420,7 +423,8 @@ export default class GaugeCluster extends React.PureComponent {
         if (current_state.vehicleClock !== props.vehicleClock ||
             current_state.timeScale !== props.timeScale || 
             current_state.showMetric !== props.showMetric ||
-            current_state.dark !== props.dark) {
+            current_state.dark !== props.dark ||
+            current_state.window !== props.window) {
             
 
             if(props.showMetric) {
@@ -437,6 +441,7 @@ export default class GaugeCluster extends React.PureComponent {
                     velUnit: "m/s",
                     showMetric: props.showMetric,
                     dark: props.dark,
+                    window: props.window,
                 }
             } else {
                 update = {
@@ -452,6 +457,7 @@ export default class GaugeCluster extends React.PureComponent {
                     velUnit: "ft/s",
                     showMetric: props.showMetric,
                     dark: props.dark,
+                    window: props.window,
                 }
             }
 

@@ -60,9 +60,7 @@ export default class CubeDisplayPanel extends React.Component{
                     lastTemp: props.lastTemp,
                     lastHmid: props.lastHmid,
                     lastPres: props.lastPres,
-                    showTemp: true,
-                    showHmid: false,
-                    showPres: false,
+
                     cubeDataT: 
                         {
                             id: "Temperature",
@@ -101,6 +99,7 @@ export default class CubeDisplayPanel extends React.Component{
                     lastHmid: props.lastHmid,
                     lastPres: props.lastPres,
                     lastTemp: props.lastTemp,
+                    dark: props.dark,
                 }
             }
 

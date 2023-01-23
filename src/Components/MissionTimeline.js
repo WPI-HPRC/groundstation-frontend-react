@@ -120,8 +120,8 @@ export default class MissionTimeline extends React.Component {
                         <div style={{position: "absolute", width: "100%"}}>
                             {missionPoints.map((elem) => (<MissionPoint key={elem[0]} name={elem[2]} percentStart={elem[0]} percentEnd={elem[1]} time={elem[3]}/>))}
                         </div>
-                        <div style={{position: "absolute", top: "52px", width: "100%"}}>
-                            <ProgressBar completed={missionPercent} isLabelVisible={false} bgColor="#ED5031" height="11px"/>
+                        <div  style={{position: "absolute", top: "52px", width: "100%", }}>
+                            <ProgressBar completed={missionPercent} isLabelVisible={false} bgColor={"#ED5031"} barContainerClassName={this.state.dark ? "foregroundDark" : "foregroundLight"} height="11px"/>
                         </div>
                     </div>
                     <div style={{display: "inline-block", position: "absolute", right: "0", height: "100%", width: "22%"}}>
