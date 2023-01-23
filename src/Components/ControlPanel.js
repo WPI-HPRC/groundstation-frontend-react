@@ -16,6 +16,7 @@ class Console extends React.Component {
         this.state = {
             consoleInput: ">",
             commandHistory: props.commandHistory,
+            dark: props.dark,
         }
 
         this.handleConsoleEnter = this.handleConsoleEnter.bind(this);
@@ -23,7 +24,8 @@ class Console extends React.Component {
     }
 
     static getDerivedStateFromProps(props, current_state) {
-        if (current_state.commandHistory !== props.commandHistory) {
+        if (current_state.commandHistory !== props.commandHistory ||
+            current_state.dark !== props.dark) {
             return {
                 commandHistory: props.commandHistory,
             }
@@ -53,7 +55,7 @@ class Console extends React.Component {
             <>
                 <div style={{height: "100%", position: "relative"}}>
                     <div style={{display: "flex", flexDirection: "column-reverse", height: "80%", overflowY: "auto", overflowWrap: "break-word" }}>
-                        {this.state.commandHistory.slice(0).reverse().map((elem, i) => (<p className="command" style={{color: elem[1]}} key={i}>{elem[0]}</p>))}
+                        {this.state.commandHistory.slice(0).reverse().map((elem, i) => (<p className="command" style={{color: this.props.dark ? "#ffffff" : "#000000"}} key={i}>{elem[0]}</p>))}
                     </div>
                     <input style={{position: "absolute", bottom: 0, left: 0, right: 0, width: "100%"}} type="text" onKeyDown={this.handleConsoleEnter} onChange={this.handleConsoleChange} value={this.state.consoleInput}/>
                 </div>
@@ -80,9 +82,11 @@ export default class ControlPanel extends React.Component {
     }
 
     static getDerivedStateFromProps(props, current_state) {
-        if (current_state.showConnect !== props.showConnectButton) {
+        if (current_state.showConnect !== props.showConnectButton ||
+            current_state.dark !== props.dark) {
             return {
                 showConnect: props.showConnectButton,
+                dark: props.dark,
             }
         }
         return null
@@ -146,21 +150,21 @@ export default class ControlPanel extends React.Component {
                                 <Col lg={2} style={{position: "relative", textAlign: "center"}}>    
                                     <div style={{position: "absolute", bottom: 70, left: 0, right: 0, margin: 0}}>
 
-                                        <button className="customButtonLg" style={{display: "inline-block"}} onClick={() => this.handleReset()}>Clear</button>
+                                        <button className={this.state.dark ? "customButtonLg" : "customButtonLgLight"} style={{display: "inline-block"}} onClick={() => this.handleReset()}>Clear</button>
                                         {/* <button className="customButtonLg" style={{display: "inline-block"}} onClick={() => this.handleReset()}>Clear</button> */}
                                     </div>
                                     <div className="subpanel" style={{width: "100%", textAlign: "center", position: "absolute", bottom: 0, margin: 0}}>
                                         <h4 style={{margin: "0px 0px 0px 0px"}}>Resolution:</h4>
    
-                                        <button className="customButtonSm mono" onClick={() => this.handleTSDec()}>-</button>
-                                        <input style={{margin: "5px 0px 5px 0px", textAlign: "center"}} type="text" size={4 } value={this.state.tsInput} onKeyDown={this.handleTSEnter} onChange={this.handleTSChange}/>
-                                        <button className="customButtonSm mono" onClick={() => this.handleTSInc()}>+</button>
+                                        <button className={this.state.dark ? "customButtonSm mono" : "customButtonSmLight mono"} onClick={() => this.handleTSDec()}>-</button>
+                                        <input style={{margin: "5px 0px 5px 0px", textAlign: "center", backgroundColor: this.state.dark ? "#212121" : "#BDBDBD"}} type="text" size={4 } value={this.state.tsInput} onKeyDown={this.handleTSEnter} onChange={this.handleTSChange}/>
+                                        <button className={this.state.dark ? "customButtonSm mono" : "customButtonSmLight mono"} onClick={() => this.handleTSInc()}>+</button>
                                     </div>
                                 </Col>
 
-                                <Col lg={10} style={{height: "100%", position: "relative", margin: "0px"}}>
+                                <Col lg={10} style={{height: "100%", position: "relative", margin: "0px", textColor: this.state.dark ? "#000000" : "#ffffff"}}>
                                     <div className="subpanel" style={{height: "90%", width: "90%", position: "absolute", right: 20, bottom: 2}}>
-                                        <Console handleCommandFunc={this.props.commandFunc} commandHistory={this.props.commandHistory}/>
+                                        <Console style={{backgroundColor: this.state.dark ? "#141414" : "#BDBDBD"}} handleCommandFunc={this.props.commandFunc} commandHistory={this.props.commandHistory} dark={this.state.dark}/>
                                     </div>
                                 </Col>
                             </Row>

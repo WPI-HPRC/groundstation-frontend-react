@@ -41,14 +41,15 @@ export default class SystemPanel extends React.Component {
         if (current_state.time !== props.vehicleClock || 
             current_state.gyroX !== props.gyroX ||
             current_state.gyroY !== props.gyroY ||
-            current_state.gyroZ !== props.gyroZ) {
+            current_state.gyroZ !== props.gyroZ ||
+            current_state.dark !== props.dark) {
 
             if (props.vehicleClock.getTime() === 0) { // FLAG
                 return {
                     gyroX: props.gyroX,
                     gyroY: props.gyroY,
                     gyroZ: props.gyroZ,
-
+                    dark: props.dark,
                     time: props.vehicleClock
                 }
             }
@@ -57,7 +58,7 @@ export default class SystemPanel extends React.Component {
                     gyroX: props.gyroX,
                     gyroY: props.gyroY,
                     gyroZ: props.gyroZ,
-
+                    dark: props.dark,
                     time: props.vehicleClock
                 }
             }
@@ -82,11 +83,19 @@ export default class SystemPanel extends React.Component {
 
         const circCenterRenderer = (value, color) => {
 
+            let textColor = null;
+            if(this.state.dark) {
+                textColor = "#ffffff"
+            } else {
+                textColor = "#000000"
+
+            }
+
             return (
                 <>
                     <h3
                         style={{
-                        color: "#F7F7F7",
+                        color: textColor,
                         fontSize: "2.5em",
                         margin: "0px 0px 0px 0px",
                         padding: "0px 0px 0px 0px"
@@ -101,12 +110,20 @@ export default class SystemPanel extends React.Component {
 
         const arcCenterRenderer = (value, color) => {
 
+            let textColor = null;
+            if(this.state.dark) {
+                textColor = "#ffffff"
+            } else {
+                textColor = "#000000"
+
+            }
+
             return (
                 <>
                     <h4>{this.props.unit}</h4>
                     <h3
                         style={{
-                        color: "#F7F7F7",
+                        color: textColor,
                         fontSize: "2.5em",
                         margin: "0px 0px 0px 0px",
                         padding: "5px 5px 5px 5px",

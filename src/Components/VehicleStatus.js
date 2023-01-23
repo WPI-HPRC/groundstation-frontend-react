@@ -2,8 +2,7 @@ import React from 'react';
 
 
 /**
- *   Indicator on middle-left showing status of vehicle
- *   currently used inside MissionStatus
+ *   Left-top panel, showing general vehicle information including power, temp, pressure, airbrakes etc.
  * 
  *   
  */
@@ -12,15 +11,20 @@ class VehicleState extends React.PureComponent {
 
     constructor(props) {
         super(props);
-        this.state = { stateStr: props.stateStr };
+        this.state = { 
+            stateStr: props.stateStr,
+            dark: props.dark,
+        };
     }
 
     static getDerivedStateFromProps(props, current_state) {
         let update = null;
 
-        if (current_state.stateStr !== props.stateStr) {
+        if (current_state.stateStr !== props.stateStr ||
+            current_state.dark !== props.dark) {
             update = {
                 stateStr: props.stateStr,
+                dark: props.dark,
             }
         }
        
@@ -61,14 +65,18 @@ class VehicleState extends React.PureComponent {
 class FlightClock extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { time: props.time,
-                       color: "white"};
+        this.state = { 
+            time: props.time,
+            dark: props.dark,
+        };
     }
 
     static getDerivedStateFromProps(props, current_state) {
-        if (current_state.time !== props.time) {
+        if (current_state.time !== props.time ||
+            current_state.dark !== props.dark) {
             return {
                 time: props.time,
+                dark: props.dark,
             }
         }
         return null
@@ -79,7 +87,7 @@ class FlightClock extends React.Component {
 
         return (
             <div style={{display:"inline-block", position: "relative", width: "100%", textAlign: "center"}}>
-                <h1 className="subpanel" style={{margin: "auto", color: this.state.color, width: "70%", fontSize: "3em"}}>{clockStr}</h1>
+                <h1 className="subpanel" style={{margin: "auto", color: this.state.dark ? "#ffffff" : "#000000", width: "70%", fontSize: "3em"}}>{clockStr}</h1>
             </div>
         )
     }
@@ -99,7 +107,7 @@ export default class VehicleStatus extends React.Component {
             lat: props.lat,
             long: props.long,
             airbrakesDeploy: props.airbrakesDeploy,
-            vehicleClock: props.vehicleClock
+            vehicleClock: props.vehicleClock,
         };
     }
 
@@ -108,13 +116,14 @@ export default class VehicleStatus extends React.Component {
 
         if (current_state.battery !== props.battery ||
             current_state.temperature !== props.temperature ||
-            current_state.pressure != props.pressure ||
-            current_state.humidity != props.humidity ||
+            current_state.pressure !== props.pressure ||
+            current_state.humidity !== props.humidity ||
             current_state.stateStr !== props.stateStr ||
             current_state.lat !== props.lat ||
             current_state.long !== props.log ||
             current_state.vehicleClock !== props.vehicleClock ||
-            current_state.airbrakesDeploy !== props.airbrakesDeploy) {
+            current_state.airbrakesDeploy !== props.airbrakesDeploy ||
+            current_state.dark !== props.dark) {
             update = {
                 battery: props.battery,
                 temperature: parseFloat(props.temperature).toFixed(2),
@@ -124,7 +133,8 @@ export default class VehicleStatus extends React.Component {
                 lat: props.lat,
                 long: props.long,
                 airbrakesDeploy: props.airbrakesDeploy,
-                vehicleClock: props.vehicleClock
+                vehicleClock: props.vehicleClock,
+                dark: props.dark,
             }
         }
         
@@ -182,7 +192,7 @@ export default class VehicleStatus extends React.Component {
                     <div style={{position: "absolute", bottom: "2%", width: "100%"}}>
                         <hr/>
                         <h4>Flight Clock:</h4>
-                        <FlightClock time={this.state.vehicleClock}/>
+                        <FlightClock time={this.state.vehicleClock} dark={this.state.dark}/>
                     </div>
                 </div>
             </div>

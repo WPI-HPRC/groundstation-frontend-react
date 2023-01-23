@@ -4,9 +4,7 @@ import { ArcGauge } from "@progress/kendo-react-gauges";
 // import { dataOut as data } from './data';
 // import { ResponsiveScatterPlot } from '@nivo/scatterplot';
 import { ResponsiveLine } from '@nivo/line';
-import { quantizeColorScalePropType } from 'nivo/lib/props/colors';
-const config = require('../mission.cfg');
-const dataScalar = -1;
+
 
 /**
  *  The group of gauges that handles the altitude, velocity, and acceleration
@@ -29,6 +27,7 @@ class Box extends React.PureComponent {
             val1: props.val1,
             val2: props.val2,
             time: props.time,
+            dark: props.dark,
             graphTime: props.time,
             data: [
                 {
@@ -60,7 +59,8 @@ class Box extends React.PureComponent {
 
         // Update on new time
         // check if time has changed
-        if (current_state.time !== props.time) {
+        if (current_state.time !== props.time ||
+            current_state.dark !== props.dark) {
 
             // Reset if rocket time returns to 0
             if (props.time.getTime() === 0) {
@@ -162,7 +162,7 @@ class Box extends React.PureComponent {
 
         let testTimeFactor = 1000; // for testing purposes, treating 1ms as 100ms aka time / 10 rather than time / 1000
 
-        if((this.state.data[0].data[0] == undefined) || (this.state.data[0].data[this.state.data[0].data.length - 1].x !== this.props.time.getTime() / testTimeFactor)) 
+        if((this.state.data[0].data[0] === undefined) || (this.state.data[0].data[this.state.data[0].data.length - 1].x !== this.props.time.getTime() / testTimeFactor)) 
         {
 
             // make some new data points for the current values
@@ -212,14 +212,14 @@ class Box extends React.PureComponent {
 
         // index of each data point.  allows to use resolution variable to change what fraction of the points are displayed
         // for example, resolution of 2 would be 50%, 100 would be 1%, etc.
-        let ind = 0;
+
 
         let resolution = this.props.datanum;
 
         this.state.finalData[0].data = [];
 
         this.state.data[0].data.forEach(element => {
-            if(element.x * 1000 % resolution == 0 && element.x >= graphMin/1000 && element.x <= this.state.time.getTime()/1000)
+            if(element.x * 1000 % resolution === 0 && element.x >= graphMin/1000 && element.x <= this.state.time.getTime()/1000)
             {
                 this.state.finalData[0].data.push(element);
             } 
@@ -246,6 +246,13 @@ class Box extends React.PureComponent {
 
         const centerRenderer = (value, color) => {
 
+            let textColor = null;
+            if(this.props.dark) {
+                textColor = "#ffffff";
+            } else {
+                textColor = "#000000";
+            }
+
             return (
                 <>
                     <div>
@@ -253,7 +260,7 @@ class Box extends React.PureComponent {
                         <h3
                             className="subpanel"
                             style={{
-                                color: "#F7F7F7",
+                                color: textColor,
                                 fontSize: "3.5em",
                                 margin: "0px 20px 20px 20px",
                                 textAlign: "center",
@@ -275,7 +282,7 @@ class Box extends React.PureComponent {
                             <h3>{this.props.title}</h3>
                         </div>
                         <div style={{position: "absolute", top:0, right: 0, bottom: 0, left: 0, textAlign:"right", margin: "10px 0px 0px 0px"}}>
-                            <button className={"customButtonLg"} onClick={() => this.handleClick()}>
+                            <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.handleClick()}>
                                 {this.state.drawGraph ? "View Gauge" : "View Graph"}
                             </button>
                         </div>
@@ -403,7 +410,7 @@ export default class GaugeCluster extends React.PureComponent {
             showMetric: false,
             altUnit: "m",
             accelUnit: "m/s/s",
-            velUnit: "m/s"
+            velUnit: "m/s",
         }
 
     }
@@ -412,7 +419,8 @@ export default class GaugeCluster extends React.PureComponent {
         let update = null;
         if (current_state.vehicleClock !== props.vehicleClock ||
             current_state.timeScale !== props.timeScale || 
-            current_state.showMetric !== props.showMetric) {
+            current_state.showMetric !== props.showMetric ||
+            current_state.dark !== props.dark) {
             
 
             if(props.showMetric) {
@@ -427,8 +435,8 @@ export default class GaugeCluster extends React.PureComponent {
                     altUnit: "m",
                     accelUnit: "m/s/s",
                     velUnit: "m/s",
-                    showMetric: props.showMetric
-
+                    showMetric: props.showMetric,
+                    dark: props.dark,
                 }
             } else {
                 update = {
@@ -442,7 +450,8 @@ export default class GaugeCluster extends React.PureComponent {
                     altUnit: "ft",
                     accelUnit: "G",
                     velUnit: "ft/s",
-                    showMetric: props.showMetric
+                    showMetric: props.showMetric,
+                    dark: props.dark,
                 }
             }
 
@@ -458,10 +467,12 @@ export default class GaugeCluster extends React.PureComponent {
                     <Box title="Altitude" unit={this.state.altUnit} min={0} max={9999} defaultToGraph={false}
                         threshold={900} digits={4} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.altitude} name0={"Altitude"}
+                        dark={this.state.dark}
                         />
                     <Box title="Velocity" unit={this.state.velUnit} min={0} max={300} defaultToGraph={false}
                         threshold={200} digits={3} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.vel} name0={"Velocity ΔA"}
+                        dark={this.state.dark}
                         />
                     <Box title="Acceleration" unit={this.state.accelUnit} min={0} max={3000} 
                         threshold={2000} digits={4} graphRefreshRate={this.props.graphRefreshRate}
@@ -469,6 +480,7 @@ export default class GaugeCluster extends React.PureComponent {
                         val0={this.state.accelY} name0="Y"
                         val1={this.state.accelX} name1="X"
                         val2={this.state.accelZ} name2="Z"
+                        dark={this.state.dark}
                         />
                 </div>
             </div>

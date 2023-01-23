@@ -3,7 +3,7 @@ import React from 'react';
 /**
  *  plate in top-right which contains club name and logo
  *  Current: WPI <img> HPRC
- *             AQUILA GS
+ *           CAPRICORNUS GS
  */
 
 export default class TitlePlate extends React.Component {
@@ -14,6 +14,16 @@ export default class TitlePlate extends React.Component {
             dark: props.dark,
         }
     }
+
+    static getDerivedStateFromProps(props, current_state) {
+        if(current_state.dark !== props.dark) {
+            return {
+                dark: props.dark
+            }
+        }
+        return null;
+    }
+
 
     render() {
         return (

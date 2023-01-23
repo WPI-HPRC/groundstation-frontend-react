@@ -101,16 +101,19 @@ class MissionState extends React.Component {
     constructor(props) {
         super(props);
         this.state = { 
-            missionStateStr: props.missionStateStr
+            missionStateStr: props.missionStateStr,
+            dark: props.dark,
          };
     }
 
     static getDerivedStateFromProps(props, current_state) {
         let update = null;
 
-        if (current_state.missionStateStr !== props.missionStateStr) {
+        if (current_state.missionStateStr !== props.missionStateStr ||
+            current_state.dark !== props.dark) {
             update = {
-                missionStateStr: props.missionStateStr
+                missionStateStr: props.missionStateStr,
+                dark: props.dark,
             }
         }
         
@@ -170,7 +173,8 @@ export default class MissionStatus extends React.Component {
             showConnect: props.showConnectButton,
             slowLog: props.slowLog,
             showMetric: props.showMetric,
-            altitude: props.altitude
+            altitude: props.altitude,
+            dark:props.dark,
         }
 
         this.handleConnect = this.handleConnect.bind(this);
@@ -187,7 +191,8 @@ export default class MissionStatus extends React.Component {
             current_state.lastUpdate !== props.lastUpdate ||
             current_state.latency !== props.latency ||
             current_state.showConnect !== props.showConnectButton ||
-            current_state.slowLog !== props.slowLog ) {
+            current_state.slowLog !== props.slowLog ||
+            current_state.dark !== props.dark ) {
 
             if (props.latency === "-" && props.lastUpdate === "-") {
                 return {
@@ -199,6 +204,7 @@ export default class MissionStatus extends React.Component {
                     latencies: [],
                     showConnect: props.showConnectButton,
                     slowLog: props.slowLog,
+                    dark: props.dark,
                 }
             }
             update = {
@@ -211,6 +217,7 @@ export default class MissionStatus extends React.Component {
                 latencies: [...current_state.latencies.slice(-100), props.latency],
                 showConnect: props.showConnectButton,
                 slowLog: props.slowLog,
+                dark: props.dark,
             }
         }
 
@@ -272,18 +279,18 @@ export default class MissionStatus extends React.Component {
                         </div>
                         <div style={{display: "inline-block", width: "90%", textAlign: "right"}}>
                             <div className={!this.state.showConnect ? "inline" : "hidden"}>
-                                <button className="customButtonLg" style={{margin: "0px 10px 0px 0px"}} onClick={() => this.handleDisconnect()}>Disconnect</button>
+                                <button className={this.state.dark ? "customButtonLg" : "customButtonLgLight"} style={{margin: "0px 10px 0px 0px"}} onClick={() => this.handleDisconnect()}>Disconnect</button>
                             </div>
                             <div className={this.state.showConnect ? "inline" : "hidden"}>
-                                <button className="customButtonLg" style={{margin: "0px 10px 0px 0px"}} onClick={() => this.handleConnect()}>Connect</button>
+                                <button className={this.state.dark ? "customButtonLg" : "customButtonLgLight"} style={{margin: "0px 10px 0px 0px"}} onClick={() => this.handleConnect()}>Connect</button>
                             </div>
 
                             <div className={this.state.showMetric ? "inline" : "hidden"}>
-                                <button className="customButtonLg" style={{margin: "0px 20px 0px 0px"}} onClick={() => this.handleUnitSwitch()}>Metric</button>
+                                <button className={this.state.dark ? "customButtonLg" : "customButtonLgLight"} style={{margin: "0px 20px 0px 0px"}} onClick={() => this.handleUnitSwitch()}>Metric</button>
                             </div>
 
                             <div className={!this.state.showMetric ? "inline" : "hidden"}>
-                                <button className="customButtonLg" style={{margin: "0px 10px 0px 0px"}} onClick={() => this.handleUnitSwitch()}>Imperial</button>
+                                <button className={this.state.dark ? "customButtonLg" : "customButtonLgLight"} style={{margin: "0px 10px 0px 0px"}} onClick={() => this.handleUnitSwitch()}>Imperial</button>
                             </div>
 
                         </div>
