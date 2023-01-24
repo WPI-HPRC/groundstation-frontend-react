@@ -1,6 +1,6 @@
 import React from 'react';
 import { CircularGauge, ArcGauge } from '@progress/kendo-react-gauges';
-import { RPMGauge, CGaugeR, CGaugeL } from './Gauge';
+import { RPMGauge, CGauge } from './Gauge';
 
 /**
  *  the panel containing the 3 gyroscope gauges (x/y/z, pitch/roll/yaw)
@@ -151,26 +151,28 @@ export default class SystemPanel extends React.Component {
                     <h3>Gyroscope</h3>
                     <hr/>
                     <div className="subpanel" style={{display: "inline-block", height: "80%", margin: "0px 0px 0px 5px"}}>
-                        <div style={{display: "inline-block", textAlign: "center", margin: "0px 0px 0px 10px"}}>
-                            <h3>Pitch (X)</h3>
-                            <CGaugeL
-                                input={Math.abs(this.state.gyroX)}
-                                reverse={ this.state.gyroX < 0} 
-                                dark={this.state.dark}
-                            />
-                        </div>
-                        <div style={{display: "inline-block", margin: "0px 0px 0px 0px", textAlign: "center", position: "relative"}}>
-                            <h3>Roll (Y)</h3>
-                            <RPMGauge input={this.state.gyroY} dark={this.state.dark} unit={this.state.unit} digits={this.state.digits}/>
+                        <div className="row">
+                            <div style={{display: "inline-block", textAlign: "center", margin: "0px 0px 0px 10px", position:"relative"}}>
+                                <h3>Pitch (X)</h3>
+                                <CGauge
+                                    input={Math.abs(this.state.gyroX)}
+                                    reverse={ this.state.gyroX < 0} 
+                                    dark={this.state.dark}
+                                />
+                            </div>
+                            <div style={{display: "inline-block", margin: "0px 0px 0px 0px", textAlign: "center", position: "relative"}}>
+                                <h3>Roll (Y)</h3>
+                                <RPMGauge input={this.state.gyroY} dark={this.state.dark} unit={this.state.unit} digits={this.state.digits}/>
 
-                        </div>
-                        <div style={{display: "inline-block", margin: "0px 10px 0px 0px", textAlign: "center"}}>
-                            <h3>Yaw (Z)</h3>
-                            <CGaugeR
-                                input={Math.abs(this.state.gyroZ)}
-                                reverse={ this.state.gyroZ < 0} 
-                                dark={this.state.dark}
-                            />
+                            </div>
+                            <div style={{display: "inline-block", margin: "0px 10px 0px 0px", textAlign: "center", position:"relative"}}>
+                                <h3>Yaw (Z)</h3>
+                                <CGauge
+                                    input={Math.abs(this.state.gyroZ)}
+                                    reverse={ this.state.gyroZ < 0} 
+                                    dark={this.state.dark}
+                                />
+                            </div>
                         </div>
                         {/* <div style={{display: "inline-block", textAlign: "center", margin: "0px 10px 0px 0px"}}>
                             <h3>Roll (Z)</h3>

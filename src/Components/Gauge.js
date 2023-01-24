@@ -322,7 +322,7 @@ export class CGaugeR extends React.Component {
 
 }
 
-export class CGaugeL extends React.Component {
+export class CGauge extends React.Component {
 
     constructor(props) {
         super(props);
@@ -441,7 +441,7 @@ export class CGaugeL extends React.Component {
                    
 
                 </svg>
-                <div style={{textAlign: "center", width: "100%", position:"absolute", top: "18vh", right: "16.2vw"}}>
+                <div style={{textAlign: "center", width: "100%", position:"absolute", top: "12vh"}}>
                     <h4 style={{textAlign:"center", position: "relative", fontSize: "2.5em", marginBottom: "10px"}}>{padLeadingZeros(parseInt(this.state.input), 3)}</h4>
                     <h4 style={{fontSize:"1.5em", fontWeight: "400"}}>dps</h4>
                 </div>
