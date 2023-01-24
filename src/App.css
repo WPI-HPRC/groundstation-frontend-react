@@ -30,8 +30,20 @@
   --box-shadow-secondary-color: rgba(46, 46, 46, var(--box-shadow-opacity));
 }
 
-.lightGauge path {
-  stroke: black !important;
+.cGauge {
+  transform-origin: center;
+  transform: rotate(-90deg);
+}
+.cGaugeRev {
+  transform-origin: center;
+  transform: rotate(-90deg) scaleY(-1);
+}
+
+.centerTextDark {
+  text-align: center;
+  font-weight: 550;
+  font-size: 1em;
+  color: #ffffff;
 }
 
 .darkApp {
@@ -82,7 +94,7 @@
 }
 
 .foregroundLight {
-  background-color: var(--light-app-fg-color);
+  background-color: var(--light-app-bg-color);
 }
 
 .foregroundDark {

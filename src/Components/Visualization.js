@@ -65,7 +65,7 @@ export default class Visualization extends React.Component {
                         </MapContainer>
                     </div>
                     <div className={this.state.showMap ? "hidden" : "visDiv"} id={"canvas3D"}>
-                        <button className={"showMap customButtonLg"} onClick={() => this.toggleVis()}>
+                        <button className={this.state.dark ? "showMap customButtonLg" : "showMap customButtonLgLight"} onClick={() => this.toggleVis()}>
                             Map
                         </button>
                         <RocketViewer className={this.state.showMap ? "hidden" : undefined} {...this.props}/>

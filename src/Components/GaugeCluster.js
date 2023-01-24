@@ -1,9 +1,9 @@
 import React from 'react';
 import { ArcGauge } from "@progress/kendo-react-gauges";
-
 // import { dataOut as data } from './data';
 // import { ResponsiveScatterPlot } from '@nivo/scatterplot';
 import { ResponsiveLine } from '@nivo/line';
+import Gauge from './Gauge';
 
 
 /**
@@ -62,7 +62,8 @@ class Box extends React.PureComponent {
         // check if time has changed
         if (current_state.time !== props.time ||
             current_state.dark !== props.dark ||
-            current_state.window !== props.window) {
+            current_state.window !== props.window ||
+            current_state.val0 !== props.val0) {
 
             // Reset if rocket time returns to 0
             if (props.time.getTime() === 0) {
@@ -72,7 +73,8 @@ class Box extends React.PureComponent {
                     val2: 0,
                     max: 0,
                     time: props.time,
-                    graphTime: props.time
+                    graphTime: props.time,
+                    dark: props.dark,
                 }
             }
 
@@ -84,7 +86,7 @@ class Box extends React.PureComponent {
                         val0: props.val0,
                         val1: props.val1,
                         val2: props.val2,
-
+                        dark: props.dark,
                         max: current_state.max > props.val0 ? current_state.max : props.val0,
                         time: props.time,
                         graphTime: props.time,
@@ -99,7 +101,7 @@ class Box extends React.PureComponent {
                         val2: props.val2,
                         max: current_state.max > props.val0 ? current_state.max : props.val0,
                         time: props.time,
-                        
+                        dark: props.dark,
                     }
                 }
             }
@@ -135,13 +137,12 @@ class Box extends React.PureComponent {
     initAnimation() {
         // setting gauge to max value
         this.setState({
-            gaugeLevel: this.props.max
+            val0: 9999
         });
         // set gauge back to zero 1 second after, giving time for animation to complete
         setTimeout(() => {
             this.setState({
-                enable: true,
-                drawGraph: this.props.defaultToGraph
+                val0: 0
             });
         }, 1000);
     }
@@ -291,7 +292,7 @@ class Box extends React.PureComponent {
                     </div>
 
                     <div className={this.state.drawGraph ? "hidden" : undefined} style={{height: "80%"}}>
-                        <ArcGauge path={{stroke:"black"}} className={"lightGauge"} {...arcOptions} centerRender={centerRenderer} style={{width: "100%", height: "100%"}} scale={{startAngle: -40, endAngle: 220, rangeSize: 10, min: this.props.min, max: this.props.max}}/>
+                        <Gauge input={this.state.val0} dark={this.state.dark} unit={this.props.unit} digits={this.props.digits}/>
                     </div>
                     <div className={this.state.drawGraph ? "hidden" : undefined} style={{position: "absolute", bottom: 0, right: 0, height: "15%", textAlign: "right"}}>
                             <h3 style={{margin: 0, padding: 5}}>Max: {this.state.max}</h3>
@@ -310,7 +311,7 @@ class Box extends React.PureComponent {
                             animate={false}
                             nodeSize={10}
                             theme={{
-                                textColor: '#ffffff',
+                                textColor: this.state.dark ? "#ffffff" : "#000000",
                                 fontSize: '14px',
                                 axis: {
                                     legend: {
@@ -321,8 +322,8 @@ class Box extends React.PureComponent {
                                 },
                                 tooltip: {
                                     container: {
-                                        background: "#000000",
-                                        textColor: "#333333",
+                                        background: this.state.dark ? "#141414" : "#607d8b",
+                                        textColor: "#ffffff",
                                         fontSize: "14px"
                                     }
                                 },
@@ -424,7 +425,10 @@ export default class GaugeCluster extends React.PureComponent {
             current_state.timeScale !== props.timeScale || 
             current_state.showMetric !== props.showMetric ||
             current_state.dark !== props.dark ||
-            current_state.window !== props.window) {
+            current_state.window !== props.window ||
+            current_state.accelY !== props.accelY ||
+            current_state.altitude !== props.altitude ||
+            current_state.vel !== props.vel) {
             
 
             if(props.showMetric) {

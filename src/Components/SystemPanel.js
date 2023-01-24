@@ -1,5 +1,6 @@
 import React from 'react';
 import { CircularGauge, ArcGauge } from '@progress/kendo-react-gauges';
+import { RPMGauge, CGaugeR, CGaugeL } from './Gauge';
 
 /**
  *  the panel containing the 3 gyroscope gauges (x/y/z, pitch/roll/yaw)
@@ -33,7 +34,9 @@ export default class SystemPanel extends React.Component {
             data1: [],
             data2: [],
             roll: 0,
-            time: props.vehicleClock
+            time: props.vehicleClock,
+            unit: "rpm",
+            digits: 3,
         }
     }
 
@@ -150,48 +153,23 @@ export default class SystemPanel extends React.Component {
                     <div className="subpanel" style={{display: "inline-block", height: "80%", margin: "0px 0px 0px 5px"}}>
                         <div style={{display: "inline-block", textAlign: "center", margin: "0px 0px 0px 10px"}}>
                             <h3>Pitch (X)</h3>
-                            <CircularGauge
-                                value={Math.abs(this.state.gyroX)}
-                                colors={colors}
-                                transitions={true}
-                                centerRender={circCenterRenderer}
-                                style={{
-                                display: "inline-block",
-                                }}
-                                scale={{
-                                rangeSize: 10,
-                                rangeLineCap: "round",
-                                reverse: this.state.gyroX > 0 ? false : true,
-                                startAngle: 90,
-                                min: 0,
-                                max: 360
-                                }}
+                            <CGaugeL
+                                input={Math.abs(this.state.gyroX)}
+                                reverse={ this.state.gyroX < 0} 
+                                dark={this.state.dark}
                             />
                         </div>
                         <div style={{display: "inline-block", margin: "0px 0px 0px 0px", textAlign: "center", position: "relative"}}>
                             <h3>Roll (Y)</h3>
-                            <ArcGauge {...arcOptions} centerRender={arcCenterRenderer} 
-                                style={{position: "absolute", width: "300px", bottom: "10px", margin: "0px 0px 0px 0px"}} 
-                                scale={{startAngle: -40, endAngle: 220, rangeSize: 10, min: 0, max: 300}}/>
+                            <RPMGauge input={this.state.gyroY} dark={this.state.dark} unit={this.state.unit} digits={this.state.digits}/>
+
                         </div>
                         <div style={{display: "inline-block", margin: "0px 10px 0px 0px", textAlign: "center"}}>
                             <h3>Yaw (Z)</h3>
-                            <CircularGauge
-                                value={Math.abs(this.state.gyroZ)}
-                                colors={colors}
-                                transitions={true}
-                                centerRender={circCenterRenderer}
-                                style={{
-                                display: "inline-block",
-                                }}
-                                scale={{
-                                rangeSize: 10,
-                                rangeLineCap: "round",
-                                reverse: this.state.gyroY > 0 ? false : true,
-                                startAngle: 90,
-                                min: 0,
-                                max: 360
-                                }}
+                            <CGaugeR
+                                input={Math.abs(this.state.gyroZ)}
+                                reverse={ this.state.gyroZ < 0} 
+                                dark={this.state.dark}
                             />
                         </div>
                         {/* <div style={{display: "inline-block", textAlign: "center", margin: "0px 10px 0px 0px"}}>

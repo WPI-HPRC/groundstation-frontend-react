@@ -47,6 +47,7 @@ export default class MissionTimeline extends React.Component {
             stateStr: props.stateStr,
             vehicleTime: props.vehicleClock,
             clock: new Date(),
+            dark: props.dark,
             missionPoints: [ [0, 5, "Stby", new Date(0)],
                             [5, 10, "Boot", new Date(0)],
                             [10, 15, "DGN", new Date(0)],
