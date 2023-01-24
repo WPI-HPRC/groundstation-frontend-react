@@ -48,6 +48,7 @@ export default class CubeTopbar extends React.Component {
                     </div>
                     <div className={"row"}>
                         <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.handleWindowChange()}>Return to Main Window</button>
+                        <img src="SettingsIconDark.png" style={{width:"50px", height:"50px"}}/>
                     </div>
 
                 </div>
