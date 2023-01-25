@@ -278,12 +278,10 @@ export default class MissionStatus extends React.Component {
                             <h3>Status</h3>
                         </div>
                         <div style={{display: "inline-block", width: "90%", textAlign: "right"}}>
-                            <div className={!this.state.showConnect ? "inline" : "hidden"}>
-                                <button className={this.state.dark ? "customButtonLg" : "customButtonLgLight"} style={{margin: "0px 10px 0px 0px"}} onClick={() => this.handleDisconnect()}>Disconnect</button>
+                            <div className={"inline"}>
+                                <button className={this.state.dark ? "customButtonLg" : "customButtonLgLight"} style={{margin: "0px 10px 0px 0px"}} onClick={() => {this.state.showConnect ? this.handleConnect() : this.handleDisconnect()}}>{this.state.showConnect ? "Connect" : "Disconnect"}</button>
                             </div>
-                            <div className={this.state.showConnect ? "inline" : "hidden"}>
-                                <button className={this.state.dark ? "customButtonLg" : "customButtonLgLight"} style={{margin: "0px 10px 0px 0px"}} onClick={() => this.handleConnect()}>Connect</button>
-                            </div>
+
 
                             <div className={"inline"}>
                                 <button className={this.state.dark ? "customButtonLg" : "customButtonLgLight"} style={{margin: "0px 20px 0px 0px"}} onClick={() => this.handleUnitSwitch()}> {this.state.showMetric ? "Metric" : "Imperial"}</button>
