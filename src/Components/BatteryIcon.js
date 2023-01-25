@@ -79,9 +79,9 @@ export default class BatteryIcon extends React.Component {
 
         return (
             <svg height="40" width="70">
-                <rect height="25" width="50" rx="5" y="5" x="5" fill="transparent" stroke={this.state.dark ? "#ffffff" : "#607d8b"} strokeWidth={5}></rect>
-                <rect height="7" width="5" rx="5" y="14" x="55" fill={this.state.dark ? "#ffffff" : "#607d8b"} stroke={this.state.dark ? "#ffffff" : "#607d8b"} strokeWidth={5}></rect>
-                <rect height="15" width={adjLength} y="10" x="10" fill={color}></rect>
+                <rect height="25" width="50" rx="5" y="12" x="5" fill="transparent" stroke={this.state.dark ? "#ffffff" : "#607d8b"} strokeWidth={5}></rect>
+                <rect height="7" width="5" rx="5" y="22" x="55" fill={this.state.dark ? "#ffffff" : "#607d8b"} stroke={this.state.dark ? "#ffffff" : "#607d8b"} strokeWidth={5}></rect>
+                <rect height="15" width={adjLength} y="17" x="10" fill={color}></rect>
 
             </svg>
         )

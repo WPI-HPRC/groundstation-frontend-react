@@ -65,6 +65,9 @@ export default class App extends React.Component {
             cubeStrength1: 1,
             cubeStrength2: 0,
             cubeStrength3: 0.75,
+            cubeBattery1: 1,
+            cubeBattery2: 0.5,
+            cubeBattery3: 0.75,
         }
 
         /**
