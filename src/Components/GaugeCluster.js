@@ -1,7 +1,4 @@
 import React from 'react';
-import { ArcGauge } from "@progress/kendo-react-gauges";
-// import { dataOut as data } from './data';
-// import { ResponsiveScatterPlot } from '@nivo/scatterplot';
 import { ResponsiveLine } from '@nivo/line';
 import Gauge from './Gauge';
 

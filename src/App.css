@@ -30,6 +30,14 @@
   --box-shadow-secondary-color: rgba(46, 46, 46, var(--box-shadow-opacity));
 }
 
+.settingsButton {
+  background-color: var(--dark-app-panel-color); 
+  border: 0px;
+  box-shadow: var(--dark-app-panel-color);
+}
+
+
+
 .cGauge {
   transform-origin: center;
   transform: rotate(-90deg);
@@ -319,8 +327,8 @@
 }
 
 .settingsPanel {
-  height: 19vh;
-  width: 20vw;
+  height: 9.5vh;
+  width: 296px;
   border-color: var(--dark-app-bg-color);
   position: absolute;
   border-width: 5px;
@@ -328,8 +336,8 @@
 }
 
 .settingsPanelLight {
-  height: 19vh;
-  width: 20vw;
+  height: 9.5vh;
+  width: 296px;
   border-color: var(--light-app-bg-color);
   position: absolute;
   border-width: 5px;

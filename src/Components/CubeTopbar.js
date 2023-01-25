@@ -30,7 +30,10 @@ export default class CubeTopbar extends React.Component {
     }
 
     handleWindowChange() {
-        this.props.windowFunc(0)
+        this.props.windowFunc(0);
+        this.setState({
+            showSettings: false,
+        });
     }
 
     render() {
@@ -41,14 +44,15 @@ export default class CubeTopbar extends React.Component {
 
                 <div className={`panel ${!this.state.showSettings ? "hidden" : this.props.dark ? "darkPanel settingsPanel" : "lightPanel settingsPanelLight"}`} /* all the settings are contained in here */ >
                     <div style={{height:"5px"}}/>
-                    <div className={"row"}>
-                        <div style={{width:"5px"}}/>
-                        <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleUnits()}>Units: {this.props.showMetric ? "Metric" : "Imperial" }</button>
+                    <div className={"row"} /* top row of buttons */ > 
+                        <div style={{width:"8px"}}/>
+                        <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleUnits()} style={{width: "150px"}}>Units: {this.props.showMetric ? "Metric" : "Imperial" }</button>
                         <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleMode()}>Mode: {this.props.dark ? "Dark" : "Light" }</button>
                     </div>
-                    <div className={"row"}>
-                        <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.handleWindowChange()}>Return to Main Window</button>
-                        <img src="SettingsIconDark.png" style={{width:"50px", height:"50px"}}/>
+                    <div className={"row"} style={{height: "5px"}}></div>
+                    <div className={"row"} /* bottom row of buttons */ >
+                    <div style={{width:"8px"}}/>
+                        <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.handleWindowChange()} style={{width: "150px"}}>Main Window</button>
                     </div>
 
                 </div>

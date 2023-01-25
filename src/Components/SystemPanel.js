@@ -1,5 +1,4 @@
 import React from 'react';
-import { CircularGauge, ArcGauge } from '@progress/kendo-react-gauges';
 import { RPMGauge, CGauge } from './Gauge';
 
 /**
