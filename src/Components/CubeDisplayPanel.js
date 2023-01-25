@@ -1,6 +1,7 @@
 import React from 'react';
 import { ResponsiveLine } from '@nivo/line';
 import SignalIcon from './SignalIcon';
+import BatteryIcon from './BatteryIcon';
 
 export default class CubeDisplayPanel extends React.Component{
     constructor(props) {
@@ -237,6 +238,7 @@ export default class CubeDisplayPanel extends React.Component{
                 <div className={"row"}>
                     <h4>{this.state.cubeName}</h4>
                     <SignalIcon dark={this.props.dark} signalStrength={this.props.signalStrength}/>
+                    <BatteryIcon dark={this.props.dark} batteryPercent={1}/>
                 </div>
                 <div style={{height:"17vh"}}>
                     <hr/>
