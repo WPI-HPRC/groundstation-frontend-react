@@ -144,17 +144,17 @@ export default class Layout extends React.Component {
                     <Row style={{height:"68vh"}}>
                         <div style={{width:"0.375vw"}}/>
                         <div style={{width:"33vw"}}> 
-                            <CubeDisplayPanel className={"CubeDisplayPanel"} cubeName={"Curly"} /* Cube 1 */
+                            <CubeDisplayPanel className={"CubeDisplayPanel"} cubeName={"Curly"} signalStrength={this.props.cubeStrength1} /* Cube 1 */
                                 {...this.props}/> 
                         </div>
                         <div style={{width:"0.25vw"}}/>
                         <div style={{width:"33vw"}}>
-                            <CubeDisplayPanel className={"CubeDisplayPanel"} cubeName={"Larry"} /* Cube 2 */
+                            <CubeDisplayPanel className={"CubeDisplayPanel"} cubeName={"Larry"} signalStrength={this.props.cubeStrength2} /* Cube 2 */
                                 {...this.props}/> 
                         </div>
                         <div style={{width:"0.25vw"}}/>
                         <div style={{width:"33vw"}}>
-                            <CubeDisplayPanel className={"CubeDisplayPanel"} cubeName={"Moe"} /* Cube 3 */ 
+                            <CubeDisplayPanel className={"CubeDisplayPanel"} cubeName={"Moe"} signalStrength={this.props.cubeStrength3} /* Cube 3 */ 
                                 {...this.props}/> 
                         </div>
                     </Row>

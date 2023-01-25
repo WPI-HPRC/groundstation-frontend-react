@@ -36,8 +36,6 @@
   box-shadow: var(--dark-app-panel-color);
 }
 
-
-
 .cGauge {
   transform-origin: center;
   transform: rotate(-90deg);

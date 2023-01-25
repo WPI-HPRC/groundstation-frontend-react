@@ -62,6 +62,9 @@ export default class App extends React.Component {
             lastTemp: 0,
             lastHmid: 0,
             lastPres: 0,
+            cubeStrength1: 1,
+            cubeStrength2: 0,
+            cubeStrength3: 0.75,
         }
 
         /**

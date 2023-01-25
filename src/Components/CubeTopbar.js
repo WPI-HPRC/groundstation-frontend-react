@@ -11,11 +11,17 @@ export default class CubeTopbar extends React.Component {
     }
 
     toggleSettings() {
-        this.setState({
-            showSettings: !this.state.showSettings,
-        });
+        if(this.state.showSettings){
+            this.setState({
+                showSettings: false,
+            })
+        } else {
+            this.setState({
+                showSettings: true,
+            })
+        }
+        console.log(this.state.showSettings);
     }
-
     toggleUnits() {
         this.props.unitFunc(!this.state.showMetric)
         this.setState({
@@ -36,6 +42,17 @@ export default class CubeTopbar extends React.Component {
         });
     }
 
+    // static getDerivedStateFromProps(props, current_state) {
+    //     if(current_state.showSettings !== props.showSettings) {
+    //         return {
+    //             showSettings: props.showSettings,
+    //         }
+    //     }
+    //     return null;
+    // }
+
+    
+
     render() {
         return (
             <div className={`panel ${this.props.dark ? "darkPanel" : "lightPanel"}`} style={{height:"19vh"}}>
@@ -54,7 +71,6 @@ export default class CubeTopbar extends React.Component {
                     <div style={{width:"8px"}}/>
                         <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.handleWindowChange()} style={{width: "150px"}}>Main Window</button>
                     </div>
-
                 </div>
 
             </div>

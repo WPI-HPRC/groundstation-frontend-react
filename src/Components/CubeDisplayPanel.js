@@ -1,5 +1,6 @@
 import React from 'react';
 import { ResponsiveLine } from '@nivo/line';
+import SignalIcon from './SignalIcon';
 
 export default class CubeDisplayPanel extends React.Component{
     constructor(props) {
@@ -232,9 +233,13 @@ export default class CubeDisplayPanel extends React.Component{
 
         return(
             <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`} style={{height:"100%"}}>
-                <div style={{height:"1vh"}}></div>
-                <h4>{this.state.cubeName}</h4>
+                <div style={{height:"1.5vh"}}></div>
+                <div className={"row"}>
+                    <h4>{this.state.cubeName}</h4>
+                    <SignalIcon dark={this.props.dark} signalStrength={this.props.signalStrength}/>
+                </div>
                 <div style={{height:"17vh"}}>
+                    <hr/>
                     <div className="row" style={{height:"10vh"}}>
                         
                     </div>
