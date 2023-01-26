@@ -384,7 +384,7 @@ class Box extends React.PureComponent {
                     </div>  
                     <div className={!this.state.drawGraph ? "hidden" : undefined} style={{position: "absolute", bottom: 0, right: 0, height: "5%", textAlign: "right"}}>
                         <h4 style={{ margin: 0, padding: 0}}>
-                            {this.props.datanum / 10}s
+                            {Math.round(100 / (this.props.datanum / 10))}% 
                         </h4>
                     </div>
                 </div>

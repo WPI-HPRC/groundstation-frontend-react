@@ -45,6 +45,7 @@ export default class CubeDisplayPanel extends React.Component{
             legendString: "",
             showMetric: props.showMetric,
             time: props.vehicleClock,
+            RSSI: 0,
         }
     }
 
@@ -69,6 +70,10 @@ export default class CubeDisplayPanel extends React.Component{
                             id: "Temperature",
                             color: 'yellow',
                             data: [
+                                {
+                                x: 0,
+                                y: 0
+                                }
                             ]
                         },
                     
@@ -77,6 +82,10 @@ export default class CubeDisplayPanel extends React.Component{
                             id: "Humidity",
                             color: 'orange',
                             data: [
+                                {
+                                x: 0,
+                                y: 0
+                                }
                             ]
                         },
                     
@@ -85,7 +94,10 @@ export default class CubeDisplayPanel extends React.Component{
                             id: "Pressure",
                             color: 'red',
                             data: [
-                                
+                                {
+                                x: 0,
+                                y: 0
+                                }
                             ]
                         },
                     
@@ -184,6 +196,11 @@ export default class CubeDisplayPanel extends React.Component{
         }
 
         if(this.state.showPres) { // if this graph is set to show PRESSURE, add the pressure data to the data array & change the legend to match
+            if(!this.state.dark) {
+                this.state.cubeDataT.color = 'red';
+            } else {
+                this.state.cubeDataT.color = 'red';
+            }
             this.state.cubeData.push(this.state.cubeDataP);
             this.state.legendString = "Pressure";
             if(this.props.showMetric) { // adjust legend to the correct units
@@ -194,6 +211,11 @@ export default class CubeDisplayPanel extends React.Component{
         }
         
         if(this.state.showHmid) { // if this graph is set to HUMIDITY, add the data.  HMID only has one unit
+            if(!this.state.dark) {
+                this.state.cubeDataT.color = 'orange';
+            } else {
+                this.state.cubeDataT.color = 'orange';
+            }
             this.state.cubeData.push(this.state.cubeDataH);
             this.state.legendString = "Humidity (%)";
 
@@ -201,6 +223,11 @@ export default class CubeDisplayPanel extends React.Component{
 
 
         if(this.state.showTemp) { // handle TEMPERATURE.  see above
+            if(!this.state.dark) {
+                this.state.cubeDataT.color = 'green';
+            } else {
+                this.state.cubeDataT.color = 'green';
+            }
             this.state.cubeData.push(this.state.cubeDataT);
             this.state.legendString = "Temperature";
             if(this.props.showMetric) {
@@ -237,8 +264,11 @@ export default class CubeDisplayPanel extends React.Component{
             <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`} style={{height:"100%"}}>
                 <div style={{height:"1.5vh"}}></div>
                 <div className={"row"}>
-                    <h4>{this.state.cubeName}</h4>
-                    <div style={{position: "relative", left: "26vw", bottom: "-0.5vh"}} >
+                    <h3>{this.state.cubeName}</h3>
+
+                    <h3 style={{position: "relative", left:"8vw"}}>RSSI: {this.state.RSSI} dBm</h3>
+
+                    <div style={{position: "relative", left: "18vw", bottom: "-0.5vh"}} >
                         {/* <SignalIcon dark={this.props.dark} signalStrength={this.props.signalStrength}/> */}
                         <BarSignalIcon dark={this.props.dark} signalStrength={this.props.signalStrength}/>
                         {/* <BatteryIcon dark={this.props.dark} batteryPercent={this.props.batteryPercent}/> */}
