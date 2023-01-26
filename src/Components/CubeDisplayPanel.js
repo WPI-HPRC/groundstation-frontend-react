@@ -2,7 +2,7 @@ import React from 'react';
 import { ResponsiveLine } from '@nivo/line';
 import SignalIcon from './SignalIcon';
 import BatteryIcon from './BatteryIcon';
-import { getRelativeCursor } from '@nivo/core';
+import BarSignalIcon from './BarSignalIcon';
 
 export default class CubeDisplayPanel extends React.Component{
     constructor(props) {
@@ -238,9 +238,10 @@ export default class CubeDisplayPanel extends React.Component{
                 <div style={{height:"1.5vh"}}></div>
                 <div className={"row"}>
                     <h4>{this.state.cubeName}</h4>
-                    <div style={{position: "relative", left: "22.5vw", bottom: "0.5vh"}} >
-                        <SignalIcon dark={this.props.dark} signalStrength={this.props.signalStrength}/>
-                        <BatteryIcon dark={this.props.dark} batteryPercent={this.props.batteryPercent}/>
+                    <div style={{position: "relative", left: "26vw", bottom: "-0.5vh"}} >
+                        {/* <SignalIcon dark={this.props.dark} signalStrength={this.props.signalStrength}/> */}
+                        <BarSignalIcon dark={this.props.dark} signalStrength={this.props.signalStrength}/>
+                        {/* <BatteryIcon dark={this.props.dark} batteryPercent={this.props.batteryPercent}/> */}
                     </div>
                 </div>
                 <div style={{height:"17vh"}}>
