@@ -171,7 +171,7 @@ export default class VehicleStatus extends React.Component {
                     </div>
                     <VehicleState stateStr={this.state.stateStr} />
                     <hr/>
-                    <div className={"row"}>
+                    <div className={"row"} style={{position: "relative", bottom: "7px"}}>
                         {/* <div className={"col-lg-4"}>
                             <img alt="Airbrakes Diagram" src={'Airbrakes Diagram.png'} className={"airbrakesIconBG"}/>
                             
@@ -186,7 +186,7 @@ export default class VehicleStatus extends React.Component {
                             </div>
 
                         </div> */}
-                        <AirbrakesIndicator airbrakesDeploy={this.state.airbrakesDeploy}/>
+                        <AirbrakesIndicator airbrakesDeploy={this.state.airbrakesDeploy} />
                     </div>
                     {/* Airbrakes indicator goes here */}
 
