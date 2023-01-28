@@ -59,7 +59,9 @@ export default class Gauge extends React.Component {
 
         let color = `rgb(${color1}, ${color2}, ${color3})`;
 
-        if(this.state.input === 0) {
+
+        
+        if(this.state.input == 0) {
             color = "transparent";
         }
 
