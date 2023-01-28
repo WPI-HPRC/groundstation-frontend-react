@@ -11,12 +11,16 @@ export default class BarSignalIcon extends React.Component {
     }
 
     static getDerivedStateFromProps(props, current_state) {
+
+        let update = null;
+
         if(current_state.dark !== props.dark)
         {
-            return {
+            update = {
                 dark: props.dark,
             }
         }
+        return null;
     }
 
     render() {
@@ -34,13 +38,6 @@ export default class BarSignalIcon extends React.Component {
         let middleArcLength = percent * scaleFactor1 * circumference;
         let innerArcLength = percent * scaleFactor1 * scaleFactor2 * circumference;
 
-        let darrayOuter = `${outerArcLength} ${circumference}`
-        let darrayMiddle = `${middleArcLength} ${circumference}`
-        let darrayInner = `${innerArcLength} ${circumference}`
-
-        // transform
-
-        let transform = "rotate(215, 30, 30)"
 
         // calculations for the color of the icon.  
         // start color: 43 171 58

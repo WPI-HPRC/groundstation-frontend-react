@@ -3,7 +3,6 @@ import '@progress/kendo-theme-default/dist/all.css';
 import Layout from "./Components/Layout";
 import SplashScreen from "./Components/SplashScreen.js"
 import React from 'react';
-import { wait } from '@testing-library/user-event/dist/utils';
 
 const dataPollingRate = 100;    // Time in ms to poll the telemetry server
 const maxMessages = 20;
@@ -405,7 +404,7 @@ export default class App extends React.Component {
                         });
                     }, 0);
                     benchIter += msTick;
-                    if(benchIter == msToRun - msTick - msTick)
+                    if(benchIter === msToRun - msTick - msTick)
                     {
                         setTimeout(() => {
                             var ms = this.state.vehicleClock.getTime() + msTick;

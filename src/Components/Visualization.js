@@ -60,7 +60,7 @@ export default class Visualization extends React.Component {
                                 url="Maps/{z}/{x}/{y}.png"
                             />
                             <button className={!this.state.showMap ? "hidden" : "visToggle"} id="visToggle" onClick={() => this.toggleVis()}>
-                                <img className={"visIcon"} src={'rocket_icon_2.png'} ></img>
+                                <img alt="a rocket" className={"visIcon"} src={'rocket_icon_2.png'} ></img>
                             </button> 
                         </MapContainer>
                     </div>

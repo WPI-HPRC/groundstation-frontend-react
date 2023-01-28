@@ -1,5 +1,5 @@
 import React from 'react';
-
+import AirbrakesIndicator from './AirbrakesIndicator';
 
 /**
  *   Left-top panel, showing general vehicle information including power, temp, pressure, airbrakes etc.
@@ -172,20 +172,21 @@ export default class VehicleStatus extends React.Component {
                     <VehicleState stateStr={this.state.stateStr} />
                     <hr/>
                     <div className={"row"}>
-                        <div className={"col-lg-4"}>
-                            <img src={'Airbrakes Diagram.png'} className={"airbrakesIconBG"}/>
+                        {/* <div className={"col-lg-4"}>
+                            <img alt="Airbrakes Diagram" src={'Airbrakes Diagram.png'} className={"airbrakesIconBG"}/>
                             
                         </div>
                         <div className={"col-lg-7"}>
                             <h4>Airbrakes: {this.state.airbrakesDeploy}%</h4>
                             <div className={"row"}>
-                                <img src={'AirbrakesFinTR.png'} className={"airbrakesFin"} style={{top:fin1Y, left:fin1X}}/>
-                                <img src={'AirbrakesFinTL.png'} className={"airbrakesFin"} style={{top:fin2Y, left:fin2X}}/>
-                                <img src={'AirbrakesFinBR.png'} className={"airbrakesFin"} style={{top:fin3Y, left:fin3X}}/>                            
-                                <img src={'AirbrakesFinBL.png'} className={"airbrakesFin"} style={{top:fin4Y, left:fin4X}}/>
+                                <img alt="Airbrakes Fin" src={'AirbrakesFinTR.png'} className={"airbrakesFin"} style={{top:fin1Y, left:fin1X}}/>
+                                <img alt="Airbrakes Fin" src={'AirbrakesFinTL.png'} className={"airbrakesFin"} style={{top:fin2Y, left:fin2X}}/>
+                                <img alt="Airbrakes Fin" src={'AirbrakesFinBR.png'} className={"airbrakesFin"} style={{top:fin3Y, left:fin3X}}/>                            
+                                <img alt="Airbrakes Fin" src={'AirbrakesFinBL.png'} className={"airbrakesFin"} style={{top:fin4Y, left:fin4X}}/>
                             </div>
 
-                        </div>
+                        </div> */}
+                        <AirbrakesIndicator airbrakesDeploy={this.state.airbrakesDeploy}/>
                     </div>
                     {/* Airbrakes indicator goes here */}
 

@@ -175,7 +175,6 @@ export default class MissionStatus extends React.Component {
             slowLog: props.slowLog,
             showMetric: props.showMetric,
             altitude: props.altitude,
-            dark:props.dark,
         }
 
         this.handleConnect = this.handleConnect.bind(this);
@@ -245,7 +244,7 @@ export default class MissionStatus extends React.Component {
         switch(this.state.showMetric) {
             case true:
                 break;
-            case false:
+            default:
                 this.setState({
                     altitude: this.state.altitude * 1000
                 });

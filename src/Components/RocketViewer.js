@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 // import filePath from '../hprc3.gltf';
@@ -15,7 +15,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 //'Toby_wtf.png'; <-- Toby
 //'blank_background.png'; <-- the real one
 
-export default class RocketViewer extends Component {
+export default class RocketViewer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

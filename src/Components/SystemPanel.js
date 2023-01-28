@@ -6,19 +6,6 @@ import { RPMGauge, CGauge } from './Gauge';
  *  not to be confused with GaugeCluster which handles the position gauges (alt/vel/accel)
  */
 
-function padLeadingZeros(num, size) {
-    var s = num+"";
-    while (s.replace(".", "").length < size) s = "0" + s;
-    return s;
-}
-
-function rPadLeadingZeros(num, size) {
-    var s = num+"";
-    while (s.replace(".", "").length < size) s = s + "0";
-    return s;
-}
-
-const dataScalar = -1.1;
 
 export default class SystemPanel extends React.Component {
 
@@ -69,81 +56,9 @@ export default class SystemPanel extends React.Component {
         return null
     }
     
+    
+        
     render() {
-
-        const colors = [
-            {
-              to: 160,
-              color: "#6D6D6D",
-            },
-            {
-              from: 160,
-              to: 180,
-              color: "#ED5031",
-            }
-        ];
-
-        const circCenterRenderer = (value, color) => {
-
-            let textColor = null;
-            if(this.state.dark) {
-                textColor = "#ffffff"
-            } else {
-                textColor = "#000000"
-
-            }
-
-            return (
-                <>
-                    <h3
-                        style={{
-                        color: textColor,
-                        fontSize: "2.5em",
-                        margin: "0px 0px 0px 0px",
-                        padding: "0px 0px 0px 0px"
-                        }}
-                    >
-                        {rPadLeadingZeros(value, 3)}
-                    </h3>
-                    <font style={{fontSize: "1.5em"}}>dps</font>
-                </>
-            );
-        };
-
-        const arcCenterRenderer = (value, color) => {
-
-            let textColor = null;
-            if(this.state.dark) {
-                textColor = "#ffffff"
-            } else {
-                textColor = "#000000"
-
-            }
-
-            return (
-                <>
-                    <h4>{this.props.unit}</h4>
-                    <h3
-                        style={{
-                        color: textColor,
-                        fontSize: "2.5em",
-                        margin: "0px 0px 0px 0px",
-                        padding: "5px 5px 5px 5px",
-                        
-                        }}
-                    >
-                        {padLeadingZeros(value, 3)}
-                    </h3>
-                    <font style={{fontSize: "1.5em" }}>rpm</font>
-                </>
-            );
-        };
-
-        const arcOptions = {
-            value: (this.state.gyroY)
-        }
-
-
         return (
             <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`}>
                 <div className="SystemPanel" style={{position: "relative", width: "100%", height: "100%"}}>

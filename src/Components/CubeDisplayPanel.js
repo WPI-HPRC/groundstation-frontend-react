@@ -1,7 +1,5 @@
 import React from 'react';
 import { ResponsiveLine } from '@nivo/line';
-import SignalIcon from './SignalIcon';
-import BatteryIcon from './BatteryIcon';
 import BarSignalIcon from './BarSignalIcon';
 
 export default class CubeDisplayPanel extends React.Component{
@@ -50,6 +48,7 @@ export default class CubeDisplayPanel extends React.Component{
     }
 
     static getDerivedStateFromProps(props, current_state) { // update to new values if anything important has changed
+        let update = null;
         if(current_state.showMetric !== props.showMetric ||
             current_state.time !== props.vehicleClock ||
             current_state.lastHmid !== props.lastHmid ||
@@ -58,7 +57,7 @@ export default class CubeDisplayPanel extends React.Component{
             current_state.dark !== props.dark) {
             
             if(props.vehicleClock.getTime() === 0){
-                return {
+                update = {
                     dark: props.dark,
                     cubeName: props.cubeName,
                     lastTemp: props.lastTemp,
@@ -114,12 +113,12 @@ export default class CubeDisplayPanel extends React.Component{
                     lastHmid: props.lastHmid,
                     lastPres: props.lastPres,
                     lastTemp: props.lastTemp,
-                    dark: props.dark,
                 }
             }
 
             
         }
+        return update;
     }
 
     toggleT() { // switch the graph to show TEMPERAUTURE
@@ -150,7 +149,7 @@ export default class CubeDisplayPanel extends React.Component{
 
         // create new elements for new data points.  but only sometimes for performance.
 
-        if(this.state.time.getTime() % 500 == 0) { // 2hz
+        if(this.state.time.getTime() % 500 === 0) { // 2hz
             let elementT = {
                 x: this.state.time.getTime() / 1000,
                 y: this.state.lastTemp
@@ -217,7 +216,9 @@ export default class CubeDisplayPanel extends React.Component{
                 this.state.cubeDataT.color = 'orange';
             }
             this.state.cubeData.push(this.state.cubeDataH);
-            this.state.legendString = "Humidity (%)";
+            this.setState({
+                legendString: "Humidity (%)"
+            })
 
         }
 

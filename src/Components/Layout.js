@@ -65,18 +65,21 @@ export default class Layout extends React.Component {
     }
 
     static getDerivedStateFromProps(props, current_state) {
+        let update = null;
+
         if(current_state.window !== props.window)
         {
-            return {
+            update = {
                 window: props.window,
             }
         }
+        return update;
     }
 
     render() {
         return (
             <>
-                <div className={this.state.window == 0 ? "Layout" : "hidden"}>
+                <div className={this.state.window === 0 ? "Layout" : "hidden"}>
                     <Grid style={{width:"100%"}}>
                         <Row style={{height:"88vh"}}>
                             <Col lg={9}>
@@ -130,7 +133,7 @@ export default class Layout extends React.Component {
                         </Row>
                     </Grid>
                 </div>
-                <div className={this.state.window == 1 ? "CubeWindow" : "hidden"} /* Cube Display Window */> 
+                <div className={this.state.window === 1 ? "CubeWindow" : "hidden"} /* Cube Display Window */> 
                     <Row style={{height:"19.5vh"}}>
                         <div style={{width:"0.375vw"}}/>
                         <div style={{width:"99.5vw"}}>

@@ -8,11 +8,6 @@ import Gauge from './Gauge';
  *  not to be confused with SystemPanel which handles gyroscopes
  */
 
-function padLeadingZeros(num, size) {
-    var s = num+"";
-    while (s.length < size) s = "0" + s;
-    return s;
-}
 
 class Box extends React.PureComponent {
 
@@ -224,55 +219,8 @@ class Box extends React.PureComponent {
                 this.state.finalData[0].data.push(element);
             } 
         });
-       
 
-
-        const colors = [
-            {
-              to: this.props.threshold,
-              color: "#6D6D6D",
-            },
-            {
-              from: this.props.threshold,
-              to: this.props.max,
-              color: "#ED5031",
-            }
-        ];
-
-        const arcOptions = {
-            value: this.state.enable ? this.state.val0 : this.state.gaugeLevel,
-            colors
-        }
-
-        const centerRenderer = (value, color) => {
-
-            let textColor = null;
-            if(this.props.dark) {
-                textColor = "#ffffff";
-            } else {
-                textColor = "#000000";
-            }
-
-            return (
-                <>
-                    <div>
-                        <h4>{this.props.unit}</h4>
-                        <h3
-                            className="subpanel"
-                            style={{
-                                color: textColor,
-                                fontSize: "3.5em",
-                                margin: "0px 20px 20px 20px",
-                                textAlign: "center",
-                                position: 'relative',
-                            }}
-                        >
-                            {padLeadingZeros(parseInt(value), this.props.digits)}
-                        </h3>
-                    </div>
-                </>
-            );
-        };
+        
 
         return (
             <>
