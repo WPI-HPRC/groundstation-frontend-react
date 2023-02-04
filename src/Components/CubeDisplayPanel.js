@@ -181,15 +181,15 @@ export default class CubeDisplayPanel extends React.Component{
             graphMin = 0;
         }
 
-        if(this.state.cubeDataT.data[0].x < graphMin)
+        if(this.state.cubeDataT.data[0].x ?? 0 < graphMin)
         {
             this.state.cubeDataT.data.shift();
         }
-        if(this.state.cubeDataH.data[0].x < graphMin)
+        if(this.state.cubeDataH.data[0].x ?? 0 < graphMin)
         {
             this.state.cubeDataH.data.shift();
         }
-        if(this.state.cubeDataP.data[0].x < graphMin)
+        if(this.state.cubeDataP.data[0].x ?? 0 < graphMin)
         {
             this.state.cubeDataP.data.shift();
         }

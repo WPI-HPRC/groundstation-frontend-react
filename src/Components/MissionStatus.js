@@ -326,7 +326,7 @@ export default class MissionStatus extends React.Component {
                         <div style={{position: "absolute", top: "140px", width: "100%"}}>
                             <div style={{position: "relative", width: "100%"}}>
                                 {/* <h4 style={{display: "inline-block", position: "absolute", left: 0}}>Logging:</h4>  */}
-                                <h4 style={{display: "inline-block", position: "absolute", right: 80}}>Slow Log: <font style={{color: this.state.slowLog ? "#00f700" : "#ED5031"}}>{this.state.slowLog ? "On" : "Off"}</font></h4>
+                                {/* <h4 style={{display: "inline-block", position: "absolute", right: 80}}>Slow Log: <font style={{color: this.state.slowLog ? "#00f700" : "#ED5031"}}>{this.state.slowLog ? "On" : "Off"}</font></h4> */}
                                 {/* <h4 style={{display: "inline-block", position: "absolute", right: 220}}>Fast Log: <font  style={{color: this.state.fastLog ? "#00f700" : "#ED5031"}}>{this.state.fastLog ? "On" : "Off"}</font></h4> */}
                             </div>
                         </div>

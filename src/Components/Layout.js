@@ -98,13 +98,13 @@ export default class Layout extends React.Component {
                                             <ControlPanel className="ControlPanel" 
                                                 {...this.props}/>
                                         </Row>
-                                        <Row style={{height:"40vh"}}>
+                                        <Row style={{height:"39vh"}}>
                                             <SystemPanel className="SystemPanel" 
                                                 {...this.props} />
                                         </Row>
                                     </Col>
                                 </Row>
-                                <Row style={{height:"30vh"}}>
+                                <Row style={{height:"29vh"}}>
                                     <GaugeCluster className="GaugeCluster"
                                         {...this.props} />
                                 </Row>
@@ -127,7 +127,7 @@ export default class Layout extends React.Component {
                             </Col>
                         </Row>
 
-                        <Row style={{height:"12vh"}}>
+                        <Row style={{height:"11vh"}}>
                             <MissionTimeline 
                                 {...this.props}/>
                         </Row>

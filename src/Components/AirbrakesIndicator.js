@@ -60,37 +60,37 @@ export default class AirbrakesIndicator extends React.Component {
 
 
         return(
-            <svg width="250" height="180">
+            <svg width="100%" height="100%" viewBox="0 0 250 180">
                 <g transform={`rotate(45, 125, 90)`}>
 
-                    <rect x={x1} y={90 - 25} width="50" height="50" rx="5" fill="grey" style={{transition: "x 0.3s"}}/>
-                    <rect x={x1} y={90 - 25} width="50" height="50" rx="5" fill="grey" style={{transition: "x 0.3s"}} transform={`rotate(90, 125, 90)`}/>
-                    <rect x={x1} y={90 - 25} width="50" height="50" rx="5" fill="grey" style={{transition: "x 0.3s"}} transform={`rotate(180, 125, 90)`}/>
-                    <rect x={x1} y={90 - 25} width="50" height="50" rx="5" fill="grey" style={{transition: "x 0.3s"}} transform={`rotate(270, 125, 90)`}/>
+                    <rect x={x1} y={90 - 25} width="50" height="50" rx="5" fill="grey" style={{transition: "x 1s"}}/>
+                    <rect x={x1} y={90 - 25} width="50" height="50" rx="5" fill="grey" style={{transition: "x 1s"}} transform={`rotate(90, 125, 90)`}/>
+                    <rect x={x1} y={90 - 25} width="50" height="50" rx="5" fill="grey" style={{transition: "x 1s"}} transform={`rotate(180, 125, 90)`}/>
+                    <rect x={x1} y={90 - 25} width="50" height="50" rx="5" fill="grey" style={{transition: "x 1s"}} transform={`rotate(270, 125, 90)`}/>
 
 
                     <circle cx="125" cy="90" r="70" fill="transparent" stroke={this.state.dark ? "white" : "#607d8b"} strokeWidth={5}></circle>
                     
-                    <g transform={transform0} style={{transition: "transform 0.3s"}}>
-                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} fill="transparent" stroke={this.state.dark ? "white" : "#607d8b"} strokeWidth={20} strokeDasharray={dA} strokeLinecap={"round"} style={{transition: "transform 0.3s"}}/>
-                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} transform={insideTransform} fill="transparent" stroke={this.state.dark ? "#212121" : "#E0E0E0"} strokeWidth={8} strokeDasharray={dAI} strokeLinecap={"round"} style={{transition: "transform 0.3s"}}/>
-                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} transform={preTransform} fill="transparent" stroke={this.state.dark ? "white" : "#607d8b"} strokeWidth={6} strokeDasharray={dAPT} strokeLinecap={"round"} style={{transition: "transform 0.3s"}}/>
+                    <g transform={transform0} style={{transition: "transform 1s"}}>
+                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} fill="transparent" stroke={this.state.dark ? "white" : "#607d8b"} strokeWidth={20} strokeDasharray={dA} strokeLinecap={"round"} style={{transition: "transform 1s"}}/>
+                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} transform={insideTransform} fill="transparent" stroke={this.state.dark ? "#212121" : "#E0E0E0"} strokeWidth={8} strokeDasharray={dAI} strokeLinecap={"round"} style={{transition: "transform 1s"}}/>
+                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} transform={preTransform} fill="transparent" stroke={this.state.dark ? "white" : "#607d8b"} strokeWidth={6} strokeDasharray={dAPT} strokeLinecap={"round"} style={{transition: "transform 1s"}}/>
                     </g>
 
-                    <g transform={transform1} style={{transition: "transform 0.3s"}}>
-                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} fill="transparent" stroke={this.state.dark ? "white" : "#607d8b"} strokeWidth={20} strokeDasharray={dA} strokeLinecap={"round"} style={{transition: "transform 0.3s"}}/>
-                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} transform={insideTransform} fill="transparent" stroke={this.state.dark ? "#212121" : "#E0E0E0"} strokeWidth={8} strokeDasharray={dAI} strokeLinecap={"round"} style={{transition: "transform 0.3s"}}/>
-                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} transform={preTransform} fill="transparent" stroke={this.state.dark ? "white" : "#607d8b"} strokeWidth={6} strokeDasharray={dAPT} strokeLinecap={"round"} style={{transition: "transform 0.3s"}}/>
+                    <g transform={transform1} style={{transition: "transform 1s"}}>
+                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} fill="transparent" stroke={this.state.dark ? "white" : "#607d8b"} strokeWidth={20} strokeDasharray={dA} strokeLinecap={"round"} style={{transition: "transform 1s"}}/>
+                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} transform={insideTransform} fill="transparent" stroke={this.state.dark ? "#212121" : "#E0E0E0"} strokeWidth={8} strokeDasharray={dAI} strokeLinecap={"round"} style={{transition: "transform 1s"}}/>
+                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} transform={preTransform} fill="transparent" stroke={this.state.dark ? "white" : "#607d8b"} strokeWidth={6} strokeDasharray={dAPT} strokeLinecap={"round"} style={{transition: "transform 1s"}}/>
                     </g>
-                    <g transform={transform2} style={{transition: "transform 0.3s"}}>
-                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} fill="transparent" stroke={this.state.dark ? "white" : "#607d8b"} strokeWidth={20} strokeDasharray={dA} strokeLinecap={"round"} style={{transition: "transform 0.3s"}}/>
-                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} transform={insideTransform} fill="transparent" stroke={this.state.dark ? "#212121" : "#E0E0E0"} strokeWidth={8} strokeDasharray={dAI} strokeLinecap={"round"} style={{transition: "transform 0.3s"}}/>
-                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} transform={preTransform} fill="transparent" stroke={this.state.dark ? "white" : "#607d8b"} strokeWidth={6} strokeDasharray={dAPT} strokeLinecap={"round"} style={{transition: "transform 0.3s"}}/>
+                    <g transform={transform2} style={{transition: "transform 1s"}}>
+                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} fill="transparent" stroke={this.state.dark ? "white" : "#607d8b"} strokeWidth={20} strokeDasharray={dA} strokeLinecap={"round"} style={{transition: "transform 1s"}}/>
+                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} transform={insideTransform} fill="transparent" stroke={this.state.dark ? "#212121" : "#E0E0E0"} strokeWidth={8} strokeDasharray={dAI} strokeLinecap={"round"} style={{transition: "transform 1s"}}/>
+                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} transform={preTransform} fill="transparent" stroke={this.state.dark ? "white" : "#607d8b"} strokeWidth={6} strokeDasharray={dAPT} strokeLinecap={"round"} style={{transition: "transform 1s"}}/>
                     </g>
-                    <g transform={transform3} style={{transition: "transform 0.3s"}}>
-                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} fill="transparent" stroke={this.state.dark ? "white" : "#607d8b"} strokeWidth={20} strokeDasharray={dA} strokeLinecap={"round"} style={{transition: "transform 0.3s"}}/>
-                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} transform={insideTransform} fill="transparent" stroke={this.state.dark ? "#212121" : "#E0E0E0"} strokeWidth={8} strokeDasharray={dAI} strokeLinecap={"round"} style={{transition: "transform 0.3s"}}/>
-                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} transform={preTransform} fill="transparent" stroke={this.state.dark ? "white" : "#607d8b"} strokeWidth={6} strokeDasharray={dAPT} strokeLinecap={"round"} style={{transition: "transform 0.3s"}}/>
+                    <g transform={transform3} style={{transition: "transform 1s"}}>
+                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} fill="transparent" stroke={this.state.dark ? "white" : "#607d8b"} strokeWidth={20} strokeDasharray={dA} strokeLinecap={"round"} style={{transition: "transform 1s"}}/>
+                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} transform={insideTransform} fill="transparent" stroke={this.state.dark ? "#212121" : "#E0E0E0"} strokeWidth={8} strokeDasharray={dAI} strokeLinecap={"round"} style={{transition: "transform 1s"}}/>
+                        <circle cx={125 - width/2.5} cy={90} r={width/2.5} transform={preTransform} fill="transparent" stroke={this.state.dark ? "white" : "#607d8b"} strokeWidth={6} strokeDasharray={dAPT} strokeLinecap={"round"} style={{transition: "transform 1s"}}/>
                     </g>
                     
                     <circle cx={125} cy={90} r="30" fill={this.state.dark ? "white" : "#607d8b"}/>

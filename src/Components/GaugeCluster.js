@@ -160,10 +160,19 @@ class Box extends React.PureComponent {
         if((this.state.data[0].data[0] === undefined) || (this.state.data[0].data[this.state.data[0].data.length - 1].x !== this.props.time.getTime() / testTimeFactor)) 
         {
 
+            let timeStringH = this.props.time.getUTCHours();
+            let timeStringM = this.props.time.getUTCMinutes();
+            let timeStringS = this.props.time.getUTCSeconds();
+
+            // let timeString = `${timeStringH === 0 ? "00" : timeStringH}:${timeStringM === 0 ? "00" : timeStringM}:${timeStringS === 0 ? "00" : timeStringS}`;
+            let timeString = `${timeStringH}:${timeStringM}:${timeStringS}`;
+
+            console.log(timeString);
+
             // make some new data points for the current values
             let element = {
-                x: this.props.time.getTime() / testTimeFactor,
-                y: this.state.val0 // MAKE SURE TO UPDATE THIS FOR TESTING
+                x: this.state.time,
+                y: this.state.val0, // MAKE SURE TO UPDATE THIS FOR TESTING
                 // what are the odds i forget?  probably high
             }
 
@@ -224,7 +233,7 @@ class Box extends React.PureComponent {
 
         return (
             <>
-                <div style={{display:"inline-block", position: "relative", width:"33%", height:"100%", textAlign: "center", verticalAlign: "top"}}>
+                <div style={{display:"inline-block", position: "relative", width:"33%", height:"85%", textAlign: "center", verticalAlign: "top"}}>
                     <div style={{width: "100%", height: "20%", textAlign: "left"}}>
                         <div style={{display:"inline-block", width: "50%"}}>
                             <h3>{this.props.title}</h3>
@@ -236,8 +245,8 @@ class Box extends React.PureComponent {
                         </div>
                     </div>
 
-                    <div className={this.state.drawGraph ? "hidden" : undefined} style={{height: "80%"}}>
-                        <Gauge input={this.state.val0} dark={this.state.dark} unit={this.props.unit} digits={this.props.digits}/>
+                    <div className={this.state.drawGraph ? "hidden" : undefined} style={{height: "100%"}}>
+                        <Gauge style={{height: "100%"}} input={this.state.val0} dark={this.state.dark} unit={this.props.unit} digits={this.props.digits}/>
                     </div>
                     <div className={this.state.drawGraph ? "hidden" : undefined} style={{position: "absolute", bottom: 0, right: 0, height: "15%", textAlign: "right"}}>
                             <h3 style={{margin: 0, padding: 5}}>Max: {this.state.max}</h3>
@@ -247,8 +256,16 @@ class Box extends React.PureComponent {
                         <ResponsiveLine
                             data={ this.state.finalData }
                             margin={{ top: 10, right: 10, bottom: 80, left: 90 }}
-                            xScale={{ type: 'linear', min: graphMin/1000 ?? 10, max: graphMax/1000 ?? 10 }}
-                            xFormat=">-.2f"
+                            xScale={{ 
+                                type: 'time',
+                                format: '%H:%M:%S',
+                                // min: graphMin/1000 ?? 10, 
+                                // max: graphMax/1000 ?? 10,
+                                // min: new Date(0),
+                                // max: new Date(5000),
+                                precision: 'second', 
+                            }}
+                            xFormat="time:%H:%M:%S"
                             yScale={{ type: 'linear', min: 0, max: 'auto' }}
                             // yScale={{ type: 'auto' }}
                             yFormat=">-.2f"
@@ -281,8 +298,10 @@ class Box extends React.PureComponent {
                             axisBottom={{
                                 orient: 'bottom',
                                 tickSize: 5,
+                                tickValues: 'every second',
                                 tickPadding: 5,
-                                tickRotation: 0,
+                                tickRotation: 45,
+                                format: '%H:%M:%S',
                                 legend: 'Time (seconds)',
                                 legendPosition: 'middle',
                                 legendOffset: 46,
@@ -417,8 +436,8 @@ export default class GaugeCluster extends React.PureComponent {
 
     render() {
         return (
-            <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`}>
-                <div className="GaugeCluster" style={{height: "90%"}}>
+            <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`} style={{height:"100%"}}>
+                <div className="GaugeCluster" style={{height: "100%"}}>
                     <Box title="Altitude" unit={this.state.altUnit} min={0} max={9999} defaultToGraph={false}
                         threshold={900} digits={4} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.altitude} name0={"Altitude"}

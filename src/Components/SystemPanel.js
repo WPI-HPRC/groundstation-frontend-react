@@ -60,31 +60,34 @@ export default class SystemPanel extends React.Component {
         
     render() {
         return (
-            <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`}>
+            <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`} style={{height:"100%", width:"100%"}}>
                 <div className="SystemPanel" style={{position: "relative", width: "100%", height: "100%"}}>
                     <h3>Gyroscope</h3>
                     <hr/>
-                    <div className="subpanel" style={{display: "inline-block", height: "80%", margin: "0px 0px 0px 5px"}}>
-                        <div className="row">
-                            <div style={{display: "inline-block", textAlign: "center", margin: "0px 0px 0px 10px", position:"relative"}}>
+                    <div className="subpanel" style={{display: "inline-block", height: "100%", width:"100%", margin: "0px 0px 0px 5px"}}>
+                        <div className="row" style={{height:"100%", width:"100%"}}>
+                            <div style={{height:"100%", width: "33%", display: "inline-block", textAlign: "center", margin: "0px 0px 0px 0px", position:"relative"}}>
                                 <h3>Pitch (X)</h3>
                                 <CGauge
                                     input={Math.abs(this.state.gyroX)}
                                     reverse={ this.state.gyroX < 0} 
                                     dark={this.state.dark}
+                                    style={{height:"70%", width: "70%"}}
                                 />
                             </div>
-                            <div style={{display: "inline-block", margin: "0px 0px 0px 0px", textAlign: "center", position: "relative"}}>
+                            <div style={{height:"100%", width: "34%", display: "inline-block", margin: "0px 0px 0px 0px", textAlign: "center", position: "relative"}}>
                                 <h3>Roll (Y)</h3>
-                                <RPMGauge input={this.state.gyroY} dark={this.state.dark} unit={this.state.unit} digits={this.state.digits}/>
+                                <RPMGauge input={this.state.gyroY} dark={this.state.dark} unit={this.state.unit} digits={this.state.digits} style={{height:"70%"}}/>
 
                             </div>
-                            <div style={{display: "inline-block", margin: "0px 10px 0px 0px", textAlign: "center", position:"relative"}}>
+                            <div style={{display: "inline-block", width: "33%", margin: "0px 0px 0px 0px", textAlign: "center", position:"relative"}}>
                                 <h3>Yaw (Z)</h3>
                                 <CGauge
                                     input={Math.abs(this.state.gyroZ)}
                                     reverse={ this.state.gyroZ < 0} 
                                     dark={this.state.dark}
+                                    style={{height:"70%", width: "70%"}}
+
                                 />
                             </div>
                         </div>
