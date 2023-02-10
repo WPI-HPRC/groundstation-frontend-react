@@ -32,7 +32,7 @@ class Box extends React.PureComponent {
             max: 0,
             timeScale: props.datanum,
             rollingAvg: 0,
-            finalData: [ // the data for each graph; 1: accel 2: vel 3: pos
+            finalData: [ 
                 {
                     id: "dataInput",
                     data: []
@@ -43,6 +43,7 @@ class Box extends React.PureComponent {
             timeToRefresh: true,
             animationID: null,
             window: props.window,
+            units: props.showMetric,
         };
 
     }
@@ -51,11 +52,12 @@ class Box extends React.PureComponent {
     static getDerivedStateFromProps(props, current_state) { // FLAG
 
         // Update on new time
-        // check if time has changed
+        // check if anything has changed
         if (current_state.time !== props.time ||
             current_state.dark !== props.dark ||
             current_state.window !== props.window ||
-            current_state.val0 !== props.val0) {
+            current_state.val0 !== props.val0 ||
+            current_state.units !== props.showMetric) {
 
             // Reset if rocket time returns to 0
             if (props.time.getTime() === 0) {
@@ -73,7 +75,7 @@ class Box extends React.PureComponent {
             // Update data sets with new values
             else {
                 // check if it is time to update
-                if ((props.time.getTime() - current_state.graphTime.getTime()) >= props.graphRefreshRate) {
+                if (current_state.units !== props.showMetric) {
                     return {
                         val0: props.val0,
                         val1: props.val1,
@@ -81,7 +83,19 @@ class Box extends React.PureComponent {
                         dark: props.dark,
                         max: current_state.max > props.val0 ? current_state.max : props.val0,
                         time: props.time,
-                        graphTime: props.time,
+                        data: [
+                            {
+                                id: "Acceleration",
+                                data: []
+                            },
+                        ],
+                        finalData: [ // the data for each graph; 1: accel 2: vel 3: pos
+                            {
+                                id: "dataInput",
+                                data: []
+                            },
+                        ],
+                        units: props.showMetric,
                         
                     }
                 }
@@ -171,7 +185,7 @@ class Box extends React.PureComponent {
 
             // make some new data points for the current values
             let element = {
-                x: this.state.time,
+                x: this.state.time.getTime()/1000,
                 y: this.state.val0, // MAKE SURE TO UPDATE THIS FOR TESTING
                 // what are the odds i forget?  probably high
             }
@@ -257,15 +271,13 @@ class Box extends React.PureComponent {
                             data={ this.state.finalData }
                             margin={{ top: 10, right: 10, bottom: 80, left: 90 }}
                             xScale={{ 
-                                type: 'time',
-                                format: '%H:%M:%S',
-                                // min: graphMin/1000 ?? 10, 
-                                // max: graphMax/1000 ?? 10,
-                                // min: new Date(0),
-                                // max: new Date(5000),
-                                precision: 'second', 
+                                type: 'linear',
+                                // format: '%H:%M:%S',
+                                min: graphMin/1000 ?? 10, 
+                                max: graphMax/1000 ?? 10,
+                                precision: 1, 
                             }}
-                            xFormat="time:%H:%M:%S"
+                            xFormat=">-.2f"
                             yScale={{ type: 'linear', min: 0, max: 'auto' }}
                             // yScale={{ type: 'auto' }}
                             yFormat=">-.2f"
@@ -298,10 +310,10 @@ class Box extends React.PureComponent {
                             axisBottom={{
                                 orient: 'bottom',
                                 tickSize: 5,
-                                tickValues: 'every second',
+                                tickValues: 5,
                                 tickPadding: 5,
-                                tickRotation: 45,
-                                format: '%H:%M:%S',
+                                tickRotation: 0,
+                                // format: '%H:%M:%S',
                                 legend: 'Time (seconds)',
                                 legendPosition: 'middle',
                                 legendOffset: 46,
