@@ -12,8 +12,6 @@ import GaugeCluster from './GaugeCluster';
 import MissionTimeline from './MissionTimeline';
 import CubeDisplayPanel from './CubeDisplayPanel';
 import CubeTopbar from './CubeTopbar';
-// import ScatterPlot from './Chart';
-
 
 /**
  *  general layout of the screen
@@ -48,6 +46,10 @@ import CubeTopbar from './CubeTopbar';
  *    - timestamps for mission objectives + current local time
  * 
  *  ---------Cube Window---------
+ * 
+ *  CubeTopbar
+ *    - top row
+ *    - contains the SETTINGS button, signal strength, flight clock (TODO)
  * 
  *  CubeDisplayPanel
  *    - middle row

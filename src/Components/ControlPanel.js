@@ -143,7 +143,7 @@ export default class ControlPanel extends React.Component {
             <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`}>
                 <div className="ControlPanel" style={{height: "100%"}}>
                     <div style={{position: "relative", width: "100%", height: "100%"}}>
-                        <h3 style={{position: "absolute"}}>{">"} Console</h3>
+                        <h3 style={{position: "absolute", fontSize:"2vh"}}>{">"} Console</h3>
 
                         <Grid style={{height: "100%", position: "absolute", bottom: 0, margin: "5px", padding: 0}}>
                             <Row style={{height: "100%"}}>

@@ -166,7 +166,7 @@ export class RPMGauge extends React.Component {
         return(
 
             <div style={{textAlign: "center", width: "100%", height: "100%"}}>
-                <svg width="100%" height="50%" viewBox="0,0,300,206">
+                <svg width="100%" height="70%" viewBox="0,0,300,206">
                     <circle cx="150" cy="106" 
                         r={radius} 
                         fill="transparent" 
@@ -190,7 +190,7 @@ export class RPMGauge extends React.Component {
                    
 
                 </svg>
-                <div style={{textAlign: "center", width: "100%", position:"absolute", top: "11vh"}}>
+                <div style={{textAlign: "center", width: "100%", position:"absolute", top: "13vh"}}>
                     <h4 style={{textAlign:"center", position: "relative", fontSize: "6vh", marginBottom: "10px"}}>{padLeadingZeros(parseInt(this.state.input), this.props.digits)}</h4>
                     <h4 style={{fontSize: "2.5vh", fontWeight: "400"}}>{this.props.unit}</h4>
                 </div>
@@ -278,7 +278,7 @@ export class CGauge extends React.Component {
         return(
 
             <div style={{textAlign: "center", width: "100%", height: "100%"}}>
-                <svg width="100%" height="50%" viewBox="0,0,300,212">
+                <svg width="100%" height="70%" viewBox="0,0,300,212">
                     <circle cx="150" cy="106" 
                         r={radius} 
                         fill="transparent" 
@@ -311,7 +311,7 @@ export class CGauge extends React.Component {
                    
 
                 </svg>
-                <div style={{textAlign: "center", width: "100%", position:"absolute", top: "12vh"}}>
+                <div style={{textAlign: "center", width: "100%", position:"absolute", top: "14vh"}}>
                     <h4 style={{textAlign:"center", position: "relative", fontSize: "5vh", marginBottom: "10px"}}>{padLeadingZeros(parseInt(this.state.input), 3)}</h4>
                     <h4 style={{fontSize:"2.5vh", fontWeight: "400"}}>dps</h4>
                 </div>

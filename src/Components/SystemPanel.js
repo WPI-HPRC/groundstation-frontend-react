@@ -86,8 +86,6 @@ export default class SystemPanel extends React.Component {
                                     input={Math.abs(this.state.gyroZ)}
                                     reverse={ this.state.gyroZ < 0} 
                                     dark={this.state.dark}
-                                    style={{height:"70%", width: "70%"}}
-
                                 />
                             </div>
                         </div>
