@@ -63,7 +63,7 @@ export default class CubeTopbar extends React.Component {
                 
                     <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleSettings()} /* show settings menu */>Settings</button>
 
-                    <div className={`panel ${!this.state.showSettings ? "hidden" : this.props.dark ? "darkPanel settingsPanel" : "lightPanel settingsPanelLight"}`} /* all the settings are contained in here */ >
+                    <div style={{height:"11vh"}} className={`panel ${!this.state.showSettings ? "hidden" : this.props.dark ? "darkPanel settingsPanel" : "lightPanel settingsPanelLight"}`} /* all the settings are contained in here */ >
                         <div style={{height:"5px"}}/>
                         <div className={"row"} /* top row of buttons */ > 
                             <div style={{width:"8px"}}/>
@@ -80,15 +80,15 @@ export default class CubeTopbar extends React.Component {
                 </div>
                 <div className={`panel ${this.props.dark ? "darkPanel" : "lightPanel"}`} style={{height:"19vh", width:"13.375vw", margin:"0px", marginTop:"5px"}}>
                     <div style={{height:"30px"}}/>
-                    <div className={"row"}>
-                        <div style={{width:"10px"}}/>
-                        <h4>Receiver: </h4> 
-                        <h4 style={{color: this.state.connectedR ? "green" : "#ED5031", position: "relative", right:"35px"}}>{this.state.connectedR ? "Connected" : "Disconnected"} </h4> 
+                    <div className={"row"} style={{width:"100%"}}>
+                        <div style={{width:"1.5vw"}}/>
+                        <h4 style={{padding:"0px"}}>Receiver: </h4> 
+                        <h4 style={{color: this.state.connectedR ? "green" : "#ED5031", position: "relative", padding: "0px", left:"5px"}}>{this.state.connectedR ? "Connected" : "Disconnected"} </h4> 
                     </div>
                     <div className={"row"}>
-                        <div style={{width:"10px"}}/>
-                        <h4>Latency: </h4> 
-                        <h4 style={{position: "relative", right:"35px"}}>{this.state.connectedR ? this.state.latency + "ms" : "-"}</h4> 
+                        <div style={{width:"1.5vw"}}/>
+                        <h4 style={{padding:"0px"}}>Latency: </h4> 
+                        <h4 style={{position: "relative", padding:"0px", right:"-5px"}}>{this.state.connectedR ? this.state.latency + "ms" : "-"}</h4> 
                     </div>
                     <div className={"row"} >
                         <div style={{width:"3.25vw"}}/>

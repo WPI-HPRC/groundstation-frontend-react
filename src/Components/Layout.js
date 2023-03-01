@@ -135,7 +135,7 @@ export default class Layout extends React.Component {
                         </Row>
                     </Grid>
                 </div>
-                <div className={this.state.window === 1 ? "CubeWindow" : "hidden"} /* Cube Display Window */> 
+                <div className={this.state.window === 1 ? "CubeWindow" : "hidden"} style={{height: "100%"}}/* Cube Display Window */> 
                     <Row style={{height:"19.5vh"}}>
                         <div style={{width:"0.375vw"}}/>
                         <div style={{width:"99.5vw"}}>
@@ -146,7 +146,7 @@ export default class Layout extends React.Component {
                                 {...this.props}/>
                         </div>
                     </Row>
-                    <Row style={{height:"68vh"}}>
+                    <Row style={{height:"67vh"}}>
                         <div style={{width:"0.375vw"}}/>
                         <div style={{width:"33vw"}}> 
                             <CubeDisplayPanel className={"CubeDisplayPanel"} cubeName={"Curly"} signalStrength={this.props.cubeStrength1} batteryPercent={this.props.cubeBattery1} /* Cube 1 */

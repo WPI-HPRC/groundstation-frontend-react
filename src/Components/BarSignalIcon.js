@@ -122,10 +122,10 @@ export default class BarSignalIcon extends React.Component {
         return (
             <svg width="60" height="50">
 
-                <rect x="40" y="00" width="7" height="35" fill={fill1 ? color : this.state.dark ? "#ffffff" : "#607d8b"} />
-                <rect x="30" y="10" width="7" height="25" fill={fill2 ? color : this.state.dark ? "#ffffff" : "#607d8b"} />
-                <rect x="20" y="20" width="7" height="15" fill={fill3 ? color : this.state.dark ? "#ffffff" : "#607d8b"} />
-                <rect x="10" y="30" width="7" height="5" fill={fill4 ? color : this.state.dark ? "#ffffff" : "#607d8b"} />
+                <rect x="40" y="00" width="7" height="35" fill={fill1 ? color : this.props.dark ? "#ffffff" : "#607d8b"} />
+                <rect x="30" y="10" width="7" height="25" fill={fill2 ? color : this.props.dark ? "#ffffff" : "#607d8b"} />
+                <rect x="20" y="20" width="7" height="15" fill={fill3 ? color : this.props.dark ? "#ffffff" : "#607d8b"} />
+                <rect x="10" y="30" width="7" height="5" fill={fill4 ? color : this.props.dark ? "#ffffff" : "#607d8b"} />
 
 
                 <line /* strikethrough "transparent" background */ x1="15" y1="36" x2="49" y2="5" strokeWidth={7} stroke={this.state.signalStrength !== 0 ? "transparent" : this.props.dark ? "#212121" : "#e0e0e0"} strokeLinecap={"round"}/>

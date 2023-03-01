@@ -262,14 +262,14 @@ export default class CubeDisplayPanel extends React.Component{
         }
 
         return(
-            <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`} style={{height:"100%"}}>
+            <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`} style={{height:"100%", width:"100%"}}>
                 <div style={{height:"1.5vh"}}></div>
                 <div className={"row"}>
                     <h3>{this.state.cubeName}</h3>
 
                     <h3 style={{position: "relative", left:"8vw"}}>RSSI: {this.state.RSSI} dBm</h3>
 
-                    <div style={{position: "relative", left: "18vw", bottom: "-0.5vh"}} >
+                    <div style={{position: "relative", left: "17vw", bottom: "-0.5vh"}} >
                         {/* <SignalIcon dark={this.props.dark} signalStrength={this.props.signalStrength}/> */}
                         <BarSignalIcon dark={this.props.dark} signalStrength={this.props.signalStrength}/>
                         {/* <BatteryIcon dark={this.props.dark} batteryPercent={this.props.batteryPercent}/> */}
