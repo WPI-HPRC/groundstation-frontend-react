@@ -120,7 +120,7 @@ export default class MissionTimeline extends React.Component {
                         <div style={{position: "absolute", width: "100%", height: "100%"}}>
                             {missionPoints.map((elem) => (<MissionPoint key={elem[0]} name={elem[2]} percentStart={elem[0]} percentEnd={elem[1]} time={elem[3]}/>))}
                         </div>
-                        <div  style={{position: "absolute", top: "5vh", width: "100%", }}>
+                        <div  style={{position: "absolute", top: "4.5vh", width: "100%", }}>
                             <ProgressBar completed={missionPercent} isLabelVisible={false} bgColor={"#ED5031"} barContainerClassName={this.state.dark ? "foregroundDark" : "foregroundLight"} height="1.5vh"/>
                         </div>
                     </div>
@@ -130,10 +130,10 @@ export default class MissionTimeline extends React.Component {
                                 <h1 style={{fontSize: "2.5vh", margin: "0.2vh"}}>{month}</h1>
                             </div>
                             <div style={{display: "inline-block", position: "absolute", bottom: 0, left: 0, textAlign: "left", padding: 0, margin: 0, verticalAlign: "top"}}>
-                                <h1 style={{fontSize: "5vh", margin: "0.2vh"}}>{time.getDate()}, {time.getFullYear()}</h1>
+                                <h1 style={{fontSize: "4.5vh", margin: "0.2vh"}}>{time.getDate()}, {time.getFullYear()}</h1>
                             </div>
                             <div style={{display: "inline-block", position: "absolute", top: 0, right: 0, textAlign: "right", margin: "auto", verticalAlign: "top"}}>
-                                <h1 style={{fontSize: "5vh", margin: "0.2vh"}}>{padLeadingZeros(time.getHours(), 2)}:{padLeadingZeros(time.getMinutes(),2)}:{padLeadingZeros(time.getSeconds(), 2)}</h1>
+                                <h1 style={{fontSize: "4.5vh", margin: "0.2vh"}}>{padLeadingZeros(time.getHours(), 2)}:{padLeadingZeros(time.getMinutes(),2)}:{padLeadingZeros(time.getSeconds(), 2)}</h1>
                             </div>
                             <div style={{display: "inline-block", position: "absolute", bottom: 0, right: 0, textAlign: "right", margin: "auto", verticalAlign: "top"}}>
                                 <h1 style={{fontSize: "2.5vh", margin: "0.2vh"}}>{tzStr}</h1>

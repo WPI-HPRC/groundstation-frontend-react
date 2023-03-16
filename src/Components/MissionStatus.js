@@ -320,7 +320,7 @@ export default class MissionStatus extends React.Component {
                                             <div className={"row"} /* bottom row of buttons */ >
                                                 <div style={{width:"8px"}}/>
                                                 <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"}  style={{width: "150px"}} onClick={() => this.cubeWindow()}>Cube Window</button>
-                                                <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleAltMode()}>{this.props.altMSL ? "AGL" : "MSL"}</button>
+                                                <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleAltMode()}>{this.props.altMSL ? "Alt: MSL" : "Alt: AGL"}</button>
                                             </div>
                                         </div>
                                     </div>

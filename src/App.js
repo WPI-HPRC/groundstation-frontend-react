@@ -74,7 +74,7 @@ export default class App extends React.Component {
         /**
          * Functions that can be called from children to affect the app
          * IMPORTANT: make sure that these are called with the correct value, especially if using 
-         * an async function like setState() to set the value going into the function
+         * an async function like setState() to set the value going into the function 
          */
         this.configFuncs = {
             tsFunc: this.updateTimescale,

@@ -21,7 +21,7 @@ class Box extends React.PureComponent {
             time: props.time,
             dark: props.dark,
             graphTime: props.time,
-            data: [
+            data: [ // the stored data for the last 10 seconds
                 {
                     id: "Acceleration",
                     data: []
@@ -32,7 +32,7 @@ class Box extends React.PureComponent {
             max: 0,
             timeScale: props.datanum,
             rollingAvg: 0,
-            finalData: [ 
+            finalData: [ // the data to be displayed
                 {
                     id: "dataInput",
                     data: []
@@ -60,6 +60,7 @@ class Box extends React.PureComponent {
             current_state.units !== props.showMetric ||
             current_state.altMSL !== props.altMSL) {
 
+
             // Reset if rocket time returns to 0
             if (props.time.getTime() === 0) {
                 return {
@@ -70,13 +71,25 @@ class Box extends React.PureComponent {
                     time: props.time,
                     graphTime: props.time,
                     dark: props.dark,
+                    finalData: [ // the data to be displayed
+                        {
+                            id: "dataInput",
+                            data: []
+                        },
+                    ],
+                    data: [
+                        {
+                            id: "Acceleration",
+                            data: []
+                        },
+                    ],
                 }
             }
 
             // Update data sets with new values
             else {
-                // check if it is time to update
-                if (current_state.units !== props.showMetric) {
+                if (current_state.units !== props.showMetric ||
+                    current_state.altMSL !== props.altMSL) {
                     return {
                         val0: props.val0,
                         val1: props.val1,
@@ -85,12 +98,12 @@ class Box extends React.PureComponent {
                         altMSL: props.altMSL,
                         max: current_state.max > props.val0 ? current_state.max : props.val0,
                         time: props.time,
-                        // data: [
-                        //     {
-                        //         id: "Acceleration",
-                        //         data: []
-                        //     },
-                        // ],
+                        data: [
+                            {
+                                id: "Acceleration",
+                                data: []
+                            },
+                        ],
                         finalData: [ // the data for each graph; 1: accel 2: vel 3: pos
                             {
                                 id: "dataInput",
@@ -271,7 +284,7 @@ class Box extends React.PureComponent {
                                 precision: 1, 
                             }}
                             xFormat=">-.2f"
-                            yScale={{ type: 'linear', min: 0, max: 'auto' }}
+                            yScale={{ type: 'linear', min: 'auto', max: 'auto' }}
                             // yScale={{ type: 'auto' }}
                             yFormat=">-.2f"
                             blendMode="normal"
@@ -452,14 +465,14 @@ export default class GaugeCluster extends React.PureComponent {
                 <div className="GaugeCluster" style={{height: "100%"}}>
                     <Box title={altString}  unit={this.state.altUnit} min={0} max={9999} defaultToGraph={false}
                         threshold={900} digits={4} graphRefreshRate={this.props.graphRefreshRate}
-                        datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.altMSL ? this.state.altitude : 
-                                                                                            this.state.showMetric ? this.state.altitude - this.props.currentAlt : this.state.altitude - (this.props.currentAlt/0.3048)} name0={"Altitude"}
-                        dark={this.state.dark}
+                        datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.altMSL ? this.state.altitude : this.state.showMetric ? this.state.altitude - this.props.currentAlt : this.state.altitude - (this.props.currentAlt/0.3048)} name0={"Altitude"}
+                        dark={this.state.dark} showMetric={this.props.showMetric} altMSL={this.props.altMSL}
                         />
                     <Box title="Velocity" unit={this.state.velUnit} min={0} max={300} defaultToGraph={false}
                         threshold={200} digits={3} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.vel} name0={"Velocity ΔA"}
-                        dark={this.state.dark}
+                        dark={this.state.dark} showMetric={this.props.showMetric} altMSL={this.props.altMSL}
+
                         />
                     <Box title="Acceleration" unit={this.state.accelUnit} min={0} max={3000} 
                         threshold={2000} digits={4} graphRefreshRate={this.props.graphRefreshRate}
@@ -467,7 +480,9 @@ export default class GaugeCluster extends React.PureComponent {
                         val0={this.state.accelY} name0="Y"
                         val1={this.state.accelX} name1="X"
                         val2={this.state.accelZ} name2="Z"
-                        dark={this.state.dark}
+                        dark={this.state.dark} 
+                        showMetric={this.props.showMetric}
+                        altMSL={this.props.altMSL}
                         />
                 </div>
             </div>
