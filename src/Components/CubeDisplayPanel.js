@@ -121,7 +121,7 @@ export default class CubeDisplayPanel extends React.Component{
         return update;
     }
 
-    toggleT() { // switch the graph to show TEMPERAUTURE
+    toggleT() { // switch the graph to show TEMPERATURE
         this.setState({
             showTemp: true,
             showHmid: false,
@@ -202,6 +202,7 @@ export default class CubeDisplayPanel extends React.Component{
             }
             this.state.cubeData.push(this.state.cubeDataP);
             this.state.legendString = "Pressure";
+            console.log("showing PRES");
             if(this.props.showMetric) { // adjust legend to the correct units
                 this.state.legendString = this.state.legendString.concat(" (mBar)");
             } else {
@@ -215,6 +216,7 @@ export default class CubeDisplayPanel extends React.Component{
             } else {
                 this.state.cubeDataT.color = 'orange';
             }
+            console.log("showing HMID");
             this.state.cubeData.push(this.state.cubeDataH);
             this.setState({
                 legendString: "Humidity (%)"
@@ -229,6 +231,8 @@ export default class CubeDisplayPanel extends React.Component{
             } else {
                 this.state.cubeDataT.color = 'green';
             }
+            console.log("showing TEMP");
+
             this.state.cubeData.push(this.state.cubeDataT);
             this.state.legendString = "Temperature";
             if(this.props.showMetric) {
@@ -282,13 +286,13 @@ export default class CubeDisplayPanel extends React.Component{
                     </div>
                     <div className="row">
                         <div style={{textAlign:"center", width:"11vw"}}>
-                            <h4>Temperature: {this.state.lastTemp} {this.state.showMetric ? "°C" : "°F"}</h4>
+                            <h4 style={{fontSize:"2vh"}}>Temperature: {this.state.lastTemp} {this.state.showMetric ? "°C" : "°F"}</h4>
                         </div>
                         <div style={{textAlign:"center", width:"11vw"}}>
-                            <h4>Humidity: {this.state.lastHmid}%</h4>
+                            <h4 style={{fontSize:"2vh"}}>Humidity: {this.state.lastHmid}%</h4>
                         </div>
                         <div style={{textAlign:"center", width:"11vw"}}>
-                            <h4>Pressure: {this.state.lastPres} {this.state.showMetric ? "mBar" : "inHg"}</h4>
+                            <h4 style={{fontSize:"2vh"}}>Pressure: {this.state.lastPres} {this.state.showMetric ? "mBar" : "inHg"}</h4>
                         </div>
                     </div>
                     

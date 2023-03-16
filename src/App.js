@@ -67,6 +67,8 @@ export default class App extends React.Component {
             cubeBattery1: 1,
             cubeBattery2: 0.5,
             cubeBattery3: 0.75,
+            altMSL: true,
+            currentAlt: 146.304,
         }
 
         /**
@@ -83,6 +85,7 @@ export default class App extends React.Component {
             unitFunc: this.updateMetric,
             modeFunc: this.updateMode,
             windowFunc: this.updateWindow,
+            altModeFunc: this.updateAltMode,
         }
 
         /**
@@ -100,6 +103,7 @@ export default class App extends React.Component {
         this.updateMetric = this.updateMetric.bind(this);
         this.updateMode = this.updateMode.bind(this);
         this.updateWindow = this.updateWindow.bind(this);
+        this.updateAltMode = this.updateAltMode.bind(this);
         
     }
 
@@ -288,6 +292,12 @@ export default class App extends React.Component {
     updateMode = (mode) => {
         this.setState({
             dark: mode
+        })
+    }
+    
+    updateAltMode = (MSL) => {
+        this.setState({
+            altMSL: MSL
         })
     }
 

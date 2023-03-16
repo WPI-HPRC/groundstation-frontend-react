@@ -54,7 +54,7 @@ import CubeTopbar from './CubeTopbar';
  *  CubeDisplayPanel
  *    - middle row
  *    - the three main panels showing the cubes' sensor readings
- * 
+ *    - signal icon
  */
 
 export default class Layout extends React.Component {

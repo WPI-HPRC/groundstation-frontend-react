@@ -57,7 +57,8 @@ class Box extends React.PureComponent {
             current_state.dark !== props.dark ||
             current_state.window !== props.window ||
             current_state.val0 !== props.val0 ||
-            current_state.units !== props.showMetric) {
+            current_state.units !== props.showMetric ||
+            current_state.altMSL !== props.altMSL) {
 
             // Reset if rocket time returns to 0
             if (props.time.getTime() === 0) {
@@ -81,14 +82,15 @@ class Box extends React.PureComponent {
                         val1: props.val1,
                         val2: props.val2,
                         dark: props.dark,
+                        altMSL: props.altMSL,
                         max: current_state.max > props.val0 ? current_state.max : props.val0,
                         time: props.time,
-                        data: [
-                            {
-                                id: "Acceleration",
-                                data: []
-                            },
-                        ],
+                        // data: [
+                        //     {
+                        //         id: "Acceleration",
+                        //         data: []
+                        //     },
+                        // ],
                         finalData: [ // the data for each graph; 1: accel 2: vel 3: pos
                             {
                                 id: "dataInput",
@@ -108,6 +110,7 @@ class Box extends React.PureComponent {
                         max: current_state.max > props.val0 ? current_state.max : props.val0,
                         time: props.time,
                         dark: props.dark,
+                        altMSL: props.altMSL,
                     }
                 }
             }
@@ -174,22 +177,12 @@ class Box extends React.PureComponent {
         if((this.state.data[0].data[0] === undefined) || (this.state.data[0].data[this.state.data[0].data.length - 1].x !== this.props.time.getTime() / testTimeFactor)) 
         {
 
-            let timeStringH = this.props.time.getUTCHours();
-            let timeStringM = this.props.time.getUTCMinutes();
-            let timeStringS = this.props.time.getUTCSeconds();
-
-            // let timeString = `${timeStringH === 0 ? "00" : timeStringH}:${timeStringM === 0 ? "00" : timeStringM}:${timeStringS === 0 ? "00" : timeStringS}`;
-            let timeString = `${timeStringH}:${timeStringM}:${timeStringS}`;
-
-            console.log(timeString);
-
             // make some new data points for the current values
             let element = {
                 x: this.state.time.getTime()/1000,
                 y: this.state.val0, // MAKE SURE TO UPDATE THIS FOR TESTING
                 // what are the odds i forget?  probably high
             }
-
             // add them to the base array
             this.state.data[0].data.push(element);
         }
@@ -379,6 +372,7 @@ export default class GaugeCluster extends React.PureComponent {
         super(props);
         this.state = {
             dark: props.dark,
+            altMSL: props.altMSL,
             vel: props.vel,
             accelX: props.accelX,
             accelY: props.accelY,
@@ -404,7 +398,8 @@ export default class GaugeCluster extends React.PureComponent {
             current_state.window !== props.window ||
             current_state.accelY !== props.accelY ||
             current_state.altitude !== props.altitude ||
-            current_state.vel !== props.vel) {
+            current_state.vel !== props.vel ||
+            current_state.altMSL !== props.altMSL) {
             
 
             if(props.showMetric) {
@@ -418,6 +413,7 @@ export default class GaugeCluster extends React.PureComponent {
                     timeScale: props.timeScale,
                     altUnit: "m",
                     accelUnit: "m/s/s",
+                    altMSL: props.altMSL,
                     velUnit: "m/s",
                     showMetric: props.showMetric,
                     dark: props.dark,
@@ -435,6 +431,7 @@ export default class GaugeCluster extends React.PureComponent {
                     altUnit: "ft",
                     accelUnit: "G",
                     velUnit: "ft/s",
+                    altMSL: props.altMSL,
                     showMetric: props.showMetric,
                     dark: props.dark,
                     window: props.window,
@@ -447,12 +444,16 @@ export default class GaugeCluster extends React.PureComponent {
     }
 
     render() {
+
+        let altString = `Altitude ${this.props.altMSL ? "(MSL)" : "(AGL)"}`;
+
         return (
-            <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`} style={{height:"100%"}}>
+            <div className={`panel ${this.props.dark ? "darkPanel" : "lightPanel"}`} style={{height:"100%"}}>
                 <div className="GaugeCluster" style={{height: "100%"}}>
-                    <Box title="Altitude" unit={this.state.altUnit} min={0} max={9999} defaultToGraph={false}
+                    <Box title={altString}  unit={this.state.altUnit} min={0} max={9999} defaultToGraph={false}
                         threshold={900} digits={4} graphRefreshRate={this.props.graphRefreshRate}
-                        datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.altitude} name0={"Altitude"}
+                        datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.altMSL ? this.state.altitude : 
+                                                                                            this.state.showMetric ? this.state.altitude - this.props.currentAlt : this.state.altitude - (this.props.currentAlt/0.3048)} name0={"Altitude"}
                         dark={this.state.dark}
                         />
                     <Box title="Velocity" unit={this.state.velUnit} min={0} max={300} defaultToGraph={false}

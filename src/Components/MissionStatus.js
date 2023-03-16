@@ -18,6 +18,7 @@ class StatusIndicator extends React.Component {
             ID: null,
             dark: props.dark,
             showSettingsPanel: false,
+            altMSL: true,
         };
             
         this.blinkWarning = this.blinkWarning.bind(this)
@@ -175,6 +176,7 @@ export default class MissionStatus extends React.Component {
             slowLog: props.slowLog,
             showMetric: props.showMetric,
             altitude: props.altitude,
+            altMSL: props.altMSL,
         }
 
         this.handleConnect = this.handleConnect.bind(this);
@@ -192,7 +194,8 @@ export default class MissionStatus extends React.Component {
             current_state.latency !== props.latency ||
             current_state.showConnect !== props.showConnectButton ||
             current_state.slowLog !== props.slowLog ||
-            current_state.dark !== props.dark ) {
+            current_state.dark !== props.dark ||
+            current_state.altMSL !== props.altMSL) {
 
             if (props.latency === "-" && props.lastUpdate === "-") {
                 return {
@@ -205,6 +208,7 @@ export default class MissionStatus extends React.Component {
                     showConnect: props.showConnectButton,
                     slowLog: props.slowLog,
                     dark: props.dark,
+                    altMSL: props.altMSL,
                 }
             }
             update = {
@@ -218,6 +222,7 @@ export default class MissionStatus extends React.Component {
                 showConnect: props.showConnectButton,
                 slowLog: props.slowLog,
                 dark: props.dark,
+                altMSL: props.altMSL,
             }
         }
 
@@ -260,20 +265,24 @@ export default class MissionStatus extends React.Component {
         this.props.disconnFunc();
     }
     
-    toggleSettingsPanel() {
+    toggleSettingsPanel(event) {
         this.setState({
             showSettingsPanel: !this.state.showSettingsPanel,
         })
     }
-    toggleMode() {
+    toggleMode(event) {
         this.props.modeFunc(!this.state.dark);
     }
 
-    cubeWindow() {
+    cubeWindow(event) {
         this.props.windowFunc(1);
         this.setState({
             showSettingsPanel: false,
         })
+    }
+
+    toggleAltMode(event) {
+        this.props.altModeFunc(!this.state.altMSL);
     }
 
     render() { 
@@ -311,6 +320,7 @@ export default class MissionStatus extends React.Component {
                                             <div className={"row"} /* bottom row of buttons */ >
                                                 <div style={{width:"8px"}}/>
                                                 <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"}  style={{width: "150px"}} onClick={() => this.cubeWindow()}>Cube Window</button>
+                                                <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleAltMode()}>{this.props.altMSL ? "AGL" : "MSL"}</button>
                                             </div>
                                         </div>
                                     </div>
