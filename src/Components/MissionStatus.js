@@ -87,10 +87,10 @@ class StatusIndicator extends React.Component {
                 <h4 style={{position: "absolute", left: 0, padding: "0px 0px 0px 20px", margin: "0px 0px 20px 0px"}}>
                     {this.state.systemName}: <font style={{color: this.state.connected ? "#00f700" : "#ED5031"}}>{this.state.connected ? "Connected" : "Disconnected"} </font>
                 </h4>
-                <h4 style={{position: "absolute", left: "40%", padding: "0px 0px 0px 20px", margin: "0px 0px 20px 0px"}}>
+                <h4 style={{position: "absolute", left: "50%", padding: "0px 0px 0px 20px", margin: "0px 0px 20px 0px"}}>
                     RFS: <font style={{color: getColor(this.state.refresh)}}>{this.state.refresh}</font>ms
                 </h4>
-                <h4 style={{position: "absolute", left: "60%", padding: "0px 0px 0px 20px", margin: "0px 0px 20px 0px"}}>
+                <h4 style={{position: "absolute", left: "70%", padding: "0px 0px 0px 20px", margin: "0px 0px 20px 0px"}}>
                     LAT: <font style={{color: getColor(this.state.latency)}}>{this.state.latency}</font>ms
                 </h4>
                 {renderWarning()}

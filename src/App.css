@@ -270,7 +270,7 @@
 .showMap{ /* button inside 3D visualization to show map */ 
   position: relative;
   top: 60px;
-  left: 17vw;
+  left: 16vw;
   padding: 5px;
   z-index: 10;
   /* width: 75px; */

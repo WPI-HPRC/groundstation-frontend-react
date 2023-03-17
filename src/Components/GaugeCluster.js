@@ -192,7 +192,7 @@ class Box extends React.PureComponent {
 
             // make some new data points for the current values
             let element = {
-                x: this.state.time.getTime()/1000,
+                x: this.props.time.getTime() / testTimeFactor,
                 y: this.state.val0, // MAKE SURE TO UPDATE THIS FOR TESTING
                 // what are the odds i forget?  probably high
             }
@@ -241,9 +241,10 @@ class Box extends React.PureComponent {
         let resolution = this.props.datanum;
 
         this.state.finalData[0].data = [];
-
         this.state.data[0].data.forEach(element => {
-            if(element.x * 1000 % resolution === 0 && element.x >= graphMin/1000 && element.x <= this.state.time.getTime()/1000)
+            // element.x >= graphMin/1000 &&
+            console.log("graphMin " + graphMin/1000 < element.x + " " + this.state.time.getTime()/1000);
+            if(element.x * 1000 % resolution === 0 && element.x <= this.state.time.getTime()/1000)
             {
                 this.state.finalData[0].data.push(element);
             } 

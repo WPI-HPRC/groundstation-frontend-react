@@ -148,7 +148,7 @@ export default class ControlPanel extends React.Component {
                         <Grid style={{height: "100%", position: "absolute", bottom: 0, margin: "5px", padding: 0}}>
                             <Row style={{height: "100%"}}>
                                 <Col lg={2} style={{position: "relative", textAlign: "center"}}>    
-                                    <div style={{position: "absolute", bottom: 70, left: 0, right: 0, margin: 0}}>
+                                    <div style={{position: "absolute", bottom: 60, left: 0, right: 0, margin: 0}}>
 
                                         <button className={this.state.dark ? "customButtonLg" : "customButtonLgLight"} style={{display: "inline-block"}} onClick={() => this.handleReset()}>Clear</button>
                                         {/* <button className="customButtonLg" style={{display: "inline-block"}} onClick={() => this.handleReset()}>Clear</button> */}

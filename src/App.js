@@ -68,7 +68,7 @@ export default class App extends React.Component {
             cubeBattery2: 0.5,
             cubeBattery3: 0.75,
             altMSL: true,
-            currentAlt: 146.304,
+            currentAlt: 146.304, // this should be in meters
         }
 
         /**
