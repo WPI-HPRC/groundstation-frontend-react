@@ -238,16 +238,16 @@ class Box extends React.PureComponent {
         // for example, resolution of 2 would be 50%, 100 would be 1%, etc.
 
 
-        let resolution = this.props.datanum;
+        let resolution = this.props.datanum / 10;
 
         this.state.finalData[0].data = [];
-        this.state.data[0].data.forEach(element => {
+        this.state.data[0].data.forEach((element, index) => {
             // element.x >= graphMin/1000 &&
-            console.log("graphMin " + graphMin/1000 < element.x + " " + this.state.time.getTime()/1000);
-            if(element.x * 1000 % resolution === 0 && element.x <= this.state.time.getTime()/1000)
+            if(index % resolution === 0 && element.x >= graphMin/1000 && element.x <= this.state.time.getTime()/1000)
             {
                 this.state.finalData[0].data.push(element);
             } 
+        
         });
 
         
