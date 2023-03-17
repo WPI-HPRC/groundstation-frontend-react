@@ -60,9 +60,9 @@ export default class CubeDisplayPanel extends React.Component{
                 update = {
                     dark: props.dark,
                     cubeName: props.cubeName,
-                    lastTemp: props.lastTemp,
-                    lastHmid: props.lastHmid,
-                    lastPres: props.lastPres,
+                    lastTemp: 0,
+                    lastHmid: 0,
+                    lastPres: 0,
 
                     cubeDataT: 
                         {
@@ -70,8 +70,7 @@ export default class CubeDisplayPanel extends React.Component{
                             color: 'yellow',
                             data: [
                                 {
-                                x: 0,
-                                y: 0
+                               
                                 }
                             ]
                         },
@@ -82,8 +81,7 @@ export default class CubeDisplayPanel extends React.Component{
                             color: 'orange',
                             data: [
                                 {
-                                x: 0,
-                                y: 0
+                               
                                 }
                             ]
                         },
@@ -94,8 +92,7 @@ export default class CubeDisplayPanel extends React.Component{
                             color: 'red',
                             data: [
                                 {
-                                x: 0,
-                                y: 0
+                               
                                 }
                             ]
                         },
@@ -149,7 +146,7 @@ export default class CubeDisplayPanel extends React.Component{
 
         // create new elements for new data points.  but only sometimes for performance.
 
-        if(this.state.time.getTime() % 500 === 0) { // 2hz
+        if(this.state.time.getTime() % 100 < 25) { // 2hz
             let elementT = {
                 x: this.state.time.getTime() / 1000,
                 y: this.state.lastTemp
@@ -166,8 +163,6 @@ export default class CubeDisplayPanel extends React.Component{
             this.state.cubeDataT.data.push(elementT);
             this.state.cubeDataP.data.push(elementP);
             this.state.cubeDataH.data.push(elementH);
-
-
         }
         
 
@@ -180,19 +175,15 @@ export default class CubeDisplayPanel extends React.Component{
             graphMax = 5;
             graphMin = 0;
         }
-
-        if(this.state.cubeDataT.data[0].x ?? 0 < graphMin)
-        {
-            this.state.cubeDataT.data.shift();
-        }
-        if(this.state.cubeDataH.data[0].x ?? 0 < graphMin)
-        {
-            this.state.cubeDataH.data.shift();
-        }
-        if(this.state.cubeDataP.data[0].x ?? 0 < graphMin)
-        {
-            this.state.cubeDataP.data.shift();
-        }
+        this.state.cubeDataT.data = this.state.cubeDataT.data.filter(function(input) {
+            return input.x > graphMin;
+        });
+        this.state.cubeDataH.data = this.state.cubeDataH.data.filter(function(input) {
+            return input.x > graphMin;
+        });
+        this.state.cubeDataP.data = this.state.cubeDataP.data.filter(function(input) {
+            return input.x > graphMin;
+        });
 
         if(this.state.showPres) { // if this graph is set to show PRESSURE, add the pressure data to the data array & change the legend to match
             if(!this.state.dark) {
@@ -202,7 +193,6 @@ export default class CubeDisplayPanel extends React.Component{
             }
             this.state.cubeData.push(this.state.cubeDataP);
             this.state.legendString = "Pressure";
-            console.log("showing PRES");
             if(this.props.showMetric) { // adjust legend to the correct units
                 this.state.legendString = this.state.legendString.concat(" (mBar)");
             } else {
@@ -216,12 +206,13 @@ export default class CubeDisplayPanel extends React.Component{
             } else {
                 this.state.cubeDataT.color = 'orange';
             }
-            console.log("showing HMID");
             this.state.cubeData.push(this.state.cubeDataH);
-            this.setState({
-                legendString: "Humidity (%)"
-            })
-
+            this.state.legendString = "Humidity (%)";
+            // if(this.props.showMetric) { // adjust legend to the correct units
+            //     this.state.legendString = this.state.legendString.concat(" (mBar)");
+            // } else {
+            //     this.state.legendString = this.state.legendString.concat(" (inHg)");
+            // }
         }
 
 
@@ -231,7 +222,6 @@ export default class CubeDisplayPanel extends React.Component{
             } else {
                 this.state.cubeDataT.color = 'green';
             }
-            console.log("showing TEMP");
 
             this.state.cubeData.push(this.state.cubeDataT);
             this.state.legendString = "Temperature";
@@ -241,6 +231,7 @@ export default class CubeDisplayPanel extends React.Component{
                 this.state.legendString = this.state.legendString.concat(" (°F)");
             }
         }
+
 
         // change the color of various elements depending on whether we're in light or dark mode 
 
@@ -264,6 +255,7 @@ export default class CubeDisplayPanel extends React.Component{
         } else {
             tooltipBG = "#607d8b";
         }
+
 
         return(
             <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`} style={{height:"100%", width:"100%"}}>
@@ -338,6 +330,7 @@ export default class CubeDisplayPanel extends React.Component{
                                 orient: 'bottom',
                                 tickSize: 5,
                                 tickPadding: 5,
+                                tickValues: 5,
                                 tickRotation: 0,
                                 legend: "Time (seconds)",
                                 legendPosition: 'middle',
