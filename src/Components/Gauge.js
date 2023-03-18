@@ -1,9 +1,49 @@
 import React from 'react';
 
 function padLeadingZeros(num, size) {
-    var s = num+"";
-    while (s.length < size) s = "0" + s;
-    return s;
+
+    if(num % 1 === 0) 
+    {
+        if(num >= 0) {
+            var s = num+"";
+            while (s.length < size) s = "0" + s;
+        } else {
+            var s = Math.abs(num)+"";
+            while (s.length < size) s = "0" + s;
+            s = "-" + s;
+        }
+        
+        return s;
+    } else if(size === 3) {
+        var rounded = 0;
+        if(num > 99) {
+            rounded = Math.round(num);
+        } else if(num > 9) {
+            rounded = Math.round(num * 10.0)/10.0;
+        } else {
+            rounded = Math.round(num * 100.0)/100.0;
+        }
+        return rounded;
+
+    } else if(size === 4) {
+        var rounded = 0;
+        if(num > 999) {
+            rounded = Math.round(num);
+        }
+        else if(num > 99) {
+            rounded = Math.round(num * 10.0)/10.0;
+        } else if(num > 9) {
+            rounded = Math.round(num * 100.0)/100.0;
+        } else {
+            rounded = Math.round(num * 1000.0)/1000.0;
+        }
+        return rounded;
+    }
+
+
+
+
+    
 }
 
 export default class Gauge extends React.Component {
@@ -191,7 +231,7 @@ export class RPMGauge extends React.Component {
 
                 </svg>
                 <div style={{textAlign: "center", width: "100%", position:"absolute", top: "13vh"}}>
-                    <h4 style={{textAlign:"center", position: "relative", fontSize: "6vh", marginBottom: "10px"}}>{padLeadingZeros(parseInt(this.state.input), this.props.digits)}</h4>
+                    <h4 style={{textAlign:"center", position: "relative", fontSize: "6vh", marginBottom: "10px"}}>{padLeadingZeros(this.state.input, 3)}</h4>
                     <h4 style={{fontSize: "2.5vh", fontWeight: "400"}}>{this.props.unit}</h4>
                 </div>
             </div>
@@ -311,8 +351,8 @@ export class CGauge extends React.Component {
                    
 
                 </svg>
-                <div style={{textAlign: "center", width: "100%", position:"absolute", top: "14vh"}}>
-                    <h4 style={{textAlign:"center", position: "relative", fontSize: "5vh", marginBottom: "10px"}}>{padLeadingZeros(parseInt(this.state.input), 3)}</h4>
+                <div style={{textAlign: "center", width: "100%", position:"absolute", top: "14vh"}}> 
+                    <h4 style={{textAlign:"center", position: "relative", fontSize: "5vh", marginBottom: "10px"}}>{padLeadingZeros(this.state.input, 3)}</h4>
                     <h4 style={{fontSize:"2.5vh", fontWeight: "400"}}>dps</h4>
                 </div>
             </div>
