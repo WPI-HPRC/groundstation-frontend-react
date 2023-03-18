@@ -1,4 +1,5 @@
 import React from 'react';
+import { FlightClock } from './VehicleStatus';
 
 export default class CubeTopbar extends React.Component {
 
@@ -57,13 +58,18 @@ export default class CubeTopbar extends React.Component {
     render() {
         return (
             <div className="row">
-                <div style={{width: "0.375vw"}}/>
-                <div className={`panel ${this.props.dark ? "darkPanel" : "lightPanel"}`} style={{height:"19vh", width:"86vw"}}>
+                <div style={{width: "0.75vw"}}/>
+                <div className={`panel ${this.props.dark ? "darkPanel" : "lightPanel"}`} style={{height:"19vh", width:"20vw"}}>
+                    <div style={{height:"35%"}}/>
+                    <div style={{right:"20px", height:"100%", width:"100%"}}>
+                        <FlightClock time={this.props.vehicleClock} dark={this.props.dark}/>
+                    </div>
+                </div>
+                <div className={`panel ${this.props.dark ? "darkPanel" : "lightPanel"}`} style={{height:"19vh", width:"58.375vw"}}>
                     <div className={"row"} style={{height:"1vh"}}></div>
                 
-                    <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleSettings()} /* show settings menu */>Settings</button>
 
-                    <div style={{height:"11vh"}} className={`panel ${!this.state.showSettings ? "hidden" : this.props.dark ? "darkPanel settingsPanel" : "lightPanel settingsPanelLight"}`} /* all the settings are contained in here */ >
+                    <div style={{height:"11vh", left: "82vw", top: "17vh"}} className={`panel ${!this.state.showSettings ? "hidden" : this.props.dark ? "darkPanel settingsPanel" : "lightPanel settingsPanelLight"}`} /* all the settings are contained in here */ >
                         <div style={{height:"5px"}}/>
                         <div className={"row"} /* top row of buttons */ > 
                             <div style={{width:"8px"}}/>
@@ -78,7 +84,7 @@ export default class CubeTopbar extends React.Component {
                     </div>
 
                 </div>
-                <div className={`panel ${this.props.dark ? "darkPanel" : "lightPanel"}`} style={{height:"19vh", width:"13.375vw", margin:"0px", marginTop:"5px"}}>
+                <div className={`panel ${this.props.dark ? "darkPanel" : "lightPanel"}`} style={{height:"19vh", width:"20vw", marginTop:"5px", marginRight:"0px", paddingRight:"0px"}}>
                     <div style={{height:"30px"}}/>
                     <div className={"row"} style={{width:"100%"}}>
                         <div style={{width:"1.5vw"}}/>
@@ -91,8 +97,12 @@ export default class CubeTopbar extends React.Component {
                         <h4 style={{position: "relative", padding:"0px", right:"-5px"}}>{this.state.connectedR ? this.state.latency + "ms" : "-"}</h4> 
                     </div>
                     <div className={"row"} >
-                        <div style={{width:"3.25vw"}}/>
-                        <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"}>{this.state.connectedR ? "Disconnect" : "Connect"}</button>
+                        <div style={{width:"2.25vw"}}/>
+                        <button /* Connect/Disconnect */ className={this.props.dark ? "customButtonLg" : "customButtonLgLight"}>{this.state.connectedR ? "Disconnect" : "Connect"}</button>
+                        <div style={{width:"2vw"}}/>
+                        <button /* Settings */ className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleSettings()} /* show settings menu */>Settings</button>
+
+
                     </div>
                 </div>
             </div>

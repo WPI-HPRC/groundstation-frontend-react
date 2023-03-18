@@ -236,7 +236,8 @@ export default class App extends React.Component {
             gyroY: ((json.GyroY * (1/16.4)) / 60).toFixed(2),
             gyroZ: (json.GyroZ * (1/16.4)).toFixed(2),
             slowLog: json.SlowLogging,
-            fastLog: json.FastLogging
+            fastLog: json.FastLogging,
+            airbrakesDeploy: json.AirbrakesDeploy,
         });
 
         if (latency > 100 && this.state.graphRefreshRate < HIGH_REFRESH) {

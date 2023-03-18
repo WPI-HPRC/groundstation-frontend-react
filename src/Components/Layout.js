@@ -135,10 +135,10 @@ export default class Layout extends React.Component {
                         </Row>
                     </Grid>
                 </div>
-                <div className={this.state.window === 1 ? "CubeWindow" : "hidden"} style={{height: "100%"}}/* Cube Display Window */> 
+                <div className={this.state.window === 1 ? "CubeWindow" : "hidden"} style={{height: "100%", width:"99.25vw"}}/* Cube Display Window */> 
                     <Row style={{height:"19.5vh"}}>
-                        <div style={{width:"0.375vw"}}/>
-                        <div style={{width:"99.5vw"}}>
+                        {/* <div style={{width:"0.75vw"}}/> */}
+                        <div style={{width:"99.75%"}}>
                             <CubeTopbar className="CubeTopbar" 
                                 unitFunc = {this.props.unitFunc}
                                 modeFunc = {this.props.modeFunc}
@@ -146,19 +146,20 @@ export default class Layout extends React.Component {
                                 {...this.props}/>
                         </div>
                     </Row>
+                    <Row style={{height:"0.375vh"}}/>
                     <Row style={{height:"67vh"}}>
                         <div style={{width:"0.375vw"}}/>
-                        <div style={{width:"33vw"}}> 
+                        <div style={{width:"32.83vw"}}> 
                             <CubeDisplayPanel className={"CubeDisplayPanel"} cubeName={"Curly"} signalStrength={this.props.cubeStrength1} batteryPercent={this.props.cubeBattery1} /* Cube 1 */
                                 {...this.props}/> 
                         </div>
-                        <div style={{width:"0.25vw"}}/>
-                        <div style={{width:"33vw"}}>
+                        <div style={{width:"0.5vw"}}/>
+                        <div style={{width:"32.83vw"}}>
                             <CubeDisplayPanel className={"CubeDisplayPanel"} cubeName={"Larry"} signalStrength={this.props.cubeStrength2} batteryPercent={this.props.cubeBattery2} /* Cube 2 */
                                 {...this.props}/> 
                         </div>
-                        <div style={{width:"0.25vw"}}/>
-                        <div style={{width:"33vw"}}>
+                        <div style={{width:"0.5vw"}}/>
+                        <div style={{width:"32.83vw"}}>
                             <CubeDisplayPanel className={"CubeDisplayPanel"} cubeName={"Moe"} signalStrength={this.props.cubeStrength3} batteryPercent={this.props.cubeBattery3} /* Cube 3 */ 
                                 {...this.props}/> 
                         </div>

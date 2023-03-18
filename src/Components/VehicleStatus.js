@@ -62,7 +62,7 @@ class VehicleState extends React.PureComponent {
     }
 }
 
-class FlightClock extends React.Component {
+export class FlightClock extends React.Component {
     constructor(props) {
         super(props);
         this.state = { 
@@ -87,7 +87,7 @@ class FlightClock extends React.Component {
 
         return (
             <div style={{display:"inline-block", position: "relative", height:"100%", width: "100%", textAlign: "center"}}>
-                <h1 className="subpanel" style={{margin: "auto", color: this.state.dark ? "#ffffff" : "#000000", width: "70%", fontSize: "5vh"}}>{clockStr}</h1>
+                <h1 className="subpanel" style={{margin: 'auto', color: this.state.dark ? "#ffffff" : "#000000", width: "100%", fontSize: "5vh"}}>{clockStr}</h1>
             </div>
         )
     }

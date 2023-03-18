@@ -101,7 +101,6 @@ export default class CubeDisplayPanel extends React.Component{
                     legendString: "",
                     showMetric: props.showMetric,
                     time: props.vehicleClock,
-                    dark: props.dark,
                 }
             } else {
                 return {
@@ -110,6 +109,7 @@ export default class CubeDisplayPanel extends React.Component{
                     lastHmid: props.lastHmid,
                     lastPres: props.lastPres,
                     lastTemp: props.lastTemp,
+                    dark: props.dark,
                 }
             }
 
@@ -258,7 +258,7 @@ export default class CubeDisplayPanel extends React.Component{
 
 
         return(
-            <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`} style={{height:"100%", width:"100%"}}>
+            <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`} style={{height:"66.625vh", width:"100%"}}>
                 <div style={{height:"1.5vh"}}></div>
                 <div className={"row"}>
                     <h3>{this.state.cubeName}</h3>
@@ -290,7 +290,7 @@ export default class CubeDisplayPanel extends React.Component{
                     
                 </div>
                 <div /* all the data from this cube */ >
-                    <div className={"row"} style={{height: "30vh"}}>
+                    <div className={"row"} style={{height: "29vh"}}>
                         <ResponsiveLine
                             className={this.props.dark ? "LineGraphDark" : "LineGraphLight"}
                             data={ this.state.cubeData }
