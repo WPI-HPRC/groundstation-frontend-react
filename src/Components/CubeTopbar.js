@@ -65,23 +65,15 @@ export default class CubeTopbar extends React.Component {
                         <FlightClock time={this.props.vehicleClock} dark={this.props.dark}/>
                     </div>
                 </div>
-                <div className={`panel ${this.props.dark ? "darkPanel" : "lightPanel"}`} style={{height:"19vh", width:"58.375vw"}}>
-                    <div className={"row"} style={{height:"1vh"}}></div>
-                
-
-                    <div style={{height:"11vh", left: "82vw", top: "17vh"}} className={`panel ${!this.state.showSettings ? "hidden" : this.props.dark ? "darkPanel settingsPanel" : "lightPanel settingsPanelLight"}`} /* all the settings are contained in here */ >
-                        <div style={{height:"5px"}}/>
-                        <div className={"row"} /* top row of buttons */ > 
-                            <div style={{width:"8px"}}/>
-                            <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleUnits()} style={{width: "150px"}}>Units: {this.props.showMetric ? "Metric" : "Imperial" }</button>
-                            <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleMode()}>Mode: {this.props.dark ? "Dark" : "Light" }</button>
-                        </div>
-                        <div className={"row"} style={{height: "5px"}}></div>
-                        <div className={"row"} /* bottom row of buttons */ >
-                        <div style={{width:"8px"}}/>
-                            <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.handleWindowChange()} style={{width: "150px"}}>Main Window</button>
+                <div className={`panel ${this.props.dark ? "darkPanel" : "lightPanel"}`} style={{height:"19vh", width:"58.375vw", position:"relative"}}>
+                    <div className={"row"} style={{height:"10vh", bottom:"2.5vh", position:"relative"}}>
+                        <div className="TitlePlate">
+                            <h1 className="titleLG">WPI <img alt="HPRC Logo" src="hprc logo red.png" style={{height: "8vh", width: "6.5vh"}}/> HPRC</h1>
+                            <h4 className="subTitleLG">Payload GS</h4>
                         </div>
                     </div>
+
+                    
 
                 </div>
                 <div className={`panel ${this.props.dark ? "darkPanel" : "lightPanel"}`} style={{height:"19vh", width:"20vw", marginTop:"5px", marginRight:"0px", paddingRight:"0px"}}>
@@ -103,6 +95,19 @@ export default class CubeTopbar extends React.Component {
                         <button /* Settings */ className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleSettings()} /* show settings menu */>Settings</button>
 
 
+                    </div>
+                    <div style={{height:"11vh", position:"absolute", left:"82vw"}} className={`panel ${!this.state.showSettings ? "hidden" : this.props.dark ? "darkPanel settingsPanel" : "lightPanel settingsPanelLight"}`} /* all the settings are contained in here */ >
+                        <div style={{height:"5px"}}/>
+                        <div className={"row"} /* top row of buttons */ > 
+                            <div style={{width:"8px"}}/>
+                            <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleUnits()} style={{width: "150px"}}>Units: {this.props.showMetric ? "Metric" : "Imperial" }</button>
+                            <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleMode()}>Mode: {this.props.dark ? "Dark" : "Light" }</button>
+                        </div>
+                        <div className={"row"} style={{height: "5px"}}></div>
+                        <div className={"row"} /* bottom row of buttons */ >
+                        <div style={{width:"8px"}}/>
+                            <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.handleWindowChange()} style={{width: "150px"}}>Main Window</button>
+                        </div>
                     </div>
                 </div>
             </div>

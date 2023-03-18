@@ -108,6 +108,7 @@ export default class VehicleStatus extends React.Component {
             long: props.long,
             airbrakesDeploy: props.airbrakesDeploy,
             vehicleClock: props.vehicleClock,
+            showMetric: props.showMetric,
         };
     }
 
@@ -123,7 +124,8 @@ export default class VehicleStatus extends React.Component {
             current_state.long !== props.log ||
             current_state.vehicleClock !== props.vehicleClock ||
             current_state.airbrakesDeploy !== props.airbrakesDeploy ||
-            current_state.dark !== props.dark) {
+            current_state.dark !== props.dark ||
+            current_state.showMetric !== props.showMetric) {
             update = {
                 battery: props.battery,
                 temperature: parseFloat(props.temperature).toFixed(2),
@@ -135,6 +137,7 @@ export default class VehicleStatus extends React.Component {
                 airbrakesDeploy: props.airbrakesDeploy,
                 vehicleClock: props.vehicleClock,
                 dark: props.dark,
+                showMetric: props.showMetric,
             }
         }
         
@@ -154,10 +157,10 @@ export default class VehicleStatus extends React.Component {
                     <div className={"row"} style={{height: "8vh"}}>
                         <div className={"col-lg-6"}>
                             <h4>Battery: {this.state.battery}V</h4>
-                            <h4>Temperature: {this.state.temperature} °F</h4>
+                            <h4>Temperature: {this.state.temperature} {this.state.showMetric ? "°C" : "°F"}</h4>
                         </div>
                         <div className={"col-lg-6"}>
-                            <h4>Pressure: {this.state.pressure} inHg</h4>
+                            <h4>Pressure: {this.state.pressure} {this.state.showMetric ? "Bar" : "inHg"}</h4>
                             <h4>Humidity: {this.state.humidity} %</h4>
                         </div>
                     </div>

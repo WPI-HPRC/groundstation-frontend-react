@@ -380,11 +380,23 @@
   text-align: center;
 }
 
+.titleLG {
+  text-align: center;
+  font-size: 8vh;
+}
+
 .subTitle {
   text-align: center;
   margin: 0;
   padding: 0;
 
+}
+
+.subTitleLG {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  font-size: 3vh;
 }
 
 .mono {
