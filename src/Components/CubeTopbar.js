@@ -25,9 +25,9 @@ export default class CubeTopbar extends React.Component {
         }
     }
     toggleUnits() {
-        this.props.unitFunc(!this.state.showMetric)
+        this.props.unitFunc(!this.props.showMetric)
         this.setState({
-            showMetric: !this.state.showMetric
+            showMetric: !this.props.showMetric
         });
     }
     toggleMode() {

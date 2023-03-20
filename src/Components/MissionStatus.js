@@ -242,11 +242,11 @@ export default class MissionStatus extends React.Component {
          *  and the state of the component using the value would be desynced
          */
 
-        this.props.unitFunc(!this.state.showMetric)
+        this.props.unitFunc(!this.props.showMetric)
         this.setState({
-            showMetric: !this.state.showMetric
+            showMetric: !this.props.showMetric
         });
-        switch(this.state.showMetric) {
+        switch(this.props.showMetric) {
             case true:
                 break;
             default:
