@@ -5,8 +5,8 @@
   "author": "WPI HPRC <bdpeters@wpi.edu>",
   "description": "WPI HPRC Telemetry Groundstation",
   "dependencies": {
-    "@nivo/core": "^0.55.0",
-    "@nivo/line": "^0.55.0",
+    "@nivo/core": "^0.80.0",
+    "@nivo/line": "^0.80.0",
     "@nivo/scatterplot": "^0.55.0",
     "@progress/kendo-drawing": "^1.16.2",
     "@progress/kendo-licensing": "^1.2.2",
@@ -85,7 +85,7 @@
       "build/**/*",
       "node_modules/**/*",
       "public/electron.js"
-      ],
+    ],
     "directories": {
       "buildResources": "public"
     },
