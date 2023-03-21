@@ -2,12 +2,12 @@
   "name": "hprc-groundstation",
   "version": "0.3.0-BETA",
   "private": true,
-  "author": "WPI HPRC",
+  "author": "WPI HPRC <bdpeters@wpi.edu>",
   "description": "WPI HPRC Telemetry Groundstation",
   "dependencies": {
-    "@nivo/core": "^0.80.0",
-    "@nivo/line": "^0.80.0",
-    "@nivo/scatterplot": "^0.80.0",
+    "@nivo/core": "^0.55.0",
+    "@nivo/line": "^0.55.0",
+    "@nivo/scatterplot": "^0.55.0",
     "@progress/kendo-drawing": "^1.16.2",
     "@progress/kendo-licensing": "^1.2.2",
     "@progress/kendo-react-gauges": "^5.0.1",
@@ -36,13 +36,13 @@
     "react-flexbox-grid": "^2.1.2",
     "react-leaflet": "^3.2.5",
     "react-rt-chart": "^2.0.0",
-    "react-scripts": "5.0.0",
+    "react-scripts": "^5.0.1",
     "three": "^0.148.0",
     "wait-on": "^6.0.0",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "electron": "^16.0.7"
+    "electron": "^23.1.4"
   },
   "main": "./public/electron.js",
   "homepage": "./",
@@ -80,10 +80,12 @@
   "build": {
     "appId": "com.electron.groundstation",
     "productName": "HPRC Ground Station",
+    "extends": null,
     "files": [
       "build/**/*",
-      "node_modules/**/*"
-    ],
+      "node_modules/**/*",
+      "public/electron.js"
+      ],
     "directories": {
       "buildResources": "public"
     },
@@ -95,7 +97,8 @@
       "icon": "build/icon.png"
     },
     "linux": {
-      "target": "deb"
+      "target": "deb",
+      "icon": "build/icon.png"
     }
   }
 }
