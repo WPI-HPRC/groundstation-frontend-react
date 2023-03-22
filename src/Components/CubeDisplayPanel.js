@@ -1,28 +1,32 @@
 import React from 'react';
 import { ResponsiveLine } from '@nivo/line';
-import BarSignalIcon from './BarSignalIcon';
+import { BarSignalIcon } from './CustomSVG';
+
+/* 
+* The three panels which each handle one of the cubes on the cube window
+*/ 
 
 export default class CubeDisplayPanel extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            dark: props.dark,
-            cubeName: props.cubeName,
-            lastTemp: props.lastTemp,
-            lastHmid: props.lastHmid,
-            lastPres: props.lastPres,
-            showTemp: true,
-            showHmid: false,
-            showPres: false,
-            cubeDataT: 
+            dark: props.dark, // UI state
+            cubeName: props.cubeName, // the name of the cube, Curly, Larry, or Moe
+            lastTemp: props.lastTemp, // previously logged temperature
+            lastHmid: props.lastHmid, // previously logged humidity
+            lastPres: props.lastPres, // previously logged pressure
+            showTemp: true, // show the temperature graph
+            showHmid: false, // show the humidity graph
+            showPres: false, // show the pressure graph
+            cubeDataT: // data series for the temperature
                 {
                     id: "Temperature",
-                    color: 'yellow',
+                    color: 'yellow', // this does not actually matter right now, it gets set later depending on the UI state
                     data: [
                     ]
                 },
             
-            cubeDataH: 
+            cubeDataH: // data series for the humidity
                 {
                     id: "Humidity",
                     color: 'orange',
@@ -30,7 +34,7 @@ export default class CubeDisplayPanel extends React.Component{
                     ]
                 },
             
-            cubeDataP: 
+            cubeDataP: // data series for the pressure
                 {
                     id: "Pressure",
                     color: 'red',
@@ -39,11 +43,11 @@ export default class CubeDisplayPanel extends React.Component{
                     ]
                 },
             
-            cubeData: [],
-            legendString: "",
-            showMetric: props.showMetric,
-            time: props.vehicleClock,
-            RSSI: 0,
+            cubeData: [], // the empty data, which the series wanted will be added
+            legendString: "", // the legend displayed on the graphs
+            showMetric: props.showMetric, // units
+            time: props.vehicleClock, // time
+            RSSI: 0, // RSSI which may or may not be implemented at some point
         }
     }
 
@@ -56,7 +60,7 @@ export default class CubeDisplayPanel extends React.Component{
             current_state.lastTemp !== props.lastTemp ||
             current_state.dark !== props.dark) {
             
-            if(props.vehicleClock.getTime() === 0){
+            if(props.vehicleClock.getTime() === 0){ // reseting the system if the time returns to zero (which wil only happen at start or when clear is pressed)
                 update = {
                     dark: props.dark,
                     cubeName: props.cubeName,
@@ -146,7 +150,7 @@ export default class CubeDisplayPanel extends React.Component{
 
         // create new elements for new data points.  but only sometimes for performance.
 
-        if(this.state.time.getTime() % 100 < 25) { // 2hz
+        if(this.state.time.getTime() % 100 < 25) {
             let elementT = {
                 x: this.state.time.getTime() / 1000,
                 y: this.state.lastTemp
@@ -187,12 +191,12 @@ export default class CubeDisplayPanel extends React.Component{
 
         if(this.state.showPres) { // if this graph is set to show PRESSURE, add the pressure data to the data array & change the legend to match
             if(!this.state.dark) {
-                this.state.cubeDataT.color = 'red';
+                this.state.cubeDataT.color = 'red'; // data series color for light mode
             } else {
-                this.state.cubeDataT.color = 'red';
+                this.state.cubeDataT.color = 'red'; // data series color for dark mode
             }
-            this.state.cubeData.push(this.state.cubeDataP);
-            this.state.legendString = "Pressure";
+            this.state.cubeData.push(this.state.cubeDataP); // add the data series to the graph's array
+            this.state.legendString = "Pressure"; // define basis of legend
             if(this.props.showMetric) { // adjust legend to the correct units
                 this.state.legendString = this.state.legendString.concat(" (mBar)");
             } else {
@@ -235,6 +239,7 @@ export default class CubeDisplayPanel extends React.Component{
 
         // change the color of various elements depending on whether we're in light or dark mode 
 
+        // tooltip text color
         let tooltipColor = null;
         if(this.props.dark) {
             tooltipColor = "#ffffff";
@@ -242,6 +247,7 @@ export default class CubeDisplayPanel extends React.Component{
             tooltipColor = "#000000";
         }
 
+        // graph text color
         let textColor = null;
         if(this.props.dark) {
             textColor = "#ffffff";
@@ -249,6 +255,7 @@ export default class CubeDisplayPanel extends React.Component{
             textColor = "#000000";
         }
 
+        // tooltip background
         let tooltipBG = null;
         if(this.props.dark) {
             tooltipBG = "#141414";

@@ -9,28 +9,32 @@ function isNumeric(value) {
     return /^-?\d+$/.test(value);
 }
 
+/* the console is at the top of the main screen and is used to enter commands */
 class Console extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            consoleInput: ">",
+            consoleInput: ">", // in the constructor, this essentially defines what the first character is of any command.  mostly of aesthetics
             commandHistory: props.commandHistory,
             dark: props.dark,
         }
 
+        // functions to do things with the console
         this.handleConsoleEnter = this.handleConsoleEnter.bind(this);
         this.handleConsoleChange = this.handleConsoleChange.bind(this);
     }
 
+    // console input is not going to change during flight, so it doesn't need to be updated
     static getDerivedStateFromProps(props, current_state) {
         if (current_state.commandHistory !== props.commandHistory ||
             current_state.dark !== props.dark) {
             return {
                 commandHistory: props.commandHistory,
+                dark: props.dark,
             }
         }
-        return null
+        return null;
     }
 
     handleConsoleChange(event) {
@@ -40,7 +44,7 @@ class Console extends React.Component {
         }
     }
 
-    handleConsoleEnter(event) {
+    handleConsoleEnter(event) { // handle entering a new console command
         if (event.key === 'Enter') {
             this.props.handleCommandFunc(this.state.consoleInput.substring(1));
             this.setState({
@@ -64,16 +68,21 @@ class Console extends React.Component {
     }
 }
 
+/*
+*  this is the section of the center-middle panel which handles the timeslice (now resolution)
+*/
+
 export default class ControlPanel extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            dark: props.dark,
-            tsInput: (props.timeScale / 10).toString(),
-            showConnect: props.showConnectButton
+            dark: props.dark, // the dark/light state of the UI
+            tsInput: (props.timeScale / 10).toString(), // the current value of the resolution (formerly timestamp)
+            showConnect: props.showConnectButton // this only exists to be updated.  why? god only knows
         };
 
+        // functions to handle changing resolution
         this.handleTSChange = this.handleTSChange.bind(this);
         this.handleTSSubmit = this.handleTSSubmit.bind(this);
         this.handleTSEnter = this.handleTSEnter.bind(this);
@@ -81,6 +90,7 @@ export default class ControlPanel extends React.Component {
 
     }
 
+    // this one only needs to update the UI color, but we're updating showConnect too for some reason
     static getDerivedStateFromProps(props, current_state) {
         if (current_state.showConnect !== props.showConnectButton ||
             current_state.dark !== props.dark) {
@@ -92,12 +102,14 @@ export default class ControlPanel extends React.Component {
         return null
     }
 
-    handleTSChange(event) {
+    // handling changing the resolution - specifically using the input
+    handleTSChange(event) { 
         if ((isNumeric(event.target.value) || event.target.value === "") && event.target.value.length < 5) {
             this.setState({tsInput: event.target.value});
         } 
     }
 
+    // handle pressing the increase button
     handleTSInc(event) {
         var newVal = parseInt(this.state.tsInput, 10) + 1;
         if (newVal < 10000) {
@@ -107,6 +119,7 @@ export default class ControlPanel extends React.Component {
         }
     }
 
+    // handle pressing the decrease button
     handleTSDec(event) {
         var newVal = parseInt(this.state.tsInput, 10) - 1;
         if (newVal > 0) {
@@ -116,16 +129,19 @@ export default class ControlPanel extends React.Component {
         }
     }
 
+    // when you hit 'enter' after typing into the input
     handleTSEnter(event) {
         if (event.key === 'Enter') {
             this.handleTSSubmit();
         }
     }
 
+    // actually updating the resolution
     handleTSSubmit(event) {
         this.props.tsFunc(this.state.tsInput);
     }
 
+    // these two are no longer needed since connect button was moved to MissionStatus
     handleConnect(event) {
         this.props.connFunc();
     }
@@ -134,6 +150,7 @@ export default class ControlPanel extends React.Component {
         this.props.disconnFunc();
     }
 
+    // reseting the entire ground station
     handleReset(event) {
         this.props.resetFunc();
     }

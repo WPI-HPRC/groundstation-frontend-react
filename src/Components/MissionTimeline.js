@@ -127,16 +127,16 @@ export default class MissionTimeline extends React.Component {
                     <div style={{display: "inline-block", position: "absolute", right: "0", height: "100%", width: "22%"}}>
                         <div className="subpanel" style={{position: "absolute", top: "10px", right: "10px", bottom: "10px", left: "10px"}}>
                             <div style={{display: "inline-block", position: "absolute", top: 0, left: 0, textAlign: "left", padding: 0, margin: 0, verticalAlign: "top"}}>
-                                <h1 style={{fontSize: "2.5vh", margin: "0.2vh"}}>{month}</h1>
+                                <h1 style={{fontFamily:"arial", fontSize: "2.5vh", margin: "0.2vh"}}>{month}</h1>
                             </div>
                             <div style={{display: "inline-block", position: "absolute", bottom: 0, left: 0, textAlign: "left", padding: 0, margin: 0, verticalAlign: "top"}}>
-                                <h1 style={{fontSize: "4.5vh", margin: "0.2vh"}}>{time.getDate()}, {time.getFullYear()}</h1>
+                                <h1 style={{fontFamily:"arial", fontSize: "4.5vh", margin: "0.2vh"}}>{time.getDate()}, {time.getFullYear()}</h1>
                             </div>
                             <div style={{display: "inline-block", position: "absolute", top: 0, right: 0, textAlign: "right", margin: "auto", verticalAlign: "top"}}>
-                                <h1 style={{fontSize: "4.5vh", margin: "0.2vh"}}>{padLeadingZeros(time.getHours(), 2)}:{padLeadingZeros(time.getMinutes(),2)}:{padLeadingZeros(time.getSeconds(), 2)}</h1>
+                                <h1 style={{fontFamily:"arial", fontSize: "4.5vh", margin: "0.2vh"}}>{padLeadingZeros(time.getHours(), 2)}:{padLeadingZeros(time.getMinutes(),2)}:{padLeadingZeros(time.getSeconds(), 2)}</h1>
                             </div>
                             <div style={{display: "inline-block", position: "absolute", bottom: 0, right: 0, textAlign: "right", margin: "auto", verticalAlign: "top"}}>
-                                <h1 style={{fontSize: "2.5vh", margin: "0.2vh"}}>{tzStr}</h1>
+                                <h1 style={{fontFamily:"arial", fontSize: "2.5vh", margin: "0.2vh"}}>{tzStr}</h1>
                             </div>
                         </div>
                     </div>

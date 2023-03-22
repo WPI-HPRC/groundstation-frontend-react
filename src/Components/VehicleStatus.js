@@ -1,5 +1,5 @@
 import React from 'react';
-import AirbrakesIndicator from './AirbrakesIndicator';
+import AirbrakesIndicator from './CustomSVG';
 
 /**
  *   Left-top panel, showing general vehicle information including power, temp, pressure, airbrakes etc.

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ResponsiveLine } from '@nivo/line';
-import Gauge from './Gauge';
+import { Gauge } from './CustomSVG';
 
 
 /**

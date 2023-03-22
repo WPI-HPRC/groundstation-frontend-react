@@ -1,5 +1,5 @@
 import React from 'react';
-import { RPMGauge, CGauge } from './Gauge';
+import { RPMGauge, CGauge } from './CustomSVG';
 
 /**
  *  the panel containing the 3 gyroscope gauges (x/y/z, pitch/roll/yaw)
