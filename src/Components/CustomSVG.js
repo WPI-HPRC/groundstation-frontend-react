@@ -1,5 +1,19 @@
 import React from 'react';
 
+/*
+*
+*  This class contains all the custom SVG elements for the ground station
+*  at the moment, that is:
+*    - AirbrakesIndicator
+*    - BarSignalIcon
+*    - BatteryIcon
+*    - SignalIcon
+*    - Gauge
+*    - RPMGauge
+*    - CGauge
+*
+*/
+
 export default class AirbrakesIndicator extends React.Component {
 
     constructor(props) {
