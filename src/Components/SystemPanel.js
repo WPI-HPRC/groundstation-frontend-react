@@ -1,25 +1,11 @@
 import React from 'react';
-import { CircularGauge, ArcGauge } from '@progress/kendo-react-gauges';
-import LiveSplineChart from './LiveSplineChart';
+import { RPMGauge, CGauge } from './Gauge';
 
 /**
  *  the panel containing the 3 gyroscope gauges (x/y/z, pitch/roll/yaw)
  *  not to be confused with GaugeCluster which handles the position gauges (alt/vel/accel)
  */
 
-function padLeadingZeros(num, size) {
-    var s = num+"";
-    while (s.replace(".", "").length < size) s = "0" + s;
-    return s;
-}
-
-function rPadLeadingZeros(num, size) {
-    var s = num+"";
-    while (s.replace(".", "").length < size) s = s + "0";
-    return s;
-}
-
-const dataScalar = -1.1;
 
 export default class SystemPanel extends React.Component {
 
@@ -34,21 +20,25 @@ export default class SystemPanel extends React.Component {
             data1: [],
             data2: [],
             roll: 0,
-            time: props.vehicleClock
+            time: props.vehicleClock,
+            unit: "rpm",
+            digits: 3,
         }
     }
 
     static getDerivedStateFromProps(props, current_state) {
-        if (current_state.time !== props.vehicleClock) {
+        if (current_state.time !== props.vehicleClock || 
+            current_state.gyroX !== props.gyroX ||
+            current_state.gyroY !== props.gyroY ||
+            current_state.gyroZ !== props.gyroZ ||
+            current_state.dark !== props.dark) {
 
-            if (props.vehicleClock.getTime() === 0) {
+            if (props.vehicleClock.getTime() === 0) { // FLAG
                 return {
                     gyroX: props.gyroX,
                     gyroY: props.gyroY,
                     gyroZ: props.gyroZ,
-                    data0: [],
-                    data1: [],
-                    data2: [],
+                    dark: props.dark,
                     time: props.vehicleClock
                 }
             }
@@ -57,9 +47,7 @@ export default class SystemPanel extends React.Component {
                     gyroX: props.gyroX,
                     gyroY: props.gyroY,
                     gyroZ: props.gyroZ,
-                    data0: [...current_state.data0.slice(props.datanum * dataScalar), [props.vehicleClock.getTime(), props.gyroX]],
-                    data1: [...current_state.data1.slice(props.datanum * dataScalar), [props.vehicleClock.getTime(), props.gyroY]],
-                    data2:[...current_state.data2.slice(props.datanum * dataScalar), [props.vehicleClock.getTime(), props.gyroZ]],
+                    dark: props.dark,
                     time: props.vehicleClock
                 }
             }
@@ -68,116 +56,38 @@ export default class SystemPanel extends React.Component {
         return null
     }
     
+    
+        
     render() {
-
-        const colors = [
-            {
-              to: 160,
-              color: "#6D6D6D",
-            },
-            {
-              from: 160,
-              to: 180,
-              color: "#ED5031",
-            }
-        ];
-
-        const circCenterRenderer = (value, color) => {
-
-            return (
-                <>
-                    <h3
-                        style={{
-                        color: "#F7F7F7",
-                        fontSize: "2.5em",
-                        margin: "0px 0px 0px 0px",
-                        padding: "0px 0px 0px 0px"
-                        }}
-                    >
-                        {rPadLeadingZeros(value, 3)}
-                    </h3>
-                    <font style={{fontSize: "1.5em"}}>dps</font>
-                </>
-            );
-        };
-
-        const arcCenterRenderer = (value, color) => {
-
-            return (
-                <>
-                    <h4>{this.props.unit}</h4>
-                    <h3
-                        style={{
-                        color: "#F7F7F7",
-                        fontSize: "2.5em",
-                        margin: "0px 0px 0px 0px",
-                        padding: "5px 5px 5px 5px",
-                        
-                        }}
-                    >
-                        {padLeadingZeros(value, 3)}
-                    </h3>
-                    <font style={{fontSize: "1.5em" }}>rpm</font>
-                </>
-            );
-        };
-
-        const arcOptions = {
-            value: (this.state.gyroY)
-        }
-
-
         return (
-            <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`}>
+            <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`} style={{height:"100%", width:"100%"}}>
                 <div className="SystemPanel" style={{position: "relative", width: "100%", height: "100%"}}>
                     <h3>Gyroscope</h3>
                     <hr/>
-                    <div className="subpanel" style={{display: "inline-block", height: "80%", margin: "0px 0px 0px 5px"}}>
-                        <div style={{display: "inline-block", textAlign: "center", margin: "0px 0px 0px 10px"}}>
-                            <h3>Pitch (X)</h3>
-                            <CircularGauge
-                                value={Math.abs(this.state.gyroX)}
-                                colors={colors}
-                                transitions={true}
-                                centerRender={circCenterRenderer}
-                                style={{
-                                display: "inline-block",
-                                }}
-                                scale={{
-                                rangeSize: 10,
-                                rangeLineCap: "round",
-                                reverse: this.state.gyroX > 0 ? false : true,
-                                startAngle: 90,
-                                min: 0,
-                                max: 360
-                                }}
-                            />
-                        </div>
-                        <div style={{display: "inline-block", margin: "0px 0px 0px 0px", textAlign: "center", position: "relative"}}>
-                            <h3>Roll (Y)</h3>
-                            <ArcGauge {...arcOptions} centerRender={arcCenterRenderer} 
-                                style={{position: "absolute", width: "300px", bottom: "10px", margin: "0px 0px 0px 0px"}} 
-                                scale={{startAngle: -40, endAngle: 220, rangeSize: 10, min: 0, max: 300}}/>
-                        </div>
-                        <div style={{display: "inline-block", margin: "0px 10px 0px 0px", textAlign: "center"}}>
-                            <h3>Yaw (Z)</h3>
-                            <CircularGauge
-                                value={Math.abs(this.state.gyroZ)}
-                                colors={colors}
-                                transitions={true}
-                                centerRender={circCenterRenderer}
-                                style={{
-                                display: "inline-block",
-                                }}
-                                scale={{
-                                rangeSize: 10,
-                                rangeLineCap: "round",
-                                reverse: this.state.gyroY > 0 ? false : true,
-                                startAngle: 90,
-                                min: 0,
-                                max: 360
-                                }}
-                            />
+                    <div className="subpanel" style={{display: "inline-block", height: "100%", width:"100%", margin: "0px 0px 0px 5px"}}>
+                        <div className="row" style={{height:"100%", width:"100%"}}>
+                            <div style={{height:"100%", width: "33%", display: "inline-block", textAlign: "center", margin: "0px 0px 0px 0px", position:"relative"}}>
+                                <h3>Pitch (X)</h3>
+                                <CGauge
+                                    input={Math.abs(this.state.gyroX)}
+                                    reverse={ this.state.gyroX < 0} 
+                                    dark={this.state.dark}
+                                    style={{height:"70%", width: "70%"}}
+                                />
+                            </div>
+                            <div style={{height:"100%", width: "34%", display: "inline-block", margin: "0px 0px 0px 0px", textAlign: "center", position: "relative"}}>
+                                <h3>Roll (Y)</h3>
+                                <RPMGauge input={this.state.gyroY} dark={this.state.dark} unit={this.state.unit} digits={this.state.digits} style={{height:"70%"}}/>
+
+                            </div>
+                            <div style={{display: "inline-block", width: "33%", margin: "0px 0px 0px 0px", textAlign: "center", position:"relative"}}>
+                                <h3>Yaw (Z)</h3>
+                                <CGauge
+                                    input={Math.abs(this.state.gyroZ)}
+                                    reverse={ this.state.gyroZ < 0} 
+                                    dark={this.state.dark}
+                                />
+                            </div>
                         </div>
                         {/* <div style={{display: "inline-block", textAlign: "center", margin: "0px 10px 0px 0px"}}>
                             <h3>Roll (Z)</h3>

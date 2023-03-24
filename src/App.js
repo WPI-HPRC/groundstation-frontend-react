@@ -3,7 +3,6 @@ import '@progress/kendo-theme-default/dist/all.css';
 import Layout from "./Components/Layout";
 import SplashScreen from "./Components/SplashScreen.js"
 import React from 'react';
-import { wait } from '@testing-library/user-event/dist/utils';
 
 const dataPollingRate = 100;    // Time in ms to poll the telemetry server
 const maxMessages = 20;
@@ -55,13 +54,27 @@ export default class App extends React.Component {
             commandHistory: [],
             slowLog: false,
             fastLog: false,
-            showMetric: false
+            showMetric: false,
+            airbrakesDeploy: 0,
+            rocketQuaternion: [0, 0, 0, 0],
+            window: 0,
+            lastTemp: 0,
+            lastHmid: 0,
+            lastPres: 0,
+            cubeStrength1: 1,
+            cubeStrength2: 0,
+            cubeStrength3: 0.75,
+            cubeBattery1: 1,
+            cubeBattery2: 0.5,
+            cubeBattery3: 0.75,
+            altMSL: true,
+            currentAlt: 146.304, // this should be in meters
         }
 
         /**
          * Functions that can be called from children to affect the app
          * IMPORTANT: make sure that these are called with the correct value, especially if using 
-         * an async function like setState() to set the value going into the function
+         * an async function like setState() to set the value going into the function 
          */
         this.configFuncs = {
             tsFunc: this.updateTimescale,
@@ -69,7 +82,10 @@ export default class App extends React.Component {
             disconnFunc: this.disconnectFromReceiver,
             resetFunc: this.resetTelem,
             commandFunc: this.handleConsoleCommand,
-            unitFunc: this.updateMetric
+            unitFunc: this.updateMetric,
+            modeFunc: this.updateMode,
+            windowFunc: this.updateWindow,
+            altModeFunc: this.updateAltMode,
         }
 
         /**
@@ -85,6 +101,9 @@ export default class App extends React.Component {
         this.getTelem = this.getTelem.bind(this);
         this.handleConsoleCommand = this.handleConsoleCommand.bind(this);
         this.updateMetric = this.updateMetric.bind(this);
+        this.updateMode = this.updateMode.bind(this);
+        this.updateWindow = this.updateWindow.bind(this);
+        this.updateAltMode = this.updateAltMode.bind(this);
         
     }
 
@@ -217,7 +236,8 @@ export default class App extends React.Component {
             gyroY: ((json.GyroY * (1/16.4)) / 60).toFixed(2),
             gyroZ: (json.GyroZ * (1/16.4)).toFixed(2),
             slowLog: json.SlowLogging,
-            fastLog: json.FastLogging
+            fastLog: json.FastLogging,
+            airbrakesDeploy: json.AirbrakesDeploy,
         });
 
         if (latency > 100 && this.state.graphRefreshRate < HIGH_REFRESH) {
@@ -268,6 +288,24 @@ export default class App extends React.Component {
             showMetric: unit
         })
 
+    }
+
+    updateMode = (mode) => {
+        this.setState({
+            dark: mode
+        })
+    }
+    
+    updateAltMode = (MSL) => {
+        this.setState({
+            altMSL: MSL
+        })
+    }
+
+    updateWindow = (window) => {
+        this.setState({
+            window: window
+        })
     }
 
     /**
@@ -377,7 +415,7 @@ export default class App extends React.Component {
                         });
                     }, 0);
                     benchIter += msTick;
-                    if(benchIter == msToRun - msTick - msTick)
+                    if(benchIter === msToRun - msTick - msTick)
                     {
                         setTimeout(() => {
                             var ms = this.state.vehicleClock.getTime() + msTick;
@@ -395,6 +433,16 @@ export default class App extends React.Component {
                 break;
             case "dump":
                 socket.send("dump");
+                break;
+            case "rq":
+                if([args[1]] !== undefined &&
+                    [args[2]] !== undefined &&
+                    [args[3]] !== undefined &&
+                    [args[4]] !== undefined) {
+                    this.setState({
+                        rocketQuaternion: [Number([args[1]]), Number([args[2]]), Number([args[3]]), Number([args[4]])]
+                    });
+                }
                 break;
             case "help":
             case "h":
@@ -489,11 +537,13 @@ export default class App extends React.Component {
         return (
             <div className={`App ${this.state.dark ? "darkApp" : "lightApp"}`}>
                 <main>
-                    <Layout
+                    <Layout 
                         {...this.state}
                         {...this.configFuncs}
                         />
 
+
+                    
                     <div className={this.state.renderSplashScreen ? 'splash' : 'splashFade'}>
                         <SplashScreen/>
                     </div>

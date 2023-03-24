@@ -10,14 +10,18 @@ import ControlPanel from './ControlPanel';
 import SystemPanel from './SystemPanel';
 import GaugeCluster from './GaugeCluster';
 import MissionTimeline from './MissionTimeline';
+import CubeDisplayPanel from './CubeDisplayPanel';
+import CubeTopbar from './CubeTopbar';
 
 /**
  *  general layout of the screen
  *  all top-level components are organized here, then they can have their own sub-components
  *  mostly panels etc 
  * 
+ * ----------Main Window---------
+ * 
  *  VehicleStatus
- *    - top right corner
+ *    - top left corner
  *    - contains info on temp, power, lat/long, mission time
  *  ControlPanel
  *    - top center
@@ -33,26 +37,52 @@ import MissionTimeline from './MissionTimeline';
  *    - contains logo + name
  *  MissionStatus
  *    - below TitlePlate
- *    - contains connection, latency info + conncect, units buttons
+ *    - contains connection, latency info + connect, units buttons
  *  Visualization
  *    - below MissionStatus
  *    - map viewer
  *  MissionTimeline
  *    - bottom row
  *    - timestamps for mission objectives + current local time
+ * 
+ *  ---------Cube Window---------
+ * 
+ *  CubeTopbar
+ *    - top row
+ *    - contains the SETTINGS button, signal strength, flight clock (TODO)
+ * 
+ *  CubeDisplayPanel
+ *    - middle row
+ *    - the three main panels showing the cubes' sensor readings
+ *    - signal icon
  */
 
 export default class Layout extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { }
+        this.state = { 
+            window: props.window,
+        }
     }
+
+    static getDerivedStateFromProps(props, current_state) {
+        let update = null;
+
+        if(current_state.window !== props.window)
+        {
+            update = {
+                window: props.window,
+            }
+        }
+        return update;
+    }
+
     render() {
         return (
             <>
-                <div className="Layout">
-                    <Grid style={{width:"100%", backgroundColor: "inherit"}}>
+                <div className={this.state.window === 0 ? "Layout" : "hidden"}>
+                    <Grid style={{width:"100%"}}>
                         <Row style={{height:"88vh"}}>
                             <Col lg={9}>
                                 <Row>
@@ -63,19 +93,20 @@ export default class Layout extends React.Component {
                                         </Row>
                                     </Col>
                                     
+                                    
 
                                     <Col lg={8}>
                                         <Row style={{height:"18vh"}}>
                                             <ControlPanel className="ControlPanel" 
                                                 {...this.props}/>
                                         </Row>
-                                        <Row style={{height:"40vh"}}>
+                                        <Row style={{height:"39vh"}}>
                                             <SystemPanel className="SystemPanel" 
                                                 {...this.props} />
                                         </Row>
                                     </Col>
                                 </Row>
-                                <Row style={{height:"30vh"}}>
+                                <Row style={{height:"29vh"}}>
                                     <GaugeCluster className="GaugeCluster"
                                         {...this.props} />
                                 </Row>
@@ -98,11 +129,49 @@ export default class Layout extends React.Component {
                             </Col>
                         </Row>
 
-                        <Row style={{height:"12vh"}}>
+                        <Row style={{height:"11vh"}}>
                             <MissionTimeline 
                                 {...this.props}/>
                         </Row>
                     </Grid>
+                </div>
+                <div className={this.state.window === 1 ? "CubeWindow" : "hidden"} style={{height: "100%", width:"99.25vw"}}/* Cube Display Window */> 
+                    <Row style={{height:"19.5vh"}}>
+                        {/* <div style={{width:"0.75vw"}}/> */}
+                        <div style={{width:"99.75%"}}>
+                            <CubeTopbar className="CubeTopbar" 
+                                unitFunc = {this.props.unitFunc}
+                                modeFunc = {this.props.modeFunc}
+                                windowFunc = {this.props.windowFunc}
+                                {...this.props}/>
+                        </div>
+                    </Row>
+                    <Row style={{height:"0.375vh"}}/>
+                    <Row style={{height:"67vh"}}>
+                        <div style={{width:"0.375vw"}}/>
+                        <div style={{width:"32.83vw"}}> 
+                            <CubeDisplayPanel className={"CubeDisplayPanel"} cubeName={"Curly"} signalStrength={this.props.cubeStrength1} batteryPercent={this.props.cubeBattery1} /* Cube 1 */
+                                {...this.props}/> 
+                        </div>
+                        <div style={{width:"0.5vw"}}/>
+                        <div style={{width:"32.83vw"}}>
+                            <CubeDisplayPanel className={"CubeDisplayPanel"} cubeName={"Larry"} signalStrength={this.props.cubeStrength2} batteryPercent={this.props.cubeBattery2} /* Cube 2 */
+                                {...this.props}/> 
+                        </div>
+                        <div style={{width:"0.5vw"}}/>
+                        <div style={{width:"32.83vw"}}>
+                            <CubeDisplayPanel className={"CubeDisplayPanel"} cubeName={"Moe"} signalStrength={this.props.cubeStrength3} batteryPercent={this.props.cubeBattery3} /* Cube 3 */ 
+                                {...this.props}/> 
+                        </div>
+                    </Row>
+                    <Row style={{height:"0.5vh"}}/>
+                    <Row style={{height:"12vh"}}>
+                        <Col style={{width:"1vw"}}/>
+                        <Row style={{width:"99.625vw"}}>
+                            <MissionTimeline 
+                                {...this.props}/>
+                        </Row>
+                    </Row>
                 </div>
             </>
         )

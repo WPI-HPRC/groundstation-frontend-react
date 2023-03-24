@@ -9,11 +9,18 @@ import React from 'react';
 class StatusIndicator extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { connected: props.connected,
-                       refresh: "-",
-                       latency: "-",
-                       systemName: props.name,
-                       blinkOn: false};
+        this.state = { 
+            connected: props.connected,
+            refresh: "-",
+            latency: "-",
+            systemName: props.name,
+            blinkOn: false,
+            ID: null,
+            dark: props.dark,
+            showSettingsPanel: false,
+            altMSL: true,
+        };
+            
         this.blinkWarning = this.blinkWarning.bind(this)
     }
 
@@ -22,7 +29,8 @@ class StatusIndicator extends React.Component {
 
         if (current_state.connected !== props.connected ||
             current_state.refresh !== props.refresh ||
-            current_state.latency !== props.latency) {
+            current_state.latency !== props.latency ||
+            current_state.dark !== props.dark) {
             update = {
                 connected: props.connected,
                 refresh: props.refresh,
@@ -33,12 +41,15 @@ class StatusIndicator extends React.Component {
         return update;
     }
 
+
     componentDidMount() {
-        setInterval(this.blinkWarning, 1000);
+        this.setState({
+            ID: setInterval(this.blinkWarning, 1000)
+        });
     }
 
-    componentWillUnmount() {
-        clearInterval(this.blinkWarning);
+    componentWillUnmount() { // Fixed this.  Clearing a callback uses an ID supplied by the set function, not the name of the function itself.
+        clearInterval(this.state.ID);
     }
     
     blinkWarning = () => {
@@ -76,10 +87,10 @@ class StatusIndicator extends React.Component {
                 <h4 style={{position: "absolute", left: 0, padding: "0px 0px 0px 20px", margin: "0px 0px 20px 0px"}}>
                     {this.state.systemName}: <font style={{color: this.state.connected ? "#00f700" : "#ED5031"}}>{this.state.connected ? "Connected" : "Disconnected"} </font>
                 </h4>
-                <h4 style={{position: "absolute", left: "40%", padding: "0px 0px 0px 20px", margin: "0px 0px 20px 0px"}}>
+                <h4 style={{position: "absolute", left: "50%", padding: "0px 0px 0px 20px", margin: "0px 0px 20px 0px"}}>
                     RFS: <font style={{color: getColor(this.state.refresh)}}>{this.state.refresh}</font>ms
                 </h4>
-                <h4 style={{position: "absolute", left: "60%", padding: "0px 0px 0px 20px", margin: "0px 0px 20px 0px"}}>
+                <h4 style={{position: "absolute", left: "70%", padding: "0px 0px 0px 20px", margin: "0px 0px 20px 0px"}}>
                     LAT: <font style={{color: getColor(this.state.latency)}}>{this.state.latency}</font>ms
                 </h4>
                 {renderWarning()}
@@ -92,16 +103,19 @@ class MissionState extends React.Component {
     constructor(props) {
         super(props);
         this.state = { 
-            missionStateStr: props.missionStateStr
+            missionStateStr: props.missionStateStr,
+            dark: props.dark,
          };
     }
 
     static getDerivedStateFromProps(props, current_state) {
         let update = null;
 
-        if (current_state.missionStateStr !== props.missionStateStr) {
+        if (current_state.missionStateStr !== props.missionStateStr ||
+            current_state.dark !== props.dark) {
             update = {
-                missionStateStr: props.missionStateStr
+                missionStateStr: props.missionStateStr,
+                dark: props.dark,
             }
         }
         
@@ -160,9 +174,9 @@ export default class MissionStatus extends React.Component {
             latencies: [],
             showConnect: props.showConnectButton,
             slowLog: props.slowLog,
-            fastLog: props.fastLog,
             showMetric: props.showMetric,
-            altitude: props.altitude
+            altitude: props.altitude,
+            altMSL: props.altMSL,
         }
 
         this.handleConnect = this.handleConnect.bind(this);
@@ -180,7 +194,8 @@ export default class MissionStatus extends React.Component {
             current_state.latency !== props.latency ||
             current_state.showConnect !== props.showConnectButton ||
             current_state.slowLog !== props.slowLog ||
-            current_state.fastLog !== props.fastLog) {
+            current_state.dark !== props.dark ||
+            current_state.altMSL !== props.altMSL) {
 
             if (props.latency === "-" && props.lastUpdate === "-") {
                 return {
@@ -192,7 +207,8 @@ export default class MissionStatus extends React.Component {
                     latencies: [],
                     showConnect: props.showConnectButton,
                     slowLog: props.slowLog,
-                    fastLog: props.fastLog
+                    dark: props.dark,
+                    altMSL: props.altMSL,
                 }
             }
             update = {
@@ -205,7 +221,8 @@ export default class MissionStatus extends React.Component {
                 latencies: [...current_state.latencies.slice(-100), props.latency],
                 showConnect: props.showConnectButton,
                 slowLog: props.slowLog,
-                fastLog: props.fastLog
+                dark: props.dark,
+                altMSL: props.altMSL,
             }
         }
 
@@ -225,14 +242,14 @@ export default class MissionStatus extends React.Component {
          *  and the state of the component using the value would be desynced
          */
 
-        this.props.unitFunc(!this.state.showMetric)
+        this.props.unitFunc(!this.props.showMetric)
         this.setState({
-            showMetric: !this.state.showMetric
+            showMetric: !this.props.showMetric
         });
-        switch(this.state.showMetric) {
+        switch(this.props.showMetric) {
             case true:
                 break;
-            case false:
+            default:
                 this.setState({
                     altitude: this.state.altitude * 1000
                 });
@@ -248,6 +265,25 @@ export default class MissionStatus extends React.Component {
         this.props.disconnFunc();
     }
     
+    toggleSettingsPanel(event) {
+        this.setState({
+            showSettingsPanel: !this.state.showSettingsPanel,
+        })
+    }
+    toggleMode(event) {
+        this.props.modeFunc(!this.state.dark);
+    }
+
+    cubeWindow(event) {
+        this.props.windowFunc(1);
+        this.setState({
+            showSettingsPanel: false,
+        })
+    }
+
+    toggleAltMode(event) {
+        this.props.altModeFunc(!this.state.altMSL);
+    }
 
     render() { 
 
@@ -266,20 +302,28 @@ export default class MissionStatus extends React.Component {
                             <h3>Status</h3>
                         </div>
                         <div style={{display: "inline-block", width: "90%", textAlign: "right"}}>
-                            <div className={!this.state.showConnect ? "inline" : "hidden"}>
-                                <button className="customButtonLg" style={{margin: "0px 10px 0px 0px"}} onClick={() => this.handleDisconnect()}>Disconnect</button>
-                            </div>
-                            <div className={this.state.showConnect ? "inline" : "hidden"}>
-                                <button className="customButtonLg" style={{margin: "0px 10px 0px 0px"}} onClick={() => this.handleConnect()}>Connect</button>
+                            <div className={"inline"}>
+                                <button className={this.state.dark ? "customButtonLg" : "customButtonLgLight"} style={{margin: "0px 10px 0px 0px"}} onClick={() => {this.state.showConnect ? this.handleConnect() : this.handleDisconnect()}}>{this.state.showConnect ? "Connect" : "Disconnect"}</button>
                             </div>
 
-                            <div className={this.state.showMetric ? "inline" : "hidden"}>
-                                <button className="customButtonLg" style={{margin: "0px 20px 0px 0px"}} onClick={() => this.handleUnitSwitch()}>Metric</button>
-                            </div>
 
-                            <div className={!this.state.showMetric ? "inline" : "hidden"}>
-                                <button className="customButtonLg" style={{margin: "0px 10px 0px 0px"}} onClick={() => this.handleUnitSwitch()}>Imperial</button>
-                            </div>
+                            <div className={"inline"}>
+                                <button className={this.state.dark ? "customButtonLg" : "customButtonLgLight"} style={{margin: "0px 20px 0px 0px"}} onClick={() => this.toggleSettingsPanel()}>Settings</button>
+                                    <div className={`panel ${!this.state.showSettingsPanel ? "hidden" : this.props.dark ? "darkPanel settingsPanel" : "lightPanel settingsPanelLight"}`} style={{ right:"0px", height:"11vh"}}/* all the settings are contained in here */ >
+                                        <div style={{height:"7px"}}/>
+                                            <div className={"row"} /* top row of buttons */ > 
+                                                <div style={{width:"8px"}}/>
+                                                <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.handleUnitSwitch()} style={{width: "150px"}}>Units: {this.props.showMetric ? "Metric" : "Imperial" }</button>
+                                                <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleMode()}>Mode: {this.props.dark ? "Dark" : "Light" }</button>
+                                            </div>
+                                            <div className={"row"} style={{height: "7px"}}></div>
+                                            <div className={"row"} /* bottom row of buttons */ >
+                                                <div style={{width:"8px"}}/>
+                                                <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"}  style={{width: "150px"}} onClick={() => this.cubeWindow()}>Cube Window</button>
+                                                <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleAltMode()}>{this.props.altMSL ? "Alt: MSL" : "Alt: AGL"}</button>
+                                            </div>
+                                        </div>
+                                    </div>
 
                         </div>
                         <hr/>
@@ -292,8 +336,8 @@ export default class MissionStatus extends React.Component {
                         <div style={{position: "absolute", top: "140px", width: "100%"}}>
                             <div style={{position: "relative", width: "100%"}}>
                                 {/* <h4 style={{display: "inline-block", position: "absolute", left: 0}}>Logging:</h4>  */}
-                                <h4 style={{display: "inline-block", position: "absolute", right: 80}}>Slow Log: <font style={{color: this.state.slowLog ? "#00f700" : "#ED5031"}}>{this.state.slowLog ? "On" : "Off"}</font></h4>
-                                <h4 style={{display: "inline-block", position: "absolute", right: 220}}>Fast Log: <font  style={{color: this.state.fastLog ? "#00f700" : "#ED5031"}}>{this.state.fastLog ? "On" : "Off"}</font></h4>
+                                {/* <h4 style={{display: "inline-block", position: "absolute", right: 80}}>Slow Log: <font style={{color: this.state.slowLog ? "#00f700" : "#ED5031"}}>{this.state.slowLog ? "On" : "Off"}</font></h4> */}
+                                {/* <h4 style={{display: "inline-block", position: "absolute", right: 220}}>Fast Log: <font  style={{color: this.state.fastLog ? "#00f700" : "#ED5031"}}>{this.state.fastLog ? "On" : "Off"}</font></h4> */}
                             </div>
                         </div>
                         <div style={{position: "absolute", bottom: "1%", width: "100%"}}>

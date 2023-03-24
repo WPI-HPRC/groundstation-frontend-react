@@ -10,22 +10,46 @@
 
 :root {
   --dark-app-bg-color: #141414;
-  --light-app-bg-color: #fdffcf;
+  --light-app-bg-color: #607d8b;
 
   --dark-app-fg-color: #ffffff;
   --light-app-fg-color: #000000;
 
   --dark-app-panel-color: #212121;
-  --light-app-panel-color: #fdffcf;
+  --light-app-panel-color: #E0E0E0;
 
   --custom-button-border-color: #ED5031;
   --custom-button-bg-color: #2e2e2e;
+
+  --custom-button-bg-color-light: #BDBDBD;
 
   --hr-color: var(--dark-app-panel-color);
 
   --box-shadow-opacity: 0;
   --box-shadow-color: rgba(0, 0, 0, var(--box-shadow-opacity));
   --box-shadow-secondary-color: rgba(46, 46, 46, var(--box-shadow-opacity));
+}
+
+.settingsButton {
+  background-color: var(--dark-app-panel-color); 
+  border: 0px;
+  box-shadow: var(--dark-app-panel-color);
+}
+
+.cGauge {
+  transform-origin: center;
+  transform: rotate(-90deg);
+}
+.cGaugeRev {
+  transform-origin: center;
+  transform: rotate(-90deg) scaleY(-1);
+}
+
+.centerTextDark {
+  text-align: center;
+  font-weight: 550;
+  font-size: 1em;
+  color: #ffffff;
 }
 
 .darkApp {
@@ -38,8 +62,11 @@
 }
 
 .lightApp {
+  width: 100vw;
+  height: 100vh;
   text-align: left;
   color: var(--light-app-fg-color);
+  
   position: relative;
   background-color: var(--light-app-bg-color);
 }
@@ -51,7 +78,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: inherit;
 }
 
 .darkPanel {
@@ -71,6 +97,14 @@
   overflow: hidden;
   width: 100%;
   margin: 5px;
+}
+
+.foregroundLight {
+  background-color: var(--light-app-bg-color);
+}
+
+.foregroundDark {
+  background-color: var(--dark-app-fg-color);
 }
 
 .subpanel {
@@ -122,7 +156,22 @@
   letter-spacing: 0.5px;
   font-weight: 550;
   background-color: var(--custom-button-bg-color);
-  color: #ffffff;
+  color: var(--dark-app-fg-color);
+  box-shadow: 2px 2px 5px var(--box-shadow-color); 
+  font-size: 1em;
+  border: 2px solid var(--custom-button-border-color);
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.customButtonLgLight {
+  width: 130px;
+  height: 40px;
+  margin: 0px 0px 0px 5px;
+  letter-spacing: 0.5px;
+  font-weight: 550;
+  background-color: var(--custom-button-bg-color-light);
+  color: var(--light-app-fg-color);
   box-shadow: 2px 2px 5px var(--box-shadow-color); 
   font-size: 1em;
   border: 2px solid var(--custom-button-border-color);
@@ -136,13 +185,28 @@
   margin: 5px;
   letter-spacing: 0.5px;
   background-color: var(--custom-button-bg-color);
-  color: #ffffff;
+  color: var(--dark-app-fg-color);
   box-shadow: 2px 2px 5px var(--box-shadow-color); 
   font-size: 1em;
   border: 1.5px solid var(--custom-button-border-color);
   border-radius: 20px;
   cursor: pointer;
 }
+
+.customButtonSmLight {
+  width: auto;
+  height: auto;
+  margin: 5px;
+  letter-spacing: 0.5px;
+  background-color: var(--custom-button-bg-color-light);
+  color: var(--light-app-fg-color);
+  box-shadow: 2px 2px 5px var(--box-shadow-color); 
+  font-size: 1em;
+  border: 1.5px solid var(--custom-button-border-color);
+  border-radius: 20px;
+  cursor: pointer;
+}
+
 
 .customButtonLg:hover {
   border: 3px solid var(--custom-button-border-color);
@@ -156,7 +220,24 @@
 }
 
 
+.customButtonLgLight:hover {
+  border: 3px solid var(--custom-button-border-color);
+  box-shadow: 2px 2px 5px 2px var(--box-shadow-color);
+}
+
+.customButtonLgLight:active {
+  background-color: var(--custom-button-border-color);
+  border: 1.5px solid var(--custom-button-border-color);
+  box-shadow: 0px 0px 0px 0px var(--box-shadow-color);
+}
+
+
 .customButtonSm:hover {
+  background-color: var(--custom-button-border-color);
+  border: 1.5px solid var(--custom-button-border-color);
+  box-shadow: 2px 2px 5px 2px var(--box-shadow-color);
+}
+.customButtonSmLight:hover {
   background-color: var(--custom-button-border-color);
   border: 1.5px solid var(--custom-button-border-color);
   box-shadow: 2px 2px 5px 2px var(--box-shadow-color);
@@ -168,6 +249,108 @@
   box-shadow: 4px 4px 5px 2px var(--box-shadow-color); 
 }
 
+.visToggle{ /* button that is below the zoom controls to activate the 3D visualization */
+  position: relative;
+  top: 120px;
+  right: -10px;
+  padding: 5px;
+  z-index: 1000;
+  width: 33px;
+  height: 33px;
+  text-align: center;
+  background-color: #ffffff;
+  border-color: #cdcdcd;
+}
+
+.mapDiv{ /* Div containing the map */ 
+  width: 100%;
+  height: 100%;
+}
+
+.showMap{ /* button inside 3D visualization to show map */ 
+  position: relative;
+  top: 60px;
+  left: 16vw;
+  padding: 5px;
+  z-index: 10;
+  /* width: 75px; */
+  /* height: 30px; */
+  text-align: center;
+}
+
+.visDiv { /* Div containing the 3D renderer */ 
+  position: relative;
+  width: 45px;
+  height: 40vh;
+  top: -40px;
+  left: 0px;
+  z-index: 100;
+}
+
+.visIcon { /* The icon inside the toggleVis button */
+  position: relative;
+  width: 22px;
+  height: 22px;
+  right: 1px;
+  top: -1px;
+}
+
+.airbrakesIconBG {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  z-index: 10;
+}
+
+.airbrakesFin {
+  width: 75px;
+  height: 75px;
+  position: relative;
+  z-index: 0;
+  /* top: -155px; */
+}
+
+.CubeWindow {
+  height: 99.5vh;
+  width: 99.5vw;
+}
+
+.LineGraphLight:theme {
+  textColor: var(--light-app-bg-color);
+}
+
+.LineGraphDark:theme {
+  textColor: var(--dark-app-bg-color);
+
+}
+
+.settingsPanel {
+  height: 9.5vh;
+  width: 296px;
+  border-color: var(--dark-app-bg-color);
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  z-index: 100;
+}
+
+.settingsPanelLight {
+  height: 9.5vh;
+  width: 296px;
+  border-color: var(--light-app-bg-color);
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+  z-index: 100;
+}
+
+.CubeTopbar {
+
+}
+
+.CubeDisplayPanel {
+
+}
 
 .VehicleStatus {
 
@@ -197,11 +380,23 @@
   text-align: center;
 }
 
+.titleLG {
+  text-align: center;
+  font-size: 8vh;
+}
+
 .subTitle {
   text-align: center;
   margin: 0;
   padding: 0;
 
+}
+
+.subTitleLG {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  font-size: 3vh;
 }
 
 .mono {
@@ -211,8 +406,9 @@
 
 .command {
   font-family: 'Overpass Mono Regular', monospace;
+  color: inherit;
   font-weight: 400;
-  padding: 0px 0px 0px 10px;
+  padding: 0px 0px 0px 0.7320644vw;
   margin: 0;
 }
 
@@ -264,7 +460,7 @@ input[type=text] {
   border: none;
   border-bottom: 2px solid #cdcdcd;
   border-color: rgb(85, 85, 85);
-  background-color: #212121;
+  background-color: inherit;
   font-family: 'Overpass Mono Regular', monospace;
   font-weight: 400;
   font-size: 1em;
@@ -277,7 +473,7 @@ input[type=text] {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background-color: #2b2b2b;
+  background-color: inherit;
   border-radius: 10px;
 }
 
