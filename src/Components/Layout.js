@@ -63,6 +63,9 @@ export default class Layout extends React.Component {
         super(props);
         this.state = { 
             window: props.window,
+            showPowerLossWarning: false,
+            powerLossWarning: props.powerLossWarning,
+
         }
     }
 
@@ -75,7 +78,22 @@ export default class Layout extends React.Component {
                 window: props.window,
             }
         }
+        if(current_state.powerLossWarning !== props.powerLossWarning)
+        {
+            update = {
+                window: props.window,
+                showPowerLossWarning: props.powerLossWarning,
+                powerLossWarning: props.powerLossWarning,
+            }
+        }
         return update;
+    }
+
+    dismissPLWarning(event) 
+    {
+        this.setState({
+            showPowerLossWarning: false,
+        });
     }
 
     render() {
@@ -172,6 +190,16 @@ export default class Layout extends React.Component {
                                 {...this.props}/>
                         </Row>
                     </Row>
+                </div>
+                <div className={!this.state.showPowerLossWarning ? "hidden" : undefined} style={{zIndex:"100000", backgroundColor: "red", position: "absolute", left: "25vw", height: "50vh", width: "50vw", top: "25vh"}}>
+                    <div style={{width: "100%", height: "100%"}}>
+                        <div className={"row"} style={{width: "100%"}}> 
+                            <h4 style={{left: "8vw", top: "20vh", position: "relative", fontSize: "10vh"}}>POWER LOSS</h4>
+                        </div>
+                        <div className={"row"} >
+                            <button style={{postion: "relative", top: "25vh"}} onClick={() => this.dismissPLWarning()} className={"customButtonLg"}>Dismiss</button>
+                        </div>
+                    </div>
                 </div>
             </>
         )

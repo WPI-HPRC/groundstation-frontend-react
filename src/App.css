@@ -148,6 +148,7 @@
   border-radius: 5px;
   width: 50%; 
   box-shadow: 2px 2px 5px var(--box-shadow-color);
+  margin: 0px 0px 0px px;
 }
 
 .customButtonLg {

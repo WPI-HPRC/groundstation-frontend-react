@@ -1,5 +1,4 @@
 import './App.css';
-import '@progress/kendo-theme-default/dist/all.css';
 import Layout from "./Components/Layout";
 import SplashScreen from "./Components/SplashScreen.js"
 import React from 'react';
@@ -30,7 +29,7 @@ export default class App extends React.Component {
             temperature: "-",
             pressure: "-",
             humidity: "-",
-            stateStr: "-",
+            state: 0,
             lat: "-",
             long: "-",
             vehicleClock: new Date(0),
@@ -69,6 +68,9 @@ export default class App extends React.Component {
             cubeBattery3: 0.75,
             altMSL: true,
             currentAlt: 146.304, // this should be in meters
+            powerLossWarning: false,
+            graphDisplayMode: 0, // 0-Z; 1-Y; 2-X; 3-all
+            rocketLatency: 0, 
         }
 
         /**
@@ -86,6 +88,7 @@ export default class App extends React.Component {
             modeFunc: this.updateMode,
             windowFunc: this.updateWindow,
             altModeFunc: this.updateAltMode,
+            changeAccelFunc: this.changeAccelMode,
         }
 
         /**
@@ -104,7 +107,7 @@ export default class App extends React.Component {
         this.updateMode = this.updateMode.bind(this);
         this.updateWindow = this.updateWindow.bind(this);
         this.updateAltMode = this.updateAltMode.bind(this);
-        
+        this.changeAccelMode = this.changeAccelMode.bind(this);
     }
 
     /**
@@ -211,6 +214,14 @@ export default class App extends React.Component {
             diff = vehicleTime.getTime() - this.state.vehicleClock.getTime();
         }
 
+        if(diff < -100) {
+            this.setState({
+                powerLossWarning: true,
+            });
+        }
+
+        
+        
         let latency = Date.now() - receiverTime.getTime();
 
         if (this.showRawInConsole) {
@@ -224,10 +235,10 @@ export default class App extends React.Component {
             pressure: json.Pressure,
             humidity: json.Humidity,
             battery: json.Voltage,
-            stateStr: json.State,
             vehicleClock: vehicleTime,
             lastUpdate: diff,
             latency: latency,
+            state: json.State,
             rocketIsConnected: json.RocketConnected,
             accelX: ((json.AccelX * (1/2048)) * 9.80665).toFixed(2),
             accelY: ((json.AccelY * (1/2048)) * 9.80665).toFixed(2),
@@ -306,6 +317,18 @@ export default class App extends React.Component {
         this.setState({
             window: window
         })
+    }
+
+    changeAccelMode = () => {
+        if(this.state.graphDisplayMode !== 3) {
+            this.setState({
+                graphDisplayMode: this.state.graphDisplayMode + 1,
+            })
+        } else {
+            this.setState({
+                graphDisplayMode: 0,
+            })
+        }
     }
 
     /**
@@ -494,7 +517,7 @@ export default class App extends React.Component {
                 temperature: "-",
                 pressure: "-",
                 humidity: "-",
-                stateStr: "-",
+                state: 0,
                 lat: "-",
                 long: "-",
                 vehicleClock: new Date(0),
@@ -529,11 +552,13 @@ export default class App extends React.Component {
                 gyroY: 0,
                 gyroZ: 0,
                 vehicleClock: new Date(0),
+                powerLossWarning: false,
             })
         }
     }
 
     render() {
+
         return (
             <div className={`App ${this.state.dark ? "darkApp" : "lightApp"}`}>
                 <main>

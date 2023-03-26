@@ -4,6 +4,7 @@ import React from 'react';
 *
 *  This class contains all the custom SVG elements for the ground station
 *  at the moment, that is:
+*    - PowerLossWarningIndicator
 *    - AirbrakesIndicator
 *    - BarSignalIcon
 *    - BatteryIcon
@@ -11,8 +12,50 @@ import React from 'react';
 *    - Gauge
 *    - RPMGauge
 *    - CGauge
-*
+*  
 */
+
+export class PowerLossWarningIndicator extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            powerLossWarning: props.powerLossWarning,
+            dark: props.dark,
+        }
+    }
+
+    static getDerivedStateFromProps(props, current_state) {
+        let update = null;
+
+        if(current_state.powerLossWarning !== props.powerLossWarning ||
+            current_state.dark !== props.dark) {
+            update = {
+                powerLossWarning: props.powerLossWarning, // power loss warning
+                dark: props.dark, // update dark/light state
+            }
+        }
+
+        return update;
+    }
+
+    render() {
+
+        let circumference = Math.PI * 100 * 2;
+        let dashArrayArrow = `${0.75 * circumference}, ${circumference}`;
+
+        return(
+            <svg width="100%" height="100%" viewBox="0 0 300 300">
+                <circle strokeDasharray={dashArrayArrow} cx="150" cy="150" r="100" fill="transparent" strokeWidth="20" stroke={this.state.dark ? this.state.powerLossWarning ? "red" : "#ffffff" : this.state.powerLossWarning ? "red" : "#607d8b"}/>
+                <rect strokeWidth="15" x="90" y="125" width="120" height="50" rx="10" fill="transparent" stroke={this.state.dark ? this.state.powerLossWarning ? "red" : "#ffffff" : this.state.powerLossWarning ? "red" : "#607d8b"} style={{transition: "x 1s"}}></rect>
+                <rect strokeWidth="15" x="210" y="140" width="10" height="20" rx="10" fill="transparent" stroke={this.state.dark ? this.state.powerLossWarning ? "red" : "#ffffff" : this.state.powerLossWarning ? "red" : "#607d8b"} style={{transition: "x 1s"}}></rect>
+                <line x1="100" y1="185" x2="200" y2="115" strokeWidth="40" strokeLinecap="round" stroke={this.state.dark ? "#212121" : "#607d8b"}></line>
+                <line x1="100" y1="185" x2="200" y2="115" strokeWidth="15" strokeLinecap="round" stroke={this.state.dark ? this.state.powerLossWarning ? "red" : "#ffffff" : this.state.powerLossWarning ? "red" : "#607d8b"}></line>
+                <polygon points="150,20 210,50 150,80" fill={this.state.dark ? this.state.powerLossWarning ? "red" : "#ffffff" : this.state.powerLossWarning ? "red" : "#607d8b"}/>
+            </svg>
+
+        );
+    }
+}
 
 export default class AirbrakesIndicator extends React.Component {
 
