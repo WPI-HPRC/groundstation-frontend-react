@@ -71,6 +71,7 @@ export default class App extends React.Component {
             powerLossWarning: false,
             graphDisplayMode: 0, // 0-Z; 1-Y; 2-X; 3-all
             rocketLatency: 0, 
+            corndog: false,
         }
 
         /**
@@ -453,6 +454,42 @@ export default class App extends React.Component {
                         }, 0);
                     }
                 }
+                break;
+            case "corndog":
+                this.setState({
+                    corndog: true,
+                });
+                let benchIter2 = 0;
+
+                let msToRun2 = 10000;
+
+                // test conditions definition
+                let msTick2 = 10;
+
+                var t = new Date();
+                while(benchIter2 < msToRun2 - msTick2)
+                {
+                    setTimeout(() => {
+                        var ms = this.state.vehicleClock.getTime() + msTick2;
+                        this.setState({
+                            vehicleClock: new Date(ms)
+                        });
+                    }, 0);
+                    benchIter2 += msTick2;
+                    if(benchIter2 === msToRun2 - msTick2 - msTick2)
+                    {
+                        setTimeout(() => {
+                            var ms = this.state.vehicleClock.getTime() + msTick2;
+                            this.setState({
+                                vehicleClock: new Date(ms)
+                            }); 
+                            this.setState({
+                                corndog: false,
+                            });       
+                        }, 0);
+                    }
+                }
+                
                 break;
             case "dump":
                 socket.send("dump");
