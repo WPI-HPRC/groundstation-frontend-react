@@ -1,8 +1,11 @@
 import React from 'react';
 import 'leaflet.offline';
-import {MapContainer, TileLayer} from 'react-leaflet';
+import {MapContainer, TileLayer, Marker} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css'
 import RocketViewer from './RocketViewer';
+import danDSB2 from '../dandsb2.png';
+import gone from '../gone.png';
+
 /**
  *  for visualization of things imported from outside React
  *  current usage: map
@@ -20,7 +23,8 @@ export default class Visualization extends React.Component {
             dark: props.dark,
             showMap: true,
             imgToShow: 0,
-
+            corndog: props.corndog,
+            angle: 0,
         }
 
         this.map = 0;
@@ -47,9 +51,32 @@ export default class Visualization extends React.Component {
 
 
     render() {
-
-        var position = [42.27470400012541,-71.80915315792504];
+        const L = require('leaflet');
+        const corndog = L.icon({
+            iconUrl: this.props.corndog ? danDSB2 : gone,
+            iconRetinaUrl: this.props.corndog ? danDSB2 : gone,
+            iconSize: this.props.corndog ? [64,64] : [0,0],
+            iconAnchor: [32, 64],
+            popupAnchor: null,
+            shadowUrl: null,
+            shadowSize: null,
+            shadowAnchor: null
+        });
+ 
+        if(this.state.angle !== 359) 
+        {
+            this.state.angle = this.state.angle + 1;
+        } else {
+            this.state.angle = 0;
+        }
         
+        let posX = 39.583013
+        let posY = -74.227006
+        var posXOffset = 0.01 * Math.cos(this.state.angle / 360 * 2 * Math.PI);
+        var posYOffset = 0.01 * Math.sin(this.state.angle / 360 * 2 * Math.PI);
+
+        var position = [posX + posXOffset,posY + posYOffset];
+
         return (
             <>
                 <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`}>
@@ -59,6 +86,7 @@ export default class Visualization extends React.Component {
                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                 url="Maps/{z}/{x}/{y}.png"
                             />
+                            <Marker icon={corndog} position={position}></Marker>
                             <button className={!this.state.showMap ? "hidden" : "visToggle"} id="visToggle" onClick={() => this.toggleVis()}>
                                 <img alt="a rocket" className={"visIcon"} src={'rocket_icon_2.png'} ></img>
                             </button> 
