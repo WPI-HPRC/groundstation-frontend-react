@@ -191,13 +191,14 @@ export default class Layout extends React.Component {
                         </Row>
                     </Row>
                 </div>
-                <div className={!this.state.showPowerLossWarning ? "hidden" : undefined} style={{zIndex:"100000", backgroundColor: "red", position: "absolute", left: "25vw", height: "50vh", width: "50vw", top: "25vh"}}>
-                    <div style={{width: "100%", height: "100%"}}>
-                        <div className={"row"} style={{width: "100%"}}> 
-                            <h4 style={{left: "8vw", top: "20vh", position: "relative", fontSize: "10vh"}}>POWER LOSS</h4>
+                <div className={!this.state.showPowerLossWarning ? "hidden" : undefined} style={{zIndex:"100000", backgroundColor: "red", position: "absolute", left: "25vw", height: "30vh", width: "50vw", top: "25vh"}}>
+                    <div style={{width: "100%", height: "100%", position: "relative"}}>
+                        <div className={"row"} style={{position:"relative", width:"100%", textAlign: "center"}}>
+                            <div style={{width: "48vw"}}/>
+                            <button style={{postion: "absolute", left: "49vw"}} onClick={() => this.dismissPLWarning()} className={"customButtonSm mono"}>x</button>
                         </div>
-                        <div className={"row"} >
-                            <button style={{postion: "relative", top: "25vh"}} onClick={() => this.dismissPLWarning()} className={"customButtonLg"}>Dismiss</button>
+                        <div className={"row"} style={{width: "100%", position: "relative"}}> 
+                            <h4 style={{left: "8vw", top: "5vh", position: "relative", fontSize: "10vh"}}>POWER LOSS</h4>
                         </div>
                     </div>
                 </div>

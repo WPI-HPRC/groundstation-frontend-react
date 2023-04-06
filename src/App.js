@@ -71,6 +71,8 @@ export default class App extends React.Component {
             powerLossWarning: false,
             graphDisplayMode: 0, // 0-Z; 1-Y; 2-X; 3-all
             rocketLatency: 0, 
+            signalLossWarning: false,
+            sigLossCount: 0,
         }
 
         /**
@@ -214,13 +216,33 @@ export default class App extends React.Component {
             diff = vehicleTime.getTime() - this.state.vehicleClock.getTime();
         }
 
+        this.setState({
+            latency: diff,
+        })
+
+        if(diff === 0) 
+        {
+            this.setState({
+                sigLossCount: this.state.diffCount + 1,
+            })
+        } else {
+            this.setState({
+                sigLossCount: 0,
+                signalLossWarning: false,
+            })
+        }
+
         if(diff < -100) {
             this.setState({
                 powerLossWarning: true,
             });
         }
 
-        
+        if(this.state.sigLossCount >= 5) {
+            this.setState({
+                signalLossWarning: true,
+            })
+        }
         
         let latency = Date.now() - receiverTime.getTime();
 
@@ -249,6 +271,7 @@ export default class App extends React.Component {
             slowLog: json.SlowLogging,
             fastLog: json.FastLogging,
             airbrakesDeploy: json.AirbrakesDeploy,
+
         });
 
         if (latency > 100 && this.state.graphRefreshRate < HIGH_REFRESH) {

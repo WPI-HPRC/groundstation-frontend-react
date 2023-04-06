@@ -793,6 +793,7 @@ export class SignalIcon extends React.Component {
         this.state = {
             signalStrength: props.signalStrength,
             dark: props.dark,
+            color: props.color,
         }
     }
 
@@ -901,12 +902,12 @@ export class SignalIcon extends React.Component {
 
         return (
             <svg width="60" height="40">
-                <circle cx="30" cy="30" r={radius} fill="transparent" stroke={fill1 ? color : this.props.dark ? "white" : "#607d8b"} strokeWidth={3} strokeDasharray={darrayOuter} transform={transform} strokeLinecap={"round"}/>
-                <circle cx="30" cy="30" r={radius * scaleFactor1} fill="transparent" stroke={fill2 ? color : this.props.dark ? "white" : "#607d8b"} strokeWidth={3} strokeDasharray={darrayMiddle} transform={transform} strokeLinecap={"round"}/>
-                <circle cx="30" cy="30" r={radius * scaleFactor1 * scaleFactor2} fill="transparent" stroke={fill3 ? color : this.props.dark ? "white" : "#607d8b"} strokeWidth={3} strokeDasharray={darrayInner} transform={transform} strokeLinecap={"round"}/>
-                <circle cx="30" cy="30" fill={fill4 ? color : this.props.dark ? "white" : "#607d8b"} r={radius * scaleFactor1 * scaleFactor2 * 0.4}></circle>
+                <circle cx="30" cy="30" r={radius} fill="transparent" stroke={fill1 ? color : this.props.color} strokeWidth={3} strokeDasharray={darrayOuter} transform={transform} strokeLinecap={"round"}/>
+                <circle cx="30" cy="30" r={radius * scaleFactor1} fill="transparent" stroke={fill2 ? color : this.props.color} strokeWidth={3} strokeDasharray={darrayMiddle} transform={transform} strokeLinecap={"round"}/>
+                <circle cx="30" cy="30" r={radius * scaleFactor1 * scaleFactor2} fill="transparent" stroke={fill3 ? color : this.props.color} strokeWidth={3} strokeDasharray={darrayInner} transform={transform} strokeLinecap={"round"}/>
+                <circle cx="30" cy="30" fill={fill4 ? color : this.props.color} r={radius * scaleFactor1 * scaleFactor2 * 0.4}></circle>
                 <line x1="15" y1="32" x2="49" y2="5" strokeWidth={8} stroke={this.state.signalStrength !== 0 ? "transparent" : this.props.dark ? "#212121" : "#e0e0e0"} strokeLinecap={"round"}/>
-                <line x1="17" y1="30" x2="46" y2="8" strokeWidth={3} stroke={this.state.signalStrength !== 0 ? "transparent" : this.props.dark ? "white" : "#607d8b"} strokeLinecap={"round"}/>
+                <line x1="17" y1="30" x2="46" y2="8" strokeWidth={3} stroke={this.state.signalStrength !== 0 ? "transparent" : this.props.color} strokeLinecap={"round"}/>
             </svg>
         )
     }
