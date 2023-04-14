@@ -21,49 +21,29 @@ class Box extends React.PureComponent {
             time: props.time,
             dark: props.dark,
             graphTime: props.time,
-            data: [ // the stored data for the last 5 seconds
+            data: [ // the stored data for the last 10 seconds
                 {
-                    id: "1", // for accel only, this is Z
+                    id: "Acceleration",
                     data: []
                 },
-                {
-                    id: "2", // Y
-                    data: []
-                },
-                {
-                    id: "3", // X
-                    data: []
-                }
             ],
             enable: false,
             gaugeLevel: 0,
             max: 0,
             timeScale: props.datanum,
             rollingAvg: 0,
-            filteredData: [ // the data to be displayed
+            finalData: [ // the data to be displayed
                 {
-                    id: "1", // for accel only, this is Z
-                    color: "#b30000",
+                    id: "dataInput",
                     data: []
                 },
-                {
-                    id: "2", // Y
-                    color: "#e67017",
-                    data: []
-                },
-                {
-                    id: "3", // X
-                    color: "#e6a117",
-                    data: []
-                }
             ],
-            displayData: [],
+
             graphType: props.graphType,
             timeToRefresh: true,
             animationID: null,
             window: props.window,
             units: props.showMetric,
-            graphDisplayMode: props.graphDisplayMode,
         };
 
     }
@@ -77,11 +57,8 @@ class Box extends React.PureComponent {
             current_state.dark !== props.dark ||
             current_state.window !== props.window ||
             current_state.val0 !== props.val0 ||
-            current_state.val1 !== props.val1 ||
-            current_state.val2 !== props.val2 ||
             current_state.units !== props.showMetric ||
-            current_state.altMSL !== props.altMSL ||
-            current_state.graphDisplayMode !== props.graphDisplayMode) {
+            current_state.altMSL !== props.altMSL) {
 
 
             // Reset if rocket time returns to 0
@@ -94,38 +71,18 @@ class Box extends React.PureComponent {
                     time: props.time,
                     graphTime: props.time,
                     dark: props.dark,
-                    filteredData: [ // the data to be displayed
+                    finalData: [ // the data to be displayed
                         {
-                            id: "1", // for accel only, this is Z
-                            color: "#b30000",
+                            id: "dataInput",
                             data: []
                         },
-                        {
-                            id: "2", // Y
-                            color: "#e67017",
-                            data: []
-                        },
-                        {
-                            id: "3", // X
-                            color: "#e6a117",
-                            data: []
-                        }
                     ],
                     data: [
                         {
-                            id: "1", // for accel only, this is Z
+                            id: "Acceleration",
                             data: []
                         },
-                        {
-                            id: "2", // Y
-                            data: []
-                        },
-                        {
-                            id: "3", // X
-                            data: []
-                        }
                     ],
-                    displayData: [],
                 }
             }
 
@@ -143,37 +100,17 @@ class Box extends React.PureComponent {
                         time: props.time,
                         data: [
                             {
-                                id: "1", // for accel only, this is Z
+                                id: "Acceleration",
                                 data: []
                             },
-                            {
-                                id: "2", // Y
-                                data: []
-                            },
-                            {
-                                id: "3", // X
-                                data: []
-                            }
                         ],
-                        filteredData: [ // the data for each graph; 1: accel 2: vel 3: pos
+                        finalData: [ // the data for each graph; 1: accel 2: vel 3: pos
                             {
-                                id: "1", // for accel only, this is Z
-                                color: "#b30000",
+                                id: "dataInput",
                                 data: []
                             },
-                            {
-                                id: "2", // Y
-                                color: "#e67017",
-                                data: []
-                            },
-                            {
-                                id: "3", // X
-                                color: "#e6a117",
-                                data: []
-                            }
                         ],
                         units: props.showMetric,
-                        displayData: [],
                         
                     }
                 }
@@ -254,29 +191,13 @@ class Box extends React.PureComponent {
         {
 
             // make some new data points for the current values
-            let element0 = {
+            let element = {
                 x: this.props.time.getTime() / testTimeFactor,
                 y: this.state.val0, // MAKE SURE TO UPDATE THIS FOR TESTING
                 // what are the odds i forget?  probably high
             }
             // add them to the base array
-            this.state.data[0].data.push(element0);
-
-            let element1 = {
-                x: this.props.time.getTime() / testTimeFactor,
-                y: this.state.val1, // MAKE SURE TO UPDATE THIS FOR TESTING
-                // what are the odds i forget?  probably high
-            }
-            // add them to the base array
-            this.state.data[1].data.push(element1);
-
-            let element2 = {
-                x: this.props.time.getTime() / testTimeFactor,
-                y: this.state.val2, // MAKE SURE TO UPDATE THIS FOR TESTING
-                // what are the odds i forget?  probably high
-            }
-            // add them to the base array
-            this.state.data[2].data.push(element2);
+            this.state.data[0].data.push(element);
         }
 
         
@@ -305,9 +226,6 @@ class Box extends React.PureComponent {
         if(this.state.data[0].data[0].x < graphMin/1000)
         {
             this.state.data[0].data.shift();
-            this.state.data[1].data.shift();
-            this.state.data[2].data.shift();
-
         }
 
 
@@ -322,41 +240,15 @@ class Box extends React.PureComponent {
 
         let resolution = this.props.datanum / 10;
 
-        this.state.filteredData[0].data = [];
-        this.state.filteredData[1].data = [];
-        this.state.filteredData[2].data = [];
-
+        this.state.finalData[0].data = [];
         this.state.data[0].data.forEach((element, index) => {
             // element.x >= graphMin/1000 &&
             if(index % resolution === 0 && element.x >= graphMin/1000 && element.x <= this.state.time.getTime()/1000)
             {
-                this.state.filteredData[0].data.push(element);
-                this.state.filteredData[1].data.push(this.state.data[1].data[index]);
-                this.state.filteredData[2].data.push(this.state.data[2].data[index]);
-
+                this.state.finalData[0].data.push(element);
             } 
         
         });
-        this.state.displayData = [];
-        if(this.props.title === "Acceleration") 
-        {
-            if(this.props.graphDisplayMode === 0 || this.props.graphDisplayMode === 3)
-            {
-                this.state.displayData.push(this.state.filteredData[0]);
-            }
-            if(this.props.graphDisplayMode === 1 || this.props.graphDisplayMode === 3)
-            {
-                this.state.displayData.push(this.state.filteredData[1]);
-            }
-            if(this.props.graphDisplayMode === 2 || this.props.graphDisplayMode === 3)
-            {
-                this.state.displayData.push(this.state.filteredData[2]);
-            }
-        } else {
-            this.state.displayData.push(this.state.filteredData[0]);
-        }
-        
-
 
         
 
@@ -383,7 +275,7 @@ class Box extends React.PureComponent {
 
                     <div className={!this.state.drawGraph ? "hidden" : undefined} style={{height: "100%", width: "80%", position:"absolute", top: "50px"}}>
                         <ResponsiveLine
-                            data={ this.state.displayData }
+                            data={ this.state.finalData }
                             margin={{ top: 10, right: 10, bottom: 80, left: 90 }}
                             xScale={{ 
                                 type: 'linear',
@@ -417,7 +309,7 @@ class Box extends React.PureComponent {
                                     }
                                 },
                             }}
-                            colors={data => data.color}
+                            colors={{ scheme: 'red_yellow_blue'}}
                             axisTop={null}
                             axisRight={null}
                             enableGridX={false}
@@ -576,24 +468,22 @@ export default class GaugeCluster extends React.PureComponent {
                         threshold={900} digits={4} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.altMSL ? this.state.altitude : this.state.showMetric ? this.state.altitude - this.props.currentAlt : this.state.altitude - (this.props.currentAlt/0.3048)} name0={"Altitude"}
                         dark={this.state.dark} showMetric={this.props.showMetric} altMSL={this.props.altMSL}
-                        graphDisplayMode={this.props.graphDisplayMode}
                         />
                     <Box title="Velocity" unit={this.state.velUnit} min={0} max={300} defaultToGraph={false}
                         threshold={200} digits={3} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} val0={this.state.vel} name0={"Velocity ΔA"}
                         dark={this.state.dark} showMetric={this.props.showMetric} altMSL={this.props.altMSL}
-                        graphDisplayMode={this.props.graphDisplayMode}
+
                         />
                     <Box title="Acceleration" unit={this.state.accelUnit} min={0} max={3000} 
                         threshold={2000} digits={4} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} 
-                        val0={this.state.accelZ} name0="Z"
-                        val1={this.state.accelY} name1="Y"
-                        val2={this.state.accelX} name2="X"
+                        val0={this.state.accelY} name0="Y"
+                        val1={this.state.accelX} name1="X"
+                        val2={this.state.accelZ} name2="Z"
                         dark={this.state.dark} 
                         showMetric={this.props.showMetric}
                         altMSL={this.props.altMSL}
-                        graphDisplayMode={this.props.graphDisplayMode}
                         />
                 </div>
             </div>

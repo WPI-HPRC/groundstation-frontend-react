@@ -313,7 +313,7 @@ export default class MissionStatus extends React.Component {
 
                             <div className={"inline"}>
                                 <button className={this.state.dark ? "customButtonLg" : "customButtonLgLight"} style={{margin: "0px 20px 0px 0px"}} onClick={() => this.toggleSettingsPanel()}>Settings</button>
-                                    <div className={`panel ${!this.state.showSettingsPanel ? "hidden" : this.props.dark ? "darkPanel settingsPanel" : "lightPanel settingsPanelLight"}`} style={{ right:"0px", height:"16vh"}}/* all the settings are contained in here */ >
+                                    <div className={`panel ${!this.state.showSettingsPanel ? "hidden" : this.props.dark ? "darkPanel settingsPanel" : "lightPanel settingsPanelLight"}`} style={{ right:"0px", height:"11vh"}}/* all the settings are contained in here */ >
                                         <div style={{height:"7px"}}/>
                                          <div className={"row"} /* top row of buttons */ > 
                                             <div style={{width:"8px"}}/>
@@ -327,11 +327,7 @@ export default class MissionStatus extends React.Component {
                                             <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleAltMode()}>{this.props.altMSL ? "Alt: MSL" : "Alt: AGL"}</button>
                                         </div>
                                         <div className={"row"} style={{height: "7px"}}></div>
-                                        <div className={"row"} /* bottom row of buttons */ >
-                                            <div style={{width:"8px"}}/>
-                                            <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"}  style={{width: "150px"}} onClick={() => this.changeAccel()}>Accel Mode: {this.props.graphDisplayMode === 0 ? "Z" : this.props.graphDisplayMode === 1 ? "Y" : this.props.graphDisplayMode === 2 ? "X" : "All"}</button>
-                                            {/* <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleAltMode()}>{this.props.altMSL ? "Alt: MSL" : "Alt: AGL"}</button> */}
-                                        </div>
+                                        
                                     </div>
                                 </div>
 

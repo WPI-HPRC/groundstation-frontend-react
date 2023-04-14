@@ -1,5 +1,5 @@
 import React from 'react';
-import AirbrakesIndicator, { PowerLossWarningIndicator, SignalIcon } from './CustomSVG';
+import AirbrakesIndicator, { AbortWarningIndicator, PowerLossWarningIndicator, SignalIcon } from './CustomSVG';
 
 /**
  *   Left-top panel, showing general vehicle information including power, temp, pressure, airbrakes etc.
@@ -203,6 +203,10 @@ export default class VehicleStatus extends React.Component {
                             <div style={{height:"100%", width:"20%", position: "relative"}}>
                                 <div style={{height:"0.5vh"}}/>
                                 <SignalIcon style={{top: "10px", height: "30px", width: "30px", position: "relative"}} color={this.props.signalLossWarning ? "red" : this.props.dark ? "white" : "#607d8b"} dark={this.state.dark} signalStrength={0}/>
+                            </div>
+                            <div style={{height:"100%", width:"10%", position: "relative"}}>
+                                <div style={{height:"0.75vh"}}/>
+                                <AbortWarningIndicator style={{top: "50px", height: "30px", width: "30px", position: "relative"}} state={this.props.state} dark={this.state.dark} signalStrength={0}/>
                             </div>
                         </div>
                         <hr/>

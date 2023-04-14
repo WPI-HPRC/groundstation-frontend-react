@@ -65,6 +65,7 @@ export default class Layout extends React.Component {
             window: props.window,
             showPowerLossWarning: false,
             powerLossWarning: props.powerLossWarning,
+            abortHasTriggered: false,
 
         }
     }
@@ -78,14 +79,44 @@ export default class Layout extends React.Component {
                 window: props.window,
             }
         }
-        if(current_state.powerLossWarning !== props.powerLossWarning)
-        {
+        if(current_state.powerLossWarning !== props.powerLossWarning) {
             update = {
                 window: props.window,
-                showPowerLossWarning: props.powerLossWarning,
                 powerLossWarning: props.powerLossWarning,
             }
         }
+        if(props.state === 12 && !current_state.abortHasTriggered)
+        {
+            update = {
+                window: props.window,
+                showPowerLossWarning: true,
+                powerLossWarning: props.powerLossWarning,
+                abortHasTriggered: true,
+            }
+
+           
+        }
+
+        if(props.state === 12)
+        {
+            var abort;
+
+            var randInt = Math.floor(Math.random() * 2);
+
+            switch(randInt) {
+                case 0:
+                    abort = new Audio('abort_warning.mp3');
+                    break;
+                case 1:
+                    abort = new Audio('Dan_abort.mp3');
+                    break;
+                default:
+                    abort = new Audio('abort_warning.mp3');
+            }
+
+            abort.play();
+        }
+        
         return update;
     }
 
@@ -198,7 +229,7 @@ export default class Layout extends React.Component {
                             <button style={{postion: "absolute", left: "49vw"}} onClick={() => this.dismissPLWarning()} className={"customButtonSm mono"}>x</button>
                         </div>
                         <div className={"row"} style={{width: "100%", position: "relative"}}> 
-                            <h4 style={{left: "8vw", top: "5vh", position: "relative", fontSize: "10vh"}}>POWER LOSS</h4>
+                            <h4 style={{left: "8vw", top: "5vh", position: "relative", fontSize: "10vh"}}>ABORT</h4>
                         </div>
                     </div>
                 </div>

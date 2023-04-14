@@ -77,11 +77,13 @@ export default class Visualization extends React.Component {
 
         var position = [posX + posXOffset,posY + posYOffset];
 
+        var mapBasePos = [42.2738330, -71.8098040];
+
         return (
             <>
                 <div className={`panel ${this.state.dark ? "darkPanel" : "lightPanel"}`}>
                     <div className={!this.state.showMap ? "hidden" : "mapDiv"}>
-                        <MapContainer center={position} zoom={13} scrollWheelZoom={true} maxZoom={14}>
+                        <MapContainer center={mapBasePos} zoom={14} scrollWheelZoom={true} maxZoom={14}>
                             <TileLayer
                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                 url="Maps/{z}/{x}/{y}.png"

@@ -4,6 +4,7 @@ import React from 'react';
 *
 *  This class contains all the custom SVG elements for the ground station
 *  at the moment, that is:
+*    - AbortWarningIndicator
 *    - PowerLossWarningIndicator
 *    - AirbrakesIndicator
 *    - BarSignalIcon
@@ -14,6 +15,51 @@ import React from 'react';
 *    - CGauge
 *  
 */
+
+export class AbortWarningIndicator extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            dark: props.dark,
+            state: props.state,
+        }
+    }
+
+    static getDerivedStateFromProps(props, current_state) {
+        let update = null;
+        if(current_state.state !== props.state ||
+        current_state.dark !== props.dark) {
+            update = {
+                dark: props.dark,
+                state: props.state,
+            }
+        }
+        return update;
+    }
+
+    render() {       
+
+        let colorMain = this.state.state === 12 ? "red" : this.state.dark ? "white" : "#607d8b";
+
+        let rotate120 = `rotate(120, 150, 150)`;
+        let rotate240 = `rotate(240, 150, 150)`;
+
+        return(
+            <svg width="100%" height="100%" viewBox="0 0 300 300">
+                <rect x="40" y="220" width="220" height="40" fill={colorMain}/>
+                <rect x="40" y="220" width="220" height="40" fill={colorMain} transform={rotate120}/>
+                <rect x="40" y="220" width="220" height="40" fill={colorMain} transform={rotate240}/>
+                <rect x="120" y="0" width="60" height="20" fill={colorMain}/>
+                <rect x="120" y="0" width="60" height="20" fill={colorMain} transform={rotate120}/>
+                <rect x="120" y="0" width="60" height="20" fill={colorMain} transform={rotate240}/>
+                <rect x="140" y="90" width="20" height="60" fill={colorMain}/>
+                <rect x="140" y="170" width="20" height="20" fill={colorMain}/>
+
+            </svg>
+        )
+    }
+
+}
 
 export class PowerLossWarningIndicator extends React.Component {
     constructor(props) {
