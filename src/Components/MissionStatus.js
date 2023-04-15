@@ -12,13 +12,15 @@ class StatusIndicator extends React.Component {
         this.state = { 
             connected: props.connected,
             refresh: "-",
-            latency: "-",
+            latency: props.latency,
             systemName: props.name,
             blinkOn: false,
             ID: null,
             dark: props.dark,
             showSettingsPanel: false,
             altMSL: true,
+            diff: props.lastUpdate,
+            repeatCount: props.diffCount,
         };
             
         this.blinkWarning = this.blinkWarning.bind(this)
@@ -88,7 +90,7 @@ class StatusIndicator extends React.Component {
                     {this.state.systemName}: <font style={{color: this.state.connected ? "#00f700" : "#ED5031"}}>{this.state.connected ? "Connected" : "Disconnected"} </font>
                 </h4>
                 <h4 style={{position: "absolute", left: "50%", padding: "0px 0px 0px 20px", margin: "0px 0px 20px 0px"}}>
-                    RFS: <font style={{color: getColor(this.state.refresh)}}>{this.state.refresh}</font>ms
+                RFS: <font style={{color: getColor(this.state.refresh)}}>{this.state.refresh}</font>ms
                 </h4>
                 <h4 style={{position: "absolute", left: "70%", padding: "0px 0px 0px 20px", margin: "0px 0px 20px 0px"}}>
                     LAT: <font style={{color: getColor(this.state.latency)}}>{this.state.latency}</font>ms

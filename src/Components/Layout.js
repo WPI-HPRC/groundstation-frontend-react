@@ -105,15 +105,14 @@ export default class Layout extends React.Component {
 
             switch(randInt) {
                 case 0:
-                    abort = new Audio('abort_warning.mp3');
+                    abort = new Audio('abort_warning.mp3'); // Ben
                     break;
                 case 1:
-                    abort = new Audio('Dan_abort.mp3');
+                    abort = new Audio('Dan_abort.mp3'); // Dan
                     break;
                 default:
                     abort = new Audio('abort_warning.mp3');
             }
-
             abort.play();
         }
         

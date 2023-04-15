@@ -221,10 +221,10 @@ export default class App extends React.Component {
             latency: diff,
         })
 
-        if(diff === 0) 
+        if(diff <= 5) 
         {
             this.setState({
-                sigLossCount: this.state.diffCount + 1,
+                sigLossCount: this.state.sigLossCount + 1,
             })
         } else {
             this.setState({
@@ -260,7 +260,7 @@ export default class App extends React.Component {
             battery: json.Voltage,
             vehicleClock: vehicleTime,
             lastUpdate: diff,
-            latency: latency,
+            latency: "-",
             state: json.State,
             rocketIsConnected: json.RocketConnected,
             accelX: ((json.AccelX * (1)) * 9.80665).toFixed(2),
