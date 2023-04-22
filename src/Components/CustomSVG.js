@@ -131,6 +131,11 @@ export default class AirbrakesIndicator extends React.Component {
 
     render() {
 
+        if(this.state.airbrakesDeploy >= 100)
+        {
+            this.state.airbrakesDeploy = 100;
+        }
+
         /* doing some math to create some of the parts needed later */ 
         let circumference = 60 * 2 * Math.PI; // circumference of the outer circle
         let innerArc = circumference * (45 /360); // the background color arc in the arms of the airbrakes 
@@ -168,8 +173,6 @@ export default class AirbrakesIndicator extends React.Component {
         /* since the fins are positioned on the right side, extended to how far */
         /* they need to be, then rotated about the center of the indicator */ 
         let x1 = 150 + (50 * scale) * (this.state.airbrakesDeploy / 100);
-
-
 
         return(
             <svg width="100%" height="100%" viewBox="0 0 250 180">

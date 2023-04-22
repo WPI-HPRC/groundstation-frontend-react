@@ -76,15 +76,15 @@ export default class SystemPanel extends React.Component {
                                 />
                             </div>
                             <div style={{height:"100%", width: "34%", display: "inline-block", margin: "0px 0px 0px 0px", textAlign: "center", position: "relative"}}>
-                                <h3>Roll (Y)</h3>
-                                <RPMGauge input={this.state.gyroY} dark={this.state.dark} unit={this.state.unit} digits={this.state.digits} style={{height:"70%"}}/>
+                                <h3>Roll (Z)</h3>
+                                <RPMGauge input={this.state.gyroZ} dark={this.state.dark} unit={this.state.unit} digits={this.state.digits} style={{height:"70%"}}/>
 
                             </div>
                             <div style={{display: "inline-block", width: "33%", margin: "0px 0px 0px 0px", textAlign: "center", position:"relative"}}>
-                                <h3>Yaw (Z)</h3>
+                                <h3>Yaw (Y)</h3>
                                 <CGauge
-                                    input={Math.abs(this.state.gyroZ)}
-                                    reverse={ this.state.gyroZ < 0} 
+                                    input={Math.abs(this.state.gyroY)}
+                                    reverse={ this.state.gyroY < 0} 
                                     dark={this.state.dark}
                                 />
                             </div>

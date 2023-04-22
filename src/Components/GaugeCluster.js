@@ -478,9 +478,9 @@ export default class GaugeCluster extends React.PureComponent {
                     <Box title="Acceleration" unit={this.state.accelUnit} min={0} max={3000} 
                         threshold={2000} digits={4} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} 
-                        val0={this.state.accelY} name0="Y"
-                        val1={this.state.accelX} name1="X"
-                        val2={this.state.accelZ} name2="Z"
+                        val0={this.state.accelZ} name0="Z"
+                        val1={this.state.accelY} name1="Y"
+                        val2={this.state.accelX} name2="X"
                         dark={this.state.dark} 
                         showMetric={this.props.showMetric}
                         altMSL={this.props.altMSL}

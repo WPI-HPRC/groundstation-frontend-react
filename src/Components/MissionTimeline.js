@@ -63,12 +63,12 @@ export default class MissionTimeline extends React.Component {
             missionPoints: [ [0, 5, "Boot", new Date(0), 0],
                              [5, 15, "Pre-Launch", new Date(0), 1],
                              [15, 25, "Boost", new Date(0), 2],
-                             [25, 50, "Coast", new Date(0), 4],
-                             [50, 60, "Apogee", new Date(0), 5],
-                             [60, 75, "Drogue", new Date(0), 7],
-                             [75, 85, "Quad Deploy", new Date(0), 9],
-                             [85, 100, "Main", new Date(0), 10],
-                             [100, 100, "Landing", new Date(0), 11],],
+                             [25, 50, "Coast", new Date(0), 3],
+                             [50, 60, "Apogee", new Date(0), 4],
+                             [60, 75, "Drogue", new Date(0), 5],
+                             [75, 85, "Quad Deploy", new Date(0), 6],
+                             [85, 100, "Main", new Date(0), 7],
+                             [100, 100, "Landing", new Date(0), 8],],
         };
 
         this.clockId = 0;

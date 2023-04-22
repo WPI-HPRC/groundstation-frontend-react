@@ -45,42 +45,44 @@ class VehicleState extends React.PureComponent {
             case 2:
                 this.state.stateStr = "Boost";
                 break;
+            // case 3:
+            //     this.state.stateStr = "Coast (Contingency)";
+            //     color = "orange";
+            //     break;
             case 3:
-                this.state.stateStr = "Coast (Contingency)";
-                color = "orange";
-                break;
-            case 4:
                 this.state.stateStr = "Coast";
                 break;
-            case 5:
+            case 4:
                 this.state.stateStr = "Drogue Deploy";
                 break;
-            case 6:
-                this.state.stateStr = "Drogue (Contingency)";
-                color = "orange";
-                break;
-            case 7:
+            // case 6:
+            //     this.state.stateStr = "Drogue (Contingency)";
+            //     color = "orange";
+            //     break;
+            case 5:
                 this.state.stateStr = "Drogue Descent";
                 break;
-            case 8:
-                this.state.stateStr = "Main (Contingency)";
-                color = "orange";
-                break;
-            case 9:
+            // case 8:
+            //     this.state.stateStr = "Main (Contingency)";
+            //     color = "orange";
+            //     break;
+            case 6:
                 this.state.stateStr = "Main Deploy";
                 break;
-            case 10:
+            case 7:
                 this.state.stateStr = "Main Descent";
                 break;
-            case 11:
+            case 8:
                 this.state.stateStr = "Post-Flight";
                 break;
-            case 12:
+            case 9:
                 this.state.stateStr = "Abort";
                 color = "red";
                 break;
             default:
                 this.state.stateStr = "Abducted by Aliens";
+                color = "purple";
+
         }
 
         return (

@@ -92,13 +92,8 @@ export default class Layout extends React.Component {
                 showPowerLossWarning: true,
                 powerLossWarning: props.powerLossWarning,
                 abortHasTriggered: true,
+
             }
-
-           
-        }
-
-        if(props.state === 12)
-        {
             var abort;
 
             var randInt = Math.floor(Math.random() * 2);
@@ -114,6 +109,7 @@ export default class Layout extends React.Component {
                     abort = new Audio('abort_warning.mp3');
             }
             abort.play();
+           
         }
         
         return update;

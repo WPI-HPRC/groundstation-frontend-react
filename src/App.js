@@ -527,6 +527,13 @@ export default class App extends React.Component {
                     });
                 }
                 break;
+            case "arm":
+                this.setState({
+                    powerLossWarning: false,
+                    state: 0,
+
+                });
+                break;
             case "help":
             case "h":
             
@@ -540,7 +547,8 @@ export default class App extends React.Component {
 - raw : print all incoming telemetry to console
 - stop : stop printing all telemetry to console
 - clear : clear the console buffer
-- benchmark [milliseconds]: run a benchmarking test for the specified time, or 10s`, "white");
+- benchmark [milliseconds]: run a benchmarking test for the specified time, or 10s
+- arm: disable all alerts and return display to state zero in preparation for launch`, "white");
                 break;
             default:
                 this.pushConsoleMessage(`Command "${args[0]}" not recognized`, "red")
