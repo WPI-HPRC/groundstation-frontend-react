@@ -194,18 +194,27 @@ export default class Layout extends React.Component {
                     <Row style={{height:"67vh"}}>
                         <div style={{width:"0.375vw"}}/>
                         <div style={{width:"32.83vw"}}> 
-                            <CubeDisplayPanel className={"CubeDisplayPanel"} cubeName={"Curly"} signalStrength={this.props.cubeStrength1} batteryPercent={this.props.cubeBattery1} /* Cube 1 */
-                                {...this.props}/> 
+                            <CubeDisplayPanel className={"CubeDisplayPanel"} 
+                            cubeName={"Alvin"} signalStrength={this.props.cubeStrength1} batteryPercent={this.props.cubeBattery1} /* Cube 1 */
+                            lastTemp={this.props.lastTemp1} lastHmid={this.props.lastHmid1} lastPres={this.props.lastPres1}
+                            cubeTime={this.props.cubeTime1}
+                            {...this.props}/> 
                         </div>
                         <div style={{width:"0.5vw"}}/>
                         <div style={{width:"32.83vw"}}>
-                            <CubeDisplayPanel className={"CubeDisplayPanel"} cubeName={"Larry"} signalStrength={this.props.cubeStrength2} batteryPercent={this.props.cubeBattery2} /* Cube 2 */
-                                {...this.props}/> 
+                            <CubeDisplayPanel className={"CubeDisplayPanel"} 
+                            cubeName={"Simon"} signalStrength={this.props.cubeStrength2} batteryPercent={this.props.cubeBattery2} /* Cube 2 */
+                            lastTemp={this.props.lastTemp2} lastHmid={this.props.lastHmid2} lastPres={this.props.lastPres2}
+                            cubeTime={this.props.cubeTime2}
+                            {...this.props}/> 
                         </div>
                         <div style={{width:"0.5vw"}}/>
                         <div style={{width:"32.83vw"}}>
-                            <CubeDisplayPanel className={"CubeDisplayPanel"} cubeName={"Moe"} signalStrength={this.props.cubeStrength3} batteryPercent={this.props.cubeBattery3} /* Cube 3 */ 
-                                {...this.props}/> 
+                            <CubeDisplayPanel className={"CubeDisplayPanel"} 
+                            cubeName={"Theo"} signalStrength={this.props.cubeStrength3} batteryPercent={this.props.cubeBattery3} /* Cube 3 */ 
+                            lastTemp={this.props.lastTemp3} lastHmid={this.props.lastHmid3} lastPres={this.props.lastPres3}  
+                            cubeTime={this.props.cubeTime3}
+                            {...this.props}/> 
                         </div>
                     </Row>
                     <Row style={{height:"0.5vh"}}/>

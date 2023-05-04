@@ -46,7 +46,7 @@ export default class CubeDisplayPanel extends React.Component{
             cubeData: [], // the empty data, which the series wanted will be added
             legendString: "", // the legend displayed on the graphs
             showMetric: props.showMetric, // units
-            time: props.vehicleClock, // time
+            time: props.cubeTime, // time
             RSSI: 0, // RSSI which may or may not be implemented at some point
         }
     }
@@ -270,9 +270,9 @@ export default class CubeDisplayPanel extends React.Component{
                 <div className={"row"}>
                     <h3>{this.state.cubeName}</h3>
 
-                    <h3 style={{position: "relative", left:"8vw"}}>RSSI: {this.state.RSSI} dBm</h3>
+                    <h3 style={{position: "relative", left:"7vw"}}>RSSI: {this.state.RSSI} dBm</h3>
 
-                    <div style={{position: "relative", left: "17vw", bottom: "-0.5vh"}} >
+                    <div style={{position: "relative", left: "15vw", bottom: "-0.5vh"}} >
                         {/* <SignalIcon dark={this.props.dark} signalStrength={this.props.signalStrength}/> */}
                         <BarSignalIcon dark={this.props.dark} signalStrength={this.props.signalStrength}/>
                         {/* <BatteryIcon dark={this.props.dark} batteryPercent={this.props.batteryPercent}/> */}

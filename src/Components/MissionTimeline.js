@@ -95,12 +95,12 @@ export default class MissionTimeline extends React.Component {
                 missionPoints: [ [0, 5, "Boot", new Date(0), 0],
                          [5, 15, "Pre-Launch", new Date(0), 1],
                          [15, 25, "Boost", new Date(0), 2],
-                         [25, 50, "Coast", new Date(0), 4],
-                         [50, 60, "Apogee", new Date(0), 5],
-                         [60, 75, "Drogue", new Date(0), 7],
-                         [75, 85, "Quad Deploy", new Date(0), 9],
-                         [85, 100, "Main", new Date(0), 10],
-                         [100, 100, "Landing", new Date(0), 11],],
+                         [25, 50, "Coast", new Date(0), 3],
+                         [50, 60, "Apogee", new Date(0), 4],
+                         [60, 75, "Drogue", new Date(0), 5],
+                         [75, 85, "Quad Deploy", new Date(0), 6],
+                         [85, 100, "Main", new Date(0), 7],
+                         [100, 100, "Landing", new Date(0), 8],],
             } 
         }
         
@@ -148,7 +148,7 @@ export default class MissionTimeline extends React.Component {
                         <div style={{position: "absolute", width: "100%", height: "100%"}}>
                             {missionPoints.map((elem) => (<MissionPoint key={elem[0]} name={elem[2]} percentStart={elem[0]} percentEnd={elem[1]} time={elem[3]}/>))}
                         </div>
-                        <div  style={{position: "absolute", top: "4.5vh", width: "100%", }}>
+                        <div  style={{position: "absolute", top: "3.75vh", left: "0.05vw", width: "100%", }}>
                             <ProgressBar completed={this.state.missionPercent} isLabelVisible={false} bgColor={"#ED5031"} barContainerClassName={this.state.dark ? "foregroundDark" : "foregroundLight"} height="1.5vh"/>
                         </div>
                     </div>

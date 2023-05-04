@@ -8,7 +8,10 @@ const maxMessages = 20;
 // const server = "ws://ted-laptop.dyn.wpi.edu"
 const server = "ws://127.0.0.1"
 const port = "3005"
+const cubeServer = "ws://127.0.0.1"
+const cubePort = "3006"
 var socket;
+var cubeSocket;
 
 const HIGH_REFRESH = 500;
 const LOW_REFRESH = 100;
@@ -47,7 +50,7 @@ export default class App extends React.Component {
             receiverIsConnected: false,
             rocketIsConnected: false,
             missionStateStr: "Idle",
-            timeScale: 50,
+            timeScale: 10,
             graphRefreshRate: 100,
             showConnectButton: true,
             commandHistory: [],
@@ -55,11 +58,20 @@ export default class App extends React.Component {
             fastLog: false,
             showMetric: false,
             airbrakesDeploy: 0,
-            rocketQuaternion: [0, 0, 0, 0],
-            window: 0,
-            lastTemp: 0,
-            lastHmid: 0,
-            lastPres: 0,
+            rocketQuaternion: [0, 0, 0, 0], // the state estimation of the rocket's orientation
+            window: 0, 
+            lastTemp1: 0, // last temperature from cube 1
+            lastHmid1: 0, // last humidity from cube 1
+            lastPres1: 0, // last pressure from cube 1
+            lastTemp2: 0, // cube 2
+            lastHmid2: 0,
+            lastPres2: 0,
+            lastTemp3: 0, // cube3
+            lastHmid3: 0,
+            lastPres3: 0,
+            cubeTime1: 0,
+            cubeTime2: 0,
+            cubeTime3: 0,
             cubeStrength1: 1,
             cubeStrength2: 0,
             cubeStrength3: 0.75,
@@ -92,6 +104,9 @@ export default class App extends React.Component {
             windowFunc: this.updateWindow,
             altModeFunc: this.updateAltMode,
             changeAccelFunc: this.changeAccelMode,
+            connCubeFunc: this.connectToCubeReceiver,
+            disconnCubeFunc: this.disconnectFromCubeReceiver,
+
         }
 
         /**
@@ -104,7 +119,9 @@ export default class App extends React.Component {
          * Binding functions to app
          */
         this.connectToReceiver = this.connectToReceiver.bind(this);
+        this.connectToCubeReceiver = this.connectToCubeReceiver.bind(this);
         this.getTelem = this.getTelem.bind(this);
+        this.getCubeTelem = this.getCubeTelem.bind(this);
         this.handleConsoleCommand = this.handleConsoleCommand.bind(this);
         this.updateMetric = this.updateMetric.bind(this);
         this.updateMode = this.updateMode.bind(this);
@@ -202,6 +219,52 @@ export default class App extends React.Component {
         
     }
 
+    connectToCubeReceiver = () => {
+        this.pushConsoleMessage("Connecting to cube receiver...", "white");
+        
+        
+
+        cubeSocket = new WebSocket(cubeServer+":"+cubePort);
+
+        // Connection opened
+        cubeSocket.addEventListener('open', function (event) {
+            this.pushConsoleMessage("Connected to cube receiver.", "green");
+            
+        }.bind(this));
+
+        // Connection closed
+        cubeSocket.addEventListener('close', function (event) {
+            if (this.state.receiverIsConnected) {
+                this.pushConsoleMessage("Lost connection to cube receiver.", "red");
+            }
+        }.bind(this));
+
+        // Listen for possible errors
+        cubeSocket.addEventListener('error', function (event) {
+            this.pushConsoleMessage("Could not connect to cube reciever.", "red");
+
+            
+        }.bind(this));
+
+        // Update telemetry
+        cubeSocket.onmessage = function(event) {
+
+            let message = event.data;
+            this.getCubeTelem(message);
+        }.bind(this);
+    }
+
+    /**
+     * Disconnect from the ws server
+     */
+    disconnectFromCubeReceiver = () => {
+        
+        cubeSocket.close();
+
+        this.pushConsoleMessage("Disconnected from cube receiver.", "green");
+        
+    }
+
     /**
      * Parse message from receiver, update telemetry and app state
      */
@@ -267,8 +330,8 @@ export default class App extends React.Component {
             accelY: ((json.AccelY * (1)) * 9.80665).toFixed(2),
             accelZ: ((json.AccelZ * (1)) * 9.80665).toFixed(2),
             gyroX: (json.GyroX * (1)).toFixed(2),
-            gyroY: ((json.GyroY * (1)) / 60).toFixed(2),
-            gyroZ: (json.GyroZ * (1)).toFixed(2),
+            gyroY: ((json.GyroY * (1))).toFixed(2),
+            gyroZ: (json.GyroZ * (1) / 60).toFixed(2),
             slowLog: json.SlowLogging,
             fastLog: json.FastLogging,
             airbrakesDeploy: json.AirbrakesDeploy,
@@ -296,6 +359,51 @@ export default class App extends React.Component {
                 missionStateStr: "Disconnected"
             });
         }
+    }
+
+    getCubeTelem(message) {
+        
+        // Good connection
+        let json = JSON.parse(message);
+    
+        if (this.showRawInConsole) {
+            this.pushConsoleMessage(json.RawData, "white");
+        }
+
+        switch(json.Name) {
+            case "Alvin":
+                this.setState({
+                    lastTemp1: json.Temperature,
+                    lastHmid1: json.Humidity,
+                    lastPres1: json.Pressure,
+                    cubeTime1: new Date(json.Timestamp),
+                });
+                break;
+            case "Simon":
+                this.setState({
+                    lastTemp2: json.Temperature,
+                    lastHmid2: json.Humidity,
+                    lastPres2: json.Pressure,
+                    cubeTime2: new Date (json.Timestamp),
+                });
+                break;
+            case "Theo":
+                this.setState({
+                    lastTemp3: json.Temperature,
+                    lastHmid3: json.Humidity,
+                    lastPres3: json.Pressure,
+                    cubeTime3: new Date(json.Timestamp),               
+                });
+                break;
+            default:
+                this.setState({
+                    lastTemp1: json.Temperature,
+                    lastHmid1: json.Humidity,
+                    lastPres1: json.Pressure,
+                    cubeTime1: new Date(json.Timestamp),
+                });
+        }
+        
     }
 
     /**

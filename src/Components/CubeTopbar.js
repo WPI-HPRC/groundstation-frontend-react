@@ -62,7 +62,7 @@ export default class CubeTopbar extends React.Component {
                 <div /* title plate */ className={`panel ${this.props.dark ? "darkPanel" : "lightPanel"}`} style={{height:"19vh", width:"58.375vw", position:"relative"}}>
                     <div className={"row"} style={{height:"10vh", bottom:"2.5vh", position:"relative"}}>
                         <div className="TitlePlate">
-                            <h1 className="titleLG">WPI <img alt="HPRC Logo" src="hprc logo red.png" style={{height: "8vh", width: "6.5vh"}}/> HPRC</h1>
+                            <h1 style={{fontFamily:"Century Gothic"}} className="titleLG">WPI <img alt="HPRC Logo" src="hprc logo red.png" style={{fontFamily: "Century Gothic", height: "8vh", width: "6.5vh"}}/> HPRC</h1>
                             <h4 className="subTitleLG">Payload GS</h4>
                         </div>
                     </div>
@@ -84,7 +84,7 @@ export default class CubeTopbar extends React.Component {
                     </div>
                     <div className={"row"} >
                         <div style={{width:"2.25vw"}}/>
-                        <button /* Connect/Disconnect */ className={this.props.dark ? "customButtonLg" : "customButtonLgLight"}>{this.state.connectedR ? "Disconnect" : "Connect"}</button>
+                    <button /* Connect/Disconnect */ onClick={this.props.connectedR ? () => this.props.disconnCubeFunc() : () => this.props.connCubeFunc()} className={this.props.dark ? "customButtonLg" : "customButtonLgLight"}>{this.state.connectedR ? "Disconnect" : "Connect"}</button>
                         <div style={{width:"2vw"}}/>
                         <button /* Settings */ className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleSettings()} /* show settings menu */>Settings</button>
 

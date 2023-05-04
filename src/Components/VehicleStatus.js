@@ -216,12 +216,14 @@ export default class VehicleStatus extends React.Component {
                     </div>
                     <div className={"row"} style={{height: "8vh"}}>
                         <div className={"col-lg-6"}>
+                            <div style={{height: "1vh"}}/>
                             <h4>Battery: {this.state.battery}V</h4>
-                            <h4>Temperature: {this.state.temperature} {this.state.showMetric ? "°C" : "°F"}</h4>
+                            <h4>Temperature: {this.state.showMetric ? this.state.temperature : (this.state.temperature * 1.4 + 32)} {this.state.showMetric ? "°C" : "°F"}</h4>
                         </div>
                         <div className={"col-lg-6"}>
-                            <h4>Pressure: {this.state.pressure} {this.state.showMetric ? "Bar" : "inHg"}</h4>
-                            <h4>Humidity: {this.state.humidity} %</h4>
+                            <div style={{height: "1vh"}}/>
+                            <h4>Pressure: {this.state.showMetric ? this.state.pressure : Math.round(this.state.pressure * 29.53 * 1000)/1000} {this.state.showMetric ? "Bar" : "inHg"}</h4>
+                            {/* <h4>Humidity: {this.state.humidity} %</h4> */}
                         </div>
                     </div>
                     <div style={{height: "12vh"}}>
