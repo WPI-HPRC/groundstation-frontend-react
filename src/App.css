@@ -110,6 +110,7 @@
 .subpanel {
   border-radius: 5px;
   background-color: inherit;
+  font-family: arial;
   box-shadow: 2px 2px 5px var(--box-shadow-color), -2px -2px 5px var(--box-shadow-secondary-color);
 }
 
@@ -147,6 +148,7 @@
   border-radius: 5px;
   width: 50%; 
   box-shadow: 2px 2px 5px var(--box-shadow-color);
+  margin: 0px 0px 0px px;
 }
 
 .customButtonLg {
@@ -374,6 +376,7 @@
   color: #BD1E01;
   text-align: center;
   position: relative;
+  font-family: "Century Gothic";
 }
 
 .title {

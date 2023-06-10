@@ -12,13 +12,15 @@ class StatusIndicator extends React.Component {
         this.state = { 
             connected: props.connected,
             refresh: "-",
-            latency: "-",
+            latency: props.latency,
             systemName: props.name,
             blinkOn: false,
             ID: null,
             dark: props.dark,
             showSettingsPanel: false,
             altMSL: true,
+            diff: props.lastUpdate,
+            repeatCount: props.diffCount,
         };
             
         this.blinkWarning = this.blinkWarning.bind(this)
@@ -88,7 +90,7 @@ class StatusIndicator extends React.Component {
                     {this.state.systemName}: <font style={{color: this.state.connected ? "#00f700" : "#ED5031"}}>{this.state.connected ? "Connected" : "Disconnected"} </font>
                 </h4>
                 <h4 style={{position: "absolute", left: "50%", padding: "0px 0px 0px 20px", margin: "0px 0px 20px 0px"}}>
-                    RFS: <font style={{color: getColor(this.state.refresh)}}>{this.state.refresh}</font>ms
+                RFS: <font style={{color: getColor(this.state.refresh)}}>{this.state.refresh}</font>ms
                 </h4>
                 <h4 style={{position: "absolute", left: "70%", padding: "0px 0px 0px 20px", margin: "0px 0px 20px 0px"}}>
                     LAT: <font style={{color: getColor(this.state.latency)}}>{this.state.latency}</font>ms
@@ -285,6 +287,10 @@ export default class MissionStatus extends React.Component {
         this.props.altModeFunc(!this.state.altMSL);
     }
 
+    changeAccel(event) {
+        this.props.changeAccelFunc();
+    }
+
     render() { 
 
         var runningAvgRefresh = parseInt(this.state.lastUpdates.reduce((a,b) => a + b, 0) / this.state.lastUpdates.length);
@@ -311,19 +317,21 @@ export default class MissionStatus extends React.Component {
                                 <button className={this.state.dark ? "customButtonLg" : "customButtonLgLight"} style={{margin: "0px 20px 0px 0px"}} onClick={() => this.toggleSettingsPanel()}>Settings</button>
                                     <div className={`panel ${!this.state.showSettingsPanel ? "hidden" : this.props.dark ? "darkPanel settingsPanel" : "lightPanel settingsPanelLight"}`} style={{ right:"0px", height:"11vh"}}/* all the settings are contained in here */ >
                                         <div style={{height:"7px"}}/>
-                                            <div className={"row"} /* top row of buttons */ > 
-                                                <div style={{width:"8px"}}/>
-                                                <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.handleUnitSwitch()} style={{width: "150px"}}>Units: {this.props.showMetric ? "Metric" : "Imperial" }</button>
-                                                <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleMode()}>Mode: {this.props.dark ? "Dark" : "Light" }</button>
-                                            </div>
-                                            <div className={"row"} style={{height: "7px"}}></div>
-                                            <div className={"row"} /* bottom row of buttons */ >
-                                                <div style={{width:"8px"}}/>
-                                                <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"}  style={{width: "150px"}} onClick={() => this.cubeWindow()}>Cube Window</button>
-                                                <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleAltMode()}>{this.props.altMSL ? "Alt: MSL" : "Alt: AGL"}</button>
-                                            </div>
+                                         <div className={"row"} /* top row of buttons */ > 
+                                            <div style={{width:"8px"}}/>
+                                            <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.handleUnitSwitch()} style={{width: "150px"}}>Units: {this.props.showMetric ? "Metric" : "Imperial" }</button>
+                                            <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleMode()}>Mode: {this.props.dark ? "Dark" : "Light" }</button>
                                         </div>
+                                        <div className={"row"} style={{height: "7px"}}></div>
+                                        <div className={"row"} /* second row of buttons */ >
+                                            <div style={{width:"8px"}}/>
+                                            <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"}  style={{width: "150px"}} onClick={() => this.cubeWindow()}>Cube Window</button>
+                                            <button className={this.props.dark ? "customButtonLg" : "customButtonLgLight"} onClick={() => this.toggleAltMode()}>{this.props.altMSL ? "Alt: MSL" : "Alt: AGL"}</button>
+                                        </div>
+                                        <div className={"row"} style={{height: "7px"}}></div>
+                                        
                                     </div>
+                                </div>
 
                         </div>
                         <hr/>

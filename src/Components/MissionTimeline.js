@@ -23,8 +23,20 @@ class MissionPoint extends React.Component {
         };
     }
 
+    static getDerivedStateFromProps(current_state, props)
+    {
+        let update = null;
+        if(current_state.time !== props.time)
+        {
+            update = {
+                time: props.time,
+            }
+        }
+        return update;
+    }
+
     render() {
-        var timeStr = this.state.time.toISOString().substr(14, 5);
+        var timeStr = this.props.time.toISOString().substr(14, 5);
 
         return (
             <div style={{height: "100%", display: "inline-block", width: this.state.percentStart === 100 ? "0%" : (this.state.percentEnd - this.state.percentStart) + "%", textAlign: this.state.percentStart === 100 ? "right" : "left", top: "0px", left:"0px"}}>
@@ -47,16 +59,16 @@ export default class MissionTimeline extends React.Component {
             stateStr: props.stateStr,
             vehicleTime: props.vehicleClock,
             clock: new Date(),
-            missionPoints: [ [0, 5, "Stby", new Date(0)],
-                            [5, 10, "Boot", new Date(0)],
-                            [10, 15, "DGN", new Date(0)],
-                            [15, 20, "Armed", new Date(0)],
-                            [20, 25, "Launch", new Date(0)],
-                            [25, 50, "Pwrd Asnt", new Date(0)],
-                            [50, 60, "Unpwrd Asnt", new Date(0)],
-                            [60, 70, "APO-G", new Date(0)],
-                            [70, 100, "Chute", new Date(0)],
-                            [100, 100, "GND", new Date(0)]]
+            missionPercent: 0,
+            missionPoints: [ [0, 5, "Boot", new Date(0), 0],
+                             [5, 15, "Pre-Launch", new Date(0), 1],
+                             [15, 25, "Boost", new Date(0), 2],
+                             [25, 50, "Coast", new Date(0), 3],
+                             [50, 60, "Apogee", new Date(0), 4],
+                             [60, 75, "Drogue", new Date(0), 5],
+                             [75, 85, "Quad Deploy", new Date(0), 6],
+                             [85, 100, "Main", new Date(0), 7],
+                             [100, 100, "Landing", new Date(0), 8],],
         };
 
         this.clockId = 0;
@@ -65,14 +77,31 @@ export default class MissionTimeline extends React.Component {
     static getDerivedStateFromProps(props, current_state) {
         let update = null;
 
-        if (current_state.stateStr !== props.stateStr ||
+        if (current_state.state !== props.state ||
             current_state.vehicleTime !== props.vehicleClock ||
             current_state.dark !== props.dark) {
             update = {
-                stateStr: props.stateStr,
+                state: props.state,
                 vehicleTime: props.vehicleClock,
                 dark: props.dark,
             }
+        }
+        if(props.vehicleClock.getTime() === 0) {
+            update = {
+                state: props.state,
+                vehicleTime: props.vehicleClock,
+                dark: props.dark,
+                missionPercent: 0,
+                missionPoints: [ [0, 5, "Boot", new Date(0), 0],
+                         [5, 15, "Pre-Launch", new Date(0), 1],
+                         [15, 25, "Boost", new Date(0), 2],
+                         [25, 50, "Coast", new Date(0), 3],
+                         [50, 60, "Apogee", new Date(0), 4],
+                         [60, 75, "Drogue", new Date(0), 5],
+                         [75, 85, "Quad Deploy", new Date(0), 6],
+                         [85, 100, "Main", new Date(0), 7],
+                         [100, 100, "Landing", new Date(0), 8],],
+            } 
         }
         
         return update;
@@ -93,16 +122,15 @@ export default class MissionTimeline extends React.Component {
     }
 
     render() {                    
-        var missionPercent = 0;
         var missionPoints = this.state.missionPoints;
-        var currentState = this.state.stateStr;
+        var currentState = this.state.state;
         var currentClock = this.state.vehicleTime;
 
-        missionPoints.forEach(function(missionPoint) {
-            
-            if (missionPoint[2] === currentState) {
-                missionPoint[3] = currentClock;
-                missionPercent = missionPoint[0];
+        missionPoints.forEach(element => {
+
+            if (element[4] === currentState && element[3].getTime() === 0 && this.state.vehicleTime.getTime() !== 0) {
+                element[3] = currentClock;
+                this.state.missionPercent = element[0];
             }
         });
 
@@ -120,23 +148,23 @@ export default class MissionTimeline extends React.Component {
                         <div style={{position: "absolute", width: "100%", height: "100%"}}>
                             {missionPoints.map((elem) => (<MissionPoint key={elem[0]} name={elem[2]} percentStart={elem[0]} percentEnd={elem[1]} time={elem[3]}/>))}
                         </div>
-                        <div  style={{position: "absolute", top: "4.5vh", width: "100%", }}>
-                            <ProgressBar completed={missionPercent} isLabelVisible={false} bgColor={"#ED5031"} barContainerClassName={this.state.dark ? "foregroundDark" : "foregroundLight"} height="1.5vh"/>
+                        <div  style={{position: "absolute", top: "3.75vh", left: "0.05vw", width: "100%", }}>
+                            <ProgressBar completed={this.state.missionPercent} isLabelVisible={false} bgColor={"#ED5031"} barContainerClassName={this.state.dark ? "foregroundDark" : "foregroundLight"} height="1.5vh"/>
                         </div>
                     </div>
                     <div style={{display: "inline-block", position: "absolute", right: "0", height: "100%", width: "22%"}}>
                         <div className="subpanel" style={{position: "absolute", top: "10px", right: "10px", bottom: "10px", left: "10px"}}>
                             <div style={{display: "inline-block", position: "absolute", top: 0, left: 0, textAlign: "left", padding: 0, margin: 0, verticalAlign: "top"}}>
-                                <h1 style={{fontSize: "2.5vh", margin: "0.2vh"}}>{month}</h1>
+                                <h1 style={{fontFamily:"arial", fontSize: "2.5vh", margin: "0.2vh"}}>{month}</h1>
                             </div>
                             <div style={{display: "inline-block", position: "absolute", bottom: 0, left: 0, textAlign: "left", padding: 0, margin: 0, verticalAlign: "top"}}>
-                                <h1 style={{fontSize: "4.5vh", margin: "0.2vh"}}>{time.getDate()}, {time.getFullYear()}</h1>
+                                <h1 style={{fontFamily:"arial", fontSize: "4.5vh", margin: "0.2vh"}}>{time.getDate()}, {time.getFullYear()}</h1>
                             </div>
                             <div style={{display: "inline-block", position: "absolute", top: 0, right: 0, textAlign: "right", margin: "auto", verticalAlign: "top"}}>
-                                <h1 style={{fontSize: "4.5vh", margin: "0.2vh"}}>{padLeadingZeros(time.getHours(), 2)}:{padLeadingZeros(time.getMinutes(),2)}:{padLeadingZeros(time.getSeconds(), 2)}</h1>
+                                <h1 style={{fontFamily:"arial", fontSize: "4.5vh", margin: "0.2vh"}}>{padLeadingZeros(time.getHours(), 2)}:{padLeadingZeros(time.getMinutes(),2)}:{padLeadingZeros(time.getSeconds(), 2)}</h1>
                             </div>
                             <div style={{display: "inline-block", position: "absolute", bottom: 0, right: 0, textAlign: "right", margin: "auto", verticalAlign: "top"}}>
-                                <h1 style={{fontSize: "2.5vh", margin: "0.2vh"}}>{tzStr}</h1>
+                                <h1 style={{fontFamily:"arial", fontSize: "2.5vh", margin: "0.2vh"}}>{tzStr}</h1>
                             </div>
                         </div>
                     </div>

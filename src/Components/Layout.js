@@ -63,6 +63,10 @@ export default class Layout extends React.Component {
         super(props);
         this.state = { 
             window: props.window,
+            showPowerLossWarning: false,
+            powerLossWarning: props.powerLossWarning,
+            abortHasTriggered: false,
+
         }
     }
 
@@ -75,7 +79,47 @@ export default class Layout extends React.Component {
                 window: props.window,
             }
         }
+        if(current_state.powerLossWarning !== props.powerLossWarning) {
+            update = {
+                window: props.window,
+                powerLossWarning: props.powerLossWarning,
+            }
+        }
+        if(props.state === 12 && !current_state.abortHasTriggered)
+        {
+            update = {
+                window: props.window,
+                showPowerLossWarning: true,
+                powerLossWarning: props.powerLossWarning,
+                abortHasTriggered: true,
+
+            }
+            var abort;
+
+            var randInt = Math.floor(Math.random() * 2);
+
+            switch(randInt) {
+                case 0:
+                    abort = new Audio('abort_warning.mp3'); // Ben
+                    break;
+                case 1:
+                    abort = new Audio('Dan_abort.mp3'); // Dan
+                    break;
+                default:
+                    abort = new Audio('abort_warning.mp3');
+            }
+            abort.play();
+           
+        }
+        
         return update;
+    }
+
+    dismissPLWarning(event) 
+    {
+        this.setState({
+            showPowerLossWarning: false,
+        });
     }
 
     render() {
@@ -150,18 +194,27 @@ export default class Layout extends React.Component {
                     <Row style={{height:"67vh"}}>
                         <div style={{width:"0.375vw"}}/>
                         <div style={{width:"32.83vw"}}> 
-                            <CubeDisplayPanel className={"CubeDisplayPanel"} cubeName={"Curly"} signalStrength={this.props.cubeStrength1} batteryPercent={this.props.cubeBattery1} /* Cube 1 */
-                                {...this.props}/> 
+                            <CubeDisplayPanel className={"CubeDisplayPanel"} 
+                            cubeName={"Alvin"} signalStrength={this.props.cubeStrength1} batteryPercent={this.props.cubeBattery1} /* Cube 1 */
+                            lastTemp={this.props.lastTemp1} lastHmid={this.props.lastHmid1} lastPres={this.props.lastPres1}
+                            cubeTime={this.props.cubeTime1}
+                            {...this.props}/> 
                         </div>
                         <div style={{width:"0.5vw"}}/>
                         <div style={{width:"32.83vw"}}>
-                            <CubeDisplayPanel className={"CubeDisplayPanel"} cubeName={"Larry"} signalStrength={this.props.cubeStrength2} batteryPercent={this.props.cubeBattery2} /* Cube 2 */
-                                {...this.props}/> 
+                            <CubeDisplayPanel className={"CubeDisplayPanel"} 
+                            cubeName={"Simon"} signalStrength={this.props.cubeStrength2} batteryPercent={this.props.cubeBattery2} /* Cube 2 */
+                            lastTemp={this.props.lastTemp2} lastHmid={this.props.lastHmid2} lastPres={this.props.lastPres2}
+                            cubeTime={this.props.cubeTime2}
+                            {...this.props}/> 
                         </div>
                         <div style={{width:"0.5vw"}}/>
                         <div style={{width:"32.83vw"}}>
-                            <CubeDisplayPanel className={"CubeDisplayPanel"} cubeName={"Moe"} signalStrength={this.props.cubeStrength3} batteryPercent={this.props.cubeBattery3} /* Cube 3 */ 
-                                {...this.props}/> 
+                            <CubeDisplayPanel className={"CubeDisplayPanel"} 
+                            cubeName={"Theo"} signalStrength={this.props.cubeStrength3} batteryPercent={this.props.cubeBattery3} /* Cube 3 */ 
+                            lastTemp={this.props.lastTemp3} lastHmid={this.props.lastHmid3} lastPres={this.props.lastPres3}  
+                            cubeTime={this.props.cubeTime3}
+                            {...this.props}/> 
                         </div>
                     </Row>
                     <Row style={{height:"0.5vh"}}/>
@@ -172,6 +225,17 @@ export default class Layout extends React.Component {
                                 {...this.props}/>
                         </Row>
                     </Row>
+                </div>
+                <div className={!this.state.showPowerLossWarning ? "hidden" : undefined} style={{zIndex:"100000", backgroundColor: "red", position: "absolute", left: "25vw", height: "30vh", width: "50vw", top: "25vh"}}>
+                    <div style={{width: "100%", height: "100%", position: "relative"}}>
+                        <div className={"row"} style={{position:"relative", width:"100%", textAlign: "center"}}>
+                            <div style={{width: "48vw"}}/>
+                            <button style={{postion: "absolute", left: "49vw"}} onClick={() => this.dismissPLWarning()} className={"customButtonSm mono"}>x</button>
+                        </div>
+                        <div className={"row"} style={{width: "100%", position: "relative"}}> 
+                            <h4 style={{left: "8vw", top: "5vh", position: "relative", fontSize: "10vh"}}>ABORT</h4>
+                        </div>
+                    </div>
                 </div>
             </>
         )

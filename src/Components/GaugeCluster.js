@@ -1,6 +1,6 @@
 import React from 'react';
 import { ResponsiveLine } from '@nivo/line';
-import Gauge from './Gauge';
+import { Gauge } from './CustomSVG';
 
 
 /**
@@ -419,9 +419,9 @@ export default class GaugeCluster extends React.PureComponent {
             if(props.showMetric) {
                 update = {
                     vel: props.vel,
-                    accelX: props.accelX,
-                    accelY: props.accelY,
-                    accelZ: props.accelZ,
+                    accelX: (props.accelX * 9.81).toFixed(2),
+                    accelY: (props.accelY * 9.81).toFixed(2),
+                    accelZ: (props.accelZ * 9.81).toFixed(2),
                     altitude: parseFloat(props.altitude).toFixed(2),
                     vehicleClock: props.vehicleClock,
                     timeScale: props.timeScale,
@@ -433,12 +433,13 @@ export default class GaugeCluster extends React.PureComponent {
                     dark: props.dark,
                     window: props.window,
                 }
+                console.log(props.accelZ);
             } else {
                 update = {
                     vel: (props.vel * 3.281).toFixed(2),
-                    accelX: (props.accelX / 9.80665).toFixed(2),
-                    accelY: (props.accelY / 9.80665).toFixed(2),
-                    accelZ: (props.accelZ / 9.80665).toFixed(2),
+                    accelX: props.accelX,
+                    accelY: props.accelY,
+                    accelZ: props.accelZ,
                     altitude: (props.altitude * 3.281).toFixed(2),
                     vehicleClock: props.vehicleClock,
                     timeScale: props.timeScale,
@@ -478,9 +479,9 @@ export default class GaugeCluster extends React.PureComponent {
                     <Box title="Acceleration" unit={this.state.accelUnit} min={0} max={3000} 
                         threshold={2000} digits={4} graphRefreshRate={this.props.graphRefreshRate}
                         datanum={this.state.timeScale} time={this.state.vehicleClock} 
-                        val0={this.state.accelY} name0="Y"
-                        val1={this.state.accelX} name1="X"
-                        val2={this.state.accelZ} name2="Z"
+                        val0={this.state.accelZ} name0="Z"
+                        val1={this.state.accelY} name1="Y"
+                        val2={this.state.accelX} name2="X"
                         dark={this.state.dark} 
                         showMetric={this.props.showMetric}
                         altMSL={this.props.altMSL}
